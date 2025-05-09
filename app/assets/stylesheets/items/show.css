@@ -1,0 +1,154 @@
+.product-detail-page {
+  padding: var(--spacing-xl) 0;
+  background-color: var(--color-background);
+}
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+/* パンくずリスト */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xl);
+  font-size: var(--font-size-sm);
+}
+
+.breadcrumb-link {
+  color: var(--color-text-light);
+  transition: color var(--transition-fast);
+}
+
+.breadcrumb-link:hover {
+  color: var(--color-primary);
+}
+
+.breadcrumb-separator {
+  color: var(--color-text-light);
+}
+
+.breadcrumb-current {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+/* 商品詳細グリッド */
+.product-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-sm);
+}
+
+
+/* 商品画像セクション */
+.main-image-container {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--color-secondary);
+}
+
+.main-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+/* 商品情報セクション */
+.product-header {
+  margin-bottom: var(--spacing-xl);
+}
+
+.product-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+  line-height: 1.3;
+}
+
+.product-price-container {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-sm);
+}
+
+.product-price {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+}
+
+.shipping-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+}
+
+.product-description {
+  margin-bottom: var(--spacing-xl);
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+/* 商品詳細テーブル */
+.details-table {
+  width: 100%;
+  margin-bottom: var(--spacing-xl);
+  border-collapse: collapse;
+}
+
+.details-table th,
+.details-table td {
+  padding: var(--spacing-md);
+  border: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+}
+
+.details-table th {
+  width: 30%;
+  background-color: var(--color-secondary);
+  font-weight: 500;
+  text-align: left;
+}
+
+/* アクションボタン */
+.product-actions {
+  margin-top: var(--spacing-xl);
+}
+
+.action-buttons {
+  display: flex;
+  gap: var(--spacing-md);
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-xl);
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.btn-purchase {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+
+.btn-edit {
+  background-color: var(--color-info);
+  color: white;
+}
+
+.btn-delete {
+  background-color: var(--color-error);
+  color: white;
+}
