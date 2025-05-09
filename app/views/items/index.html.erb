@@ -1,0 +1,64 @@
+<%= render "shared/header" %>
+
+<div class="home-page">
+  <section class="hero-section">
+    <div class="hero-image-container">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1 class="hero-title"> あなたの生活を彩る、<br> 特別なアイテム</h1>
+        <p class="hero-description">
+          DemoECで、あなただけの特別な商品を見つけましょう。高品質な商品を手頃な価格で。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <%# 商品一覧 %>
+  <section class="featured-products-section">
+    <div class="section-header">
+      <h2 class="section-title">新着商品</h2>
+      <%= link_to 'すべて見る', '#', class: 'view-all-link' %>
+    </div>
+    <div class="products-grid">
+      <%# 商品のインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
+      <%= link_to  "#", class: 'product-card' do %>
+        <div class="product-image-container">
+          <%= image_tag 'placeholder.svg', class: 'product-image' %>
+          <%# 商品が売れていれば在庫なしを表示しましょう %>
+          <div class="sold-out-badge">
+            <span>在庫なし</span>
+          </div>
+          <%# //商品が売れていれば在庫なしを表示しましょう %>
+        </div>
+        <div class="product-content">
+          <div class="product-category"><%= "カテゴリー名"  %></div>
+          <h3 class="product-name"><%= "商品名"  %></h3>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">¥<%= "販売価格"  %></div>
+        </div>
+      <% end %>
+      <%# //商品のインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
+
+      <%# 商品がない場合は以下のダミー商品が表示されるようにしましょう %>
+      <%# 商品がある場合は表示されないようにしましょう %>
+      <%= link_to '#', class: 'product-card' do %>
+        <div class="product-image-container">
+          <%= image_tag "placeholder.svg", class: "product-image" %>
+        </div>
+        <div class="product-content">
+          <div class="product-category"></div>
+          <h3 class="product-name">商品準備中</h3>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">¥<span>99999999</span></div>
+        </div>
+      <% end %>
+      <%# //商品がある場合は表示されないようにしましょう %>
+      <%# //商品がない場合は以下のダミー商品が表示されるようにしましょう %>
+    </div>
+  </section>
+  <%# /商品一覧 %>
+</div>
+
+<%= render "shared/footer" %>
