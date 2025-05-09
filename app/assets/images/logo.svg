@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500" viewBox="0 0 600 200" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- ショッピングバッグアイコン - 左側に配置、サイズを大きく -->
+  <g transform="translate(20, 20) scale(5)">
+    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" stroke="#333333" stroke-width="3" fill="none"></path>
+    <line x1="3" y1="6" x2="21" y2="6" stroke="#333333" stroke-width="3"></line>
+    <path d="M16 10a4 4 0 0 1-8 0" stroke="#333333" stroke-width="3" fill="none"></path>
+  </g>
+
+  <!-- FURIMAテキスト - 大文字で表示、アイコンとの間隔を半分に -->
+  <text x="150" y="125" font-family="Arial, sans-serif" font-size="100" font-weight="bold" fill="#231815" letter-spacing="5">DemoEC</text>
+</svg>
