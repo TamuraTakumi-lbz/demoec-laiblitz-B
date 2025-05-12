@@ -21,22 +21,26 @@
     </div>
     <div class="products-grid">
       <%# 商品のインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
-      <%= link_to  "#", class: 'product-card' do %>
-        <div class="product-image-container">
-          <%= image_tag 'placeholder.svg', class: 'product-image' %>
-          <%# 商品が売れていれば在庫なしを表示しましょう %>
-          <div class="sold-out-badge">
-            <span>在庫なし</span>
+      <% @items.each do |item| %>
+        <%= link_to  "#", class: 'product-card' do %>
+          <div class="product-image-container">
+            <%= image_tag 'placeholder.svg', class: 'product-image' %>
+            <%# 商品が売れていれば在庫なしを表示しましょう %>
+            <% unless item.has_bought %>
+              <div class="sold-out-badge">
+                <span>在庫なし</span>
+              </div>
+            <% end %>
+            <%# //商品が売れていれば在庫なしを表示しましょう %>
           </div>
-          <%# //商品が売れていれば在庫なしを表示しましょう %>
-        </div>
-        <div class="product-content">
-          <div class="product-category"><%= "カテゴリー名"  %></div>
-          <h3 class="product-name"><%= "商品名"  %></h3>
-        </div>
-        <div class="product-footer">
-          <div class="product-price">¥<%= "販売価格"  %></div>
-        </div>
+          <div class="product-content">
+            <div class="product-category"><%= item.category.category%></div> 
+            <h3 class="product-name"><%= item.name  %></h3>
+          </div>
+          <div class="product-footer">
+            <div class="product-price">¥<%= item.price  %></div>
+          </div>
+        <% end %>
       <% end %>
       <%# //商品のインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
 
