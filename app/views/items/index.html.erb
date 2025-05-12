@@ -23,7 +23,7 @@
       <% @items.each do |item| %>
         <%= link_to  "#", class: 'product-card' do %>
           <div class="product-image-container">
-            <%= image_tag 'placeholder.svg', class: 'product-image' %>
+            <%= image_tag item.image, class: 'product-image' %>
             <% unless item.has_bought %>
               <div class="sold-out-badge">
                 <span>在庫なし</span>
