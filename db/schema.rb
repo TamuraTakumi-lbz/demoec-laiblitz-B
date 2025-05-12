@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_09_065531) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_12_033231) do
   create_table "categories", charset: "utf8mb3", force: :cascade do |t|
     t.text "category"
     t.datetime "created_at", null: false
@@ -27,13 +27,32 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_09_065531) do
     t.string "name"
     t.text "description"
     t.integer "price"
-    t.boolean "has_bought" #いらない気もする
+    t.boolean "has_bought"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "category_id", null: false
     t.bigint "condition_id"
     t.index ["category_id"], name: "index_items_on_category_id"
     t.index ["condition_id"], name: "index_items_on_condition_id"
+  end
+
+  create_table "users", charset: "utf8mb3", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.boolean "is_admin", default: false, null: false
+    t.string "nickname", null: false
+    t.string "last_name_kanji"
+    t.string "first_name_kanji"
+    t.string "last_name_kana"
+    t.string "first_name_kana"
+    t.date "birth_date"
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "items", "categories"

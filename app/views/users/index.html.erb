@@ -1,0 +1,18 @@
+このブランチのindexは全部テスト用だからコンフリクトしたら消してOK
+<% @users.each do |user| %>
+  <div class="user-info">
+    <p>ID: <%= user.id %></p>
+    <p>ニックネーム: <%= user.nickname %></p>
+    <p>管理者権限: <%= user.is_admin ? 'あり' : 'なし' %></p>
+    <p>氏名: <%= user.last_name_kanji %> <%= user.first_name_kanji %></p>
+    <p>生年月日: <%= user.birth_date&.strftime('%Y年%m月%d日') %></p>
+  </div>
+<% end %>
+
+<%= link_to "ログイン", user_session_path %>
+<%= link_to "ログアウト", destroy_user_session_path, data: {turbo_method: :delete} %>
+
+
+<%= current_user.nickname if user_signed_in? %>
+
+<%= render "shared/second-footer"%>
