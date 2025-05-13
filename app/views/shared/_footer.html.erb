@@ -1,0 +1,30 @@
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-grid">
+      <div class="footer-column">
+      <%= link_to image_tag('logo.svg', class: 'logo-icon'), root_path, class: 'logo-link' %>
+        <p class="footer-description">おしゃれで使いやすいオンラインマーケットプレイス</p>
+      </div>
+      <div class="footer-column">
+        <h3 class="footer-heading">ショッピング</h3>
+        <ul class="footer-links">
+          <li><%= link_to 'カテゴリー', "#", class: 'footer-link' %></li>
+          <li><%= link_to '人気商品', "#", class: 'footer-link' %></li>
+          <li><%= link_to 'セール', "#", class: 'footer-link' %></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3 class="footer-heading">サポート</h3>
+        <ul class="footer-links">
+          <li><%= link_to 'お問い合わせ', "#", class: 'footer-link' %></li>
+          <li><%= link_to 'よくある質問', "#", class: 'footer-link' %></li>
+          <li><%= link_to '配送について', "#", class: 'footer-link' %></li>
+          <li><%= link_to '返品・交換', "#", class: 'footer-link' %></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <%= Date.today.year %> DemoEC. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

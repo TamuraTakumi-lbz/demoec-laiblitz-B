@@ -1,0 +1,63 @@
+<%= render "shared/header" %>
+
+<div class="home-page">
+  <section class="hero-section">
+    <div class="hero-image-container">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1 class="hero-title"> あなたの生活を彩る、<br> 特別なアイテム</h1>
+        <p class="hero-description">
+          DemoECで、あなただけの特別な商品を見つけましょう。高品質な商品を手頃な価格で。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <%# 商品一覧 %>
+  <section class="featured-products-section">
+    <div class="section-header">
+      <h2 class="section-title">新着商品</h2>
+      <%= link_to 'すべて見る', '#', class: 'view-all-link' %>
+    </div>
+    <div class="products-grid">
+      <% if @items.present? %>
+        <% @items.each do |item| %>
+           <%= link_to  "#", class: 'product-card' do %>
+             <div class="product-image-container">
+               <%= image_tag item.image, class: 'product-image' %>
+               <% if item.has_bought %>
+                 <div class="sold-out-badge">
+                   <span>在庫なし</span>
+                 </div>
+               <% end %>
+             </div>
+             <div class="product-content">
+               <div class="product-category"><%= item.category.category%></div> 
+               <h3 class="product-name"><%= item.name  %></h3>
+             </div>
+             <div class="product-footer">
+               <div class="product-price">¥<%= item.price  %></div>
+             </div>
+           <% end %>
+        <% end %>  
+        
+      <% else %>
+        <%= link_to '#', class: 'product-card' do %>
+          <div class="product-image-container">
+            <%= image_tag "placeholder.svg", class: "product-image" %>
+          </div>
+          <div class="product-content">
+            <div class="product-category"></div>
+            <h3 class="product-name">商品準備中</h3>
+          </div>
+          <div class="product-footer">
+            <div class="product-price">¥<span>99999999</span></div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+  <%# /商品一覧 %>
+</div>
+
+<%= render "shared/footer" %>
