@@ -20,27 +20,28 @@
       <%= link_to 'すべて見る', '#', class: 'view-all-link' %>
     </div>
     <div class="products-grid">
-      <% @items.each do |item| %>
-        <%= link_to  "#", class: 'product-card' do %>
-          <div class="product-image-container">
-            <%= image_tag item.image, class: 'product-image' %>
-            <% unless item.has_bought %>
-              <div class="sold-out-badge">
-                <span>在庫なし</span>
-              </div>
-            <% end %>
-          </div>
-          <div class="product-content">
-            <div class="product-category"><%= item.category.category%></div> 
-            <h3 class="product-name"><%= item.name  %></h3>
-          </div>
-          <div class="product-footer">
-            <div class="product-price">¥<%= item.price  %></div>
-          </div>
-        <% end %>
-      <% end %>
+      <% if @items.present? %>
+        <% @items.each do |item| %>
+           <%= link_to  "#", class: 'product-card' do %>
+             <div class="product-image-container">
+               <%= image_tag item.image, class: 'product-image' %>
+               <% if item.has_bought %>
+                 <div class="sold-out-badge">
+                   <span>在庫なし</span>
+                 </div>
+               <% end %>
+             </div>
+             <div class="product-content">
+               <div class="product-category"><%= item.category.category%></div> 
+               <h3 class="product-name"><%= item.name  %></h3>
+             </div>
+             <div class="product-footer">
+               <div class="product-price">¥<%= item.price  %></div>
+             </div>
+           <% end %>
+        <% end %>  
         
-      <% unless @items.present? %>
+      <% else %>
         <%= link_to '#', class: 'product-card' do %>
           <div class="product-image-container">
             <%= image_tag "placeholder.svg", class: "product-image" %>
