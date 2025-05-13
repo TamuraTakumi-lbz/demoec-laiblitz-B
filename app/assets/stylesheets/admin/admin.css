@@ -1,0 +1,108 @@
+/* コンテナ設定 */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* カード設定 */
+.card-layout {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  margin-bottom: 100px;
+}
+
+/* アプリタイトル */
+.app-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 20px 24px;
+  margin: 0;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.section-description {
+  font-size: 0.875rem;
+  color: #666;
+  margin: 0;
+}
+
+/* テーブルスタイル */
+th,
+td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid #eaeaea;
+}
+
+th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+}
+
+tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* アクションボタン */
+.admin-action-button {
+  display: flex;
+  justify-content: center;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin: 30px 0;
+}
+
+
+/* ページネーション */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding: 12px 0;
+}
+
+.pagination-info {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+}
+
+.pagination-button {
+  background: none;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 4px 8px;
+  margin: 0 4px;
+  cursor: pointer;
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-current {
+  font-size: 0.875rem;
+  margin: 0 8px;
+}

@@ -1,0 +1,109 @@
+<%= render "shared/second-header" %>
+
+<div class="container">
+  <%# 商品管理画面 全体レイアウト %>
+  <div class="card-layout">
+
+    <%# ヘッダー部分：タイトル %>
+    <div class="card-header">
+      <h1 class="app-title">DemoEC 商品管理</h1>
+    </div>
+    <%# /ヘッダー部分：タイトル %>
+
+    <%# 出品した商品一覧 %>
+    <div class="item-list-container">
+
+      <%# 出品した商品の見出し %>
+      <div class="item-list-header">
+        <div>
+          <h2 class="section-title">出品した商品一覧</h2>
+          <p class="section-description">
+            出品されている商品の一覧です。<%= "999" %>個の商品が見つかりました。
+          </p>
+        </div>
+
+        <%# 出品ボタン %>
+        <div class="list-header-actions">
+          <%= link_to '商品を出品する', "#", class: "new-item-button" %>
+        </div>
+        <%# /出品ボタン %>
+      </div>
+      <%# /出品した商品の見出し %>
+
+      <%# 商品テーブル %>
+      <div class="item-table">
+        <table>
+          <thead>
+            <tr>
+              <th>商品名</th>
+              <th>価格</th>
+              <th>カテゴリー</th>
+              <th>出品日</th>
+              <th>アクション</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <%# 商品のインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
+              <tr>
+
+                <%# 商品名・画像の表示 %>
+                <td class="item-col">
+                  <div class="item-info">
+                    <div class="item-avatar">
+                      <div>
+                        <%= image_tag "item-sample.png", class: "item-image" %>
+
+                        <%# 商品が売れている場合は "在庫なし" を表示 %>
+                          <div class="sold-out">
+                            <span>在庫なし</span>
+                          </div>
+                        <%# /商品が売れている場合は "在庫なし" を表示 %>
+                      </div>
+                    </div>
+                    <div class="item-details">
+                      <span class="item-name"><%= "商品名" %></span>
+                    </div>
+                  </div>
+                </td>
+                <%# /商品名・画像の表示 %>
+
+                <%# 販売価格の表示 %>
+                <td class="price-col">
+                  <%= "販売価格" %>円
+                </td>
+                <%# /販売価格の表示 %>
+
+                <%# カテゴリーの表示 %>
+                <td class="category-col">
+                  <%= "カテゴリー名" %>
+                </td>
+                <%# /カテゴリーの表示 %>
+
+                <%# 出品日の表示 %>
+                <td class="date-col">
+                  <%= "出品日" %>
+                </td>
+                <%# /出品日の表示 %>
+
+                <%# アクションボタン（編集・削除） %>
+                <td class="actions-col">
+                  <%= link_to '編集', "#", class: "admin-action-button" %>
+                  <%= link_to '削除', "#", method: :delete, class: "admin-action-button" %>
+                </td>
+                <%# /アクションボタン（編集・削除） %>
+
+              </tr>
+            <%# 商品のインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
+
+          </tbody>
+        </table>
+      </div>
+      <%# /商品テーブル %>
+
+    </div>
+    <%# /出品した商品一覧 %>
+
+  </div>
+  <%# /商品管理画面 全体レイアウト %>
+</div>

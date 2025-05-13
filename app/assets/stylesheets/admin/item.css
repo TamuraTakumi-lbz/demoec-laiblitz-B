@@ -1,0 +1,121 @@
+/* アイテムリストコンテナ */
+.item-list-container {
+  padding: 24px;
+}
+
+/* アイテムリストヘッダー */
+.item-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+
+/* 新規アイテムボタン */
+.new-item-button {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.new-item-button:hover {
+  background-color: var(--color-primary-dark);
+}
+
+/* テーブルスタイル */
+.item-table {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.item-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.item-table th,
+.item-table td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.item-table th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.item-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* アイテム情報 */
+.item-info {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  margin-right: 12px;
+}
+
+.avatar-fallback {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+}
+
+.item-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-name {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.item-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  display: block;
+  position: relative;
+}
+
+.item-avatar {
+  position: relative;
+  display: inline-block;
+  margin-right: 12px;
+}
+
+/* SOLD OUTバッジのスタイル */
+.sold-out {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--color-error);
+  color: white;
+  padding: 2px 4px;
+  border-radius: 25px;
+  font-weight: 500;
+  font-size: 0.6rem;
+  transform: translate(50%, -50%);
+  text-align: center;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
