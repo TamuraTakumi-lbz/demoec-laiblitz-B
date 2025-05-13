@@ -6,6 +6,10 @@ class ItemsController < ApplicationController
     @items=Item.includes([:condition,:category]).order(created_at: :desc)
   end
 
+  def index
+    @items = Item.order("created_at DESC")
+  end
+
   private
   def authenticate_admin
     unless current_user.is_admin
@@ -17,5 +21,4 @@ class ItemsController < ApplicationController
      unless user_signed_in?
       redirect_to root_path
     end
-  end
 end
