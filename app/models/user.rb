@@ -5,7 +5,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :email, presence: true, uniqueness: true
   validates :nickname, presence: true, uniqueness: true
 
   validates :last_name_kanji, :first_name_kanji, presence: true
