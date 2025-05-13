@@ -12,10 +12,10 @@ app/assets/stylesheets/items/form.css %>
 
       <div class="form-main">
         <h2 class="form-title">商品の情報を入力</h2>
-        <%= form_with  local: true do |f| %>
+        <%= form_with model: @item, local: true do |f| %>
 
         <%# インスタンスを渡して、エラー発生時にメッセージが表示されるようにしましょう。%>
-        <%# render 'shared/error_messages', model: f.object %>
+        <% render 'shared/error_messages', model: @item %>
         <%# //インスタンスを渡して、エラー発生時にメッセージが表示されるようにしましょう。%>
 
           <div class="img-upload">
@@ -24,7 +24,7 @@ app/assets/stylesheets/items/form.css %>
             </div>
             <div class="click-upload">
               <%= f.label :image, 'クリックしてファイルをアップロード', class: 'upload-label' %>
-              <%= f.file_field :hoge, id: 'item-image', class: 'file-input' %>
+              <%= f.file_field :image, id: 'item-image', class: 'file-input' %>
             </div>
           </div>
 
@@ -33,14 +33,14 @@ app/assets/stylesheets/items/form.css %>
               <div class="weight-bold-text">
                 商品名 <span class="required-badge">必須</span>
               </div>
-              <%= f.text_area :hoge, class: "items-text", id: "item-name", placeholder: "商品名（必須 40文字まで)", maxlength: "40" %>
+              <%= f.text_area :name, class: "items-text", id: "item-name", placeholder: "商品名（必須 40文字まで)", maxlength: "40" %>
             </div>
             <div class="form-group">
               <div class="items-explain">
                 <div class="weight-bold-text">
                   商品の説明 <span class="required-badge">必須</span>
                 </div>
-                <%= f.text_area :hoge, class: "items-text", id: "item-description", placeholder: "商品の説明（必須 1,000文字まで）", rows: "7", maxlength: "1000" %>
+                <%= f.text_area :description, class: "items-text", id: "item-description", placeholder: "商品の説明（必須 1,000文字まで）", rows: "7", maxlength: "1000" %>
               </div>
             </div>
           </div>
@@ -51,13 +51,13 @@ app/assets/stylesheets/items/form.css %>
               <div class="weight-bold-text">
                 カテゴリー <span class="required-badge">必須</span>
               </div>
-              <%= f.collection_select :hoge, [], :hoge, :hoge, {}, {class: "select-box", id: "item-category"} %>
+              <%= f.collection_select :category_id, Category.all, :id, :category_name, {}, {class: "select-box", id: "item-category"} %>
             </div>
             <div class="form-group">
               <div class="weight-bold-text">
                 商品の状態 <span class="required-badge">必須</span>
               </div>
-              <%= f.collection_select :hoge, [], :hoge, :hoge, {}, {class: "select-box", id: "item-condition"} %>
+              <%= f.collection_select :condition_id, Condition.all, :id, :condition_name, {}, {class: "select-box", id: "item-condition"} %>
             </div>
           </div>
 
@@ -72,7 +72,7 @@ app/assets/stylesheets/items/form.css %>
                   <span>価格</span> <span class="required-badge">必須</span>
                 </div>
                 <span class="sell-yen">¥</span>
-                <%= f.text_field :hoge, class: "price-input", id: "item-price", placeholder: "半角数字で入力" %>
+                <%= f.text_field :price, class: "price-input", id: "item-price", placeholder: "半角数字で入力" %>
               </div>
             </div>
           </div>
