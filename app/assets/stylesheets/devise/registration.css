@@ -1,0 +1,231 @@
+/* Base styles */
+:root {
+  --primary-color: #3490dc;
+  --accent-color: #38c172;
+  --danger-color: #e3342f;
+  --dark-color: #343a40;
+  --light-color: #f8f9fa;
+  --gray-color: #6c757d;
+  --light-gray: #e9ecef;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+body {
+  font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+  line-height: 1.6;
+  color: var(--dark-color);
+  background-color: #f5f5f5;
+}
+
+/* Form Layout */
+.registration-main {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 800px;
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 40px;
+  margin: 0 auto;
+}
+
+/* Form Header */
+.form-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.form-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--dark-color);
+  margin-bottom: 10px;
+}
+
+.form-subtitle {
+  font-size: 16px;
+  color: var(--gray-color);
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: 40px;
+  padding: 30px;
+  border-radius: var(--border-radius);
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.section-desc {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: rgba(52, 144, 220, 0.1);
+  border-radius: var(--border-radius);
+}
+
+.section-desc i {
+  color: var(--primary-color);
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.section-desc p {
+  font-size: 14px;
+  margin: 0;
+}
+
+.required-badge {
+  background-color: var(--danger-color);
+  color: white;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  transition: var(--transition);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(52, 144, 220, 0.25);
+}
+
+.helper-text {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--gray-color);
+}
+
+/* Name inputs */
+.name-input-container {
+  display: flex;
+  gap: 15px;
+}
+
+.name-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  transition: var(--transition);
+}
+
+.name-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(52, 144, 220, 0.25);
+}
+
+/* Birth date inputs */
+.birth-input-container {
+  display: flex;
+  align-items: center;
+}
+
+.birth-input-container select {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  background-color: white;
+  margin-right: 8px;
+  flex: 1;
+  max-width: 120px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23343a40'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+.birth-input-container span {
+  margin: 0 8px;
+  color: var(--gray-color);
+}
+
+/* Terms Agreement */
+.terms-agreement {
+  text-align: center;
+  margin: 30px 0;
+  padding: 20px;
+  background-color: var(--light-color);
+  border-radius: var(--border-radius);
+}
+
+.terms-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.terms-link:hover {
+  text-decoration: underline;
+}
+
+/* Action Buttons */
+.action-button {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+/* Form Footer */
+.form-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+/* ボタン共通スタイル */
+.user-submit-button {
+  flex: 0 1 auto;
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-width: 200px;
+  max-width: 300px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.user-submit-button:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+}
