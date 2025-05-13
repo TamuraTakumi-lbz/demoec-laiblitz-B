@@ -1,0 +1,41 @@
+<header class="site-header">
+  <div class="header-container">
+    <div class="header-logo-section">
+      <%= link_to image_tag('logo.svg', class: 'logo-icon'), root_path, class: 'logo-link' %>
+    </div>
+
+    <nav class="main-nav desktop-only">
+      <% nav_items = [{'name': 'ホーム', 'href': root_path}, {'name': 'カテゴリー', 'href': "#"},{'name': '人気商品', 'href': "#"}] %>
+      <% nav_items.each do |item| %>
+        <%= link_to item[:name], item[:href], class: "nav-link #{controller_name == item[:href].gsub('/', '') ? 'active' : ''}" %>
+      <% end %>
+    </nav>
+
+    <div class="header-actions desktop-only">
+      <div class="search-container">
+        <i class="fas fa-search"></i>
+        <input type="search" placeholder="商品を検索..." class="search-input">
+      </div>
+
+        <div class="user-menu">
+          <%# deviseを導入できたら、ログインの有無で表示が変わるように分岐しましょう%>
+          <%#<div class="user-dropdown">
+            <%# <%= link_to "#{current_user.nickname}さん", "#", class: 'user-nickname' %>
+            <%#<div class="dropdown-content">
+
+              <%# アドミン機能を導入できたら、管理者の有無で表示が変わるように分岐しましょう%>
+               <%# <%= link_to 'ユーザー管理', "#", class: "user-admin" %>
+               <%# <%= link_to '商品管理', "#", class: "user-admin" %>
+              <%# アドミン機能を導入できたら、管理者の有無で表示が変わるように分岐しましょう%>
+
+             <%# <%= link_to 'ログアウト', "#", method: :delete, class: "logout" %>
+           <%# </div>
+          <%# </div> %>
+          <%= link_to 'ログイン', "#", class: "login" %>
+          <%= link_to '新規登録', "#", class: "sign-up" %>
+        </div>
+      <%# //deviseを導入できたら、ログインの有無で表示が変わるように分岐しましょう%>
+    </div>
+  </div>
+
+</header>
