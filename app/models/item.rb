@@ -1,4 +1,12 @@
 class Item < ApplicationRecord
-  has_many :categories
-  has_many :conditions
+
+  extend ActiveHash::Associations::ActiveRecordExtensions
+  belongs_to :category
+  belongs_to :condition
+
+  validates :category_id, numericality: { other_than: 1, message: "can't be blank" } 
+  validates :condition_id, numericality: { other_than: 1, message: "can't be blank" } 
+
+  has_one_attached :image
+
 end
