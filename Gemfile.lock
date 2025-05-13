@@ -285,6 +285,9 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
+  devise
+  factory_bot_rails
+  image_processing (~> 1.2)
   importmap-rails
   jbuilder
   mysql2 (~> 0.5)
