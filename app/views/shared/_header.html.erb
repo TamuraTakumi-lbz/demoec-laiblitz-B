@@ -26,7 +26,7 @@
                 <%# アドミン機能を導入できたら、管理者の有無で表示が変わるように分岐しましょう%>
                 <%if current_user.is_admin%>
                   <%= link_to 'ユーザー管理', "#", class: "user-admin" %>
-                  <%= link_to '商品管理', "#", class: "user-admin" %>
+                  <%= link_to '商品管理', items_dashboard_path, class: "user-admin" %>
                 <%else%>
                   <%= link_to 'ログアウト', "#", method: :delete, class: "logout" %>
                 <%end%>
