@@ -110,14 +110,12 @@ GEM
     diff-lcs (1.6.1)
     drb (2.2.1)
     erubi (1.13.1)
-
-    ffi (1.17.2-x86_64-linux-gnu)
-
     factory_bot (6.5.1)
       activesupport (>= 6.1.0)
     factory_bot_rails (6.4.4)
       factory_bot (~> 6.5)
       railties (>= 5.0.0)
+    ffi (1.17.2-x86_64-linux-gnu)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.7)
@@ -323,11 +321,8 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
-
-  image_processing (~> 1.2)
-
   factory_bot_rails
-
+  image_processing (~> 1.2)
   importmap-rails
   jbuilder
   mini_magick
