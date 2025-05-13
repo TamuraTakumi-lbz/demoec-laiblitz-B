@@ -15,7 +15,7 @@ app/assets/stylesheets/items/form.css %>
         <%= form_with model: @item, local: true do |f| %>
 
         <%# インスタンスを渡して、エラー発生時にメッセージが表示されるようにしましょう。%>
-        <% render 'shared/error_messages', model: @item %>
+        <% render partial: 'shared/error_messages', locals: {object: @item} %>
         <%# //インスタンスを渡して、エラー発生時にメッセージが表示されるようにしましょう。%>
 
           <div class="img-upload">
