@@ -1,0 +1,90 @@
+<%= render "shared/second-header" %>
+
+<div class="container">
+  <%# ユーザー管理画面 全体レイアウト %>
+  <div class="card-layout">
+
+    <%# ヘッダー部分：タイトル %>
+    <div class="card-header">
+      <h1 class="app-title">DemoEC ユーザー管理</h1>
+    </div>
+    <%# /ヘッダー部分：タイトル %>
+
+    <%# ユーザー一覧の表示部分 %>
+    <div class="user-list-container">
+
+      <%# ユーザー一覧の見出し %>
+      <div class="user-list-header">
+        <div>
+          <h2 class="section-title">ユーザー一覧</h2>
+          <p class="section-description">
+            登録されているユーザーの一覧です。<%= "999" %>人のユーザーが見つかりました。
+          </p>
+        </div>
+      </div>
+      <%# /ユーザー一覧の見出し %>
+
+      <%# ユーザー一覧のテーブル %>
+      <div class="user-table">
+        <table>
+          <thead>
+            <tr>
+              <th class="user-col">ユーザー</th>
+              <th class="date-col">登録日</th>
+              <th class="role-col">ロール</th>
+              <th class="actions-col">アクション</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <%# ユーザーのインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
+              <tr>
+
+                <%# ユーザー名・メールアドレスの表示 %>
+                <td class="user-col">
+                  <div class="user-info">
+                    <div class="avatar">
+                      <div class="avatar-fallback"></div>
+                    </div>
+                    <div class="user-details">
+                      <span class="nickname"><%= "ニックネーム" %></span>
+                      <span class="email"><%= "メールアドレス" %></span>
+                    </div>
+                  </div>
+                </td>
+                <%# /ユーザー名・メールアドレスの表示 %>
+
+                <%# 登録日の表示 %>
+                <td class="date-col">
+                  <%= "登録日" %>
+                </td>
+                <%# /登録日の表示 %>
+
+                <%# ユーザーの権限（管理者・一般ユーザー）の表示 %>
+                <td class="role-col">
+                  <span class="role-badge <%= "管理者" ? 'admin' : 'user' %>">
+                    <%= "管理者" ? '管理者' : '一般ユーザー' %>
+                  </span>
+                </td>
+                <%# /ユーザーの権限（管理者・一般ユーザー）の表示 %>
+
+                <%# 退会ボタンの表示 %>
+                <td class="actions-col">
+                  <%= link_to '退会', "#", method: :delete , class: "admin-action-button" %>
+                </td>
+                <%# /退会ボタンの表示 %>
+
+              </tr>
+            <%# //ユーザーのインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
+
+          </tbody>
+        </table>
+      </div>
+      <%# /ユーザー一覧のテーブル %>
+
+    </div>
+    <%# /ユーザー一覧の表示部分 %>
+
+  </div>
+  <%# /ユーザー管理画面 全体レイアウト %>
+</div>
