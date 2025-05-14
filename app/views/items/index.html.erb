@@ -13,7 +13,7 @@
     </div>
   </section>
 
-  <%# 商品一覧 %>
+  
   <section class="featured-products-section">
     <div class="section-header">
       <h2 class="section-title">新着商品</h2>
@@ -25,7 +25,6 @@
            <%= link_to  "#", class: 'product-card' do %>
              <div class="product-image-container">
                <%= image_tag item.image, class: 'product-image' if item.image.attached? %>
-               <%# <%= image_tag 'placeholder.svg', class: 'product-image' %> 
                <% if item.has_bought %>
                  <div class="sold-out-badge">
                    <span>在庫なし</span>
@@ -58,7 +57,7 @@
       <% end %>
     </div>
   </section>
-  <%# /商品一覧 %>
+  
 </div>
 
 <%= render "shared/footer" %>
