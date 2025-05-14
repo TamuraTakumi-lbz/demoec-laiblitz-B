@@ -1,0 +1,59 @@
+<%= render "shared/header" %>
+
+<div class="product-detail-page">
+    <div class="product-detail-grid">
+      <%# 商品画像セクション %>
+      <div class="product-image-section">
+        <div class="main-image-container">
+          <%= image_tag "item-sample.png", class: "main-image" %>
+          <%# 商品が売れている場合は、在庫なしを表示しましょう %>
+          <div class="sold-out-badge">
+            <span>在庫なし</span>
+          </div>
+          <%# //商品が売れている場合は、在庫なしを表示しましょう %>
+        </div>
+      </div>
+
+      <%# 商品情報セクション %>
+      <div class="product-info-section">
+        <div class="product-header">
+          <h1 class="product-title"><%= @item.name %></h1>
+          <div class="product-price-container">
+            <span class="product-price">¥<%= @item.price %></span>
+          </div>
+        </div>
+
+        <div class="product-description">
+          <p><%= @item.description %></p>
+        </div>
+
+        <%# 商品詳細テーブル %>
+        <div class="product-details">
+          <table class="details-table">
+            <tr>
+              <th>カテゴリー</th>
+              <td><%= @category.category_name %></td>
+            </tr>
+            <tr>
+              <th>商品の状態</th>
+              <td><%= @condition.condition_name %></td>
+            </tr>
+          </table>
+        </div>
+
+        <%# アクションボタン %>
+        <div class="product-actions">
+          <%# ログインしているユーザーのみ表示されましょう、また管理者ユーザーは購入ボタンが表示されないようにしましょう %>
+          <% if user_signed_in? && !current_user.admin? %>
+          <%# 商品が売れていない場合はこちらを表示しましょう %>
+            <%= link_to '購入する', "#", class: "btn btn-purchase" %>
+          <%# //商品が売れていない場合はこちらを表示しましょう %>
+          <%# //ログインしているユーザーのみ表示されましょう、また管理者ユーザーは購入ボタンが表示されないようにしましょう %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render "shared/footer" %>

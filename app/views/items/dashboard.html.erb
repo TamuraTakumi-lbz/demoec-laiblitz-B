@@ -24,7 +24,7 @@
 
         <%# 出品ボタン %>
         <div class="list-header-actions">
-          <%= link_to '商品を出品する', "#", class: "new-item-button" %>
+          <%= link_to '商品を出品する', new_item_path, class: "new-item-button" %>
         </div>
         <%# /出品ボタン %>
       </div>
@@ -53,6 +53,7 @@
                       <div>
                         <%= image_tag "item-sample.png", class: "item-image" %>
                         <%# <%if item.has_bought%> 
+                        <%if !!Purchase.find_by(item_id:item.id)%>
                           <%# 商品が売れている場合は "在庫なし" を表示 %>
                             <div class="sold-out">
                               <span>在庫なし</span>
