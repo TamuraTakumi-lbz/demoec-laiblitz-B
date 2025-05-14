@@ -79,7 +79,7 @@ app/assets/stylesheets/items/form.css %>
           <div class="form-actions">
             <%= f.submit "出品する", class: "submit-button" %>
             <%# 管理者出品一覧ページに遷移できるようにしましょう。%>
-            <%= link_to 'もどる', "#", class: "cancel-button" %>
+            <%= link_to 'もどる', items_dashboard_path, class: "cancel-button" %>
             <%# //管理者出品一覧ページに遷移できるようにしましょう。%>
           </div>
         <% end %>
