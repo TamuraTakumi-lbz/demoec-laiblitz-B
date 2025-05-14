@@ -52,13 +52,13 @@
                     <div class="item-avatar">
                       <div>
                         <%= image_tag "item-sample.png", class: "item-image" %>
-                        <%if item.has_bought%>
+                        <%# <%if item.has_bought%> 
                           <%# 商品が売れている場合は "在庫なし" を表示 %>
                             <div class="sold-out">
                               <span>在庫なし</span>
                             </div>
                           <%# /商品が売れている場合は "在庫なし" を表示 %>
-                        <%end%>
+                        <%# <%end%> 
                       </div>
                     </div>
                     <div class="item-details">
@@ -89,7 +89,7 @@
                 <%# アクションボタン（編集・削除） %>
                 <td class="actions-col">
                   <%= link_to '編集', "#", class: "admin-action-button" %>
-                  <%= link_to '削除', "#", method: :delete, class: "admin-action-button" %>
+                  <%= link_to '削除', item_path(item), data:{turbo_method: :delete}, class: "admin-action-button" %>
                 </td>
                 <%# /アクションボタン（編集・削除） %>
                 
