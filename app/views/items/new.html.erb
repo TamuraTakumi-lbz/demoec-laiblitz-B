@@ -14,9 +14,7 @@ app/assets/stylesheets/items/form.css %>
         <h2 class="form-title">商品の情報を入力</h2>
         <%= form_with model: @item, local: true do |f| %>
 
-        <%# インスタンスを渡して、エラー発生時にメッセージが表示されるようにしましょう。%>
-        <% render 'shared/error_messages', model: @item %>
-        <%# //インスタンスを渡して、エラー発生時にメッセージが表示されるようにしましょう。%>
+        <%= render 'shared/error_messages', model: @item %>
 
           <div class="img-upload">
             <div class="weight-bold-text">
