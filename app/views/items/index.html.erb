@@ -25,11 +25,11 @@
            <%= link_to  "#", class: 'product-card' do %>
              <div class="product-image-container">
                <%= image_tag item.image, class: 'product-image' if item.image.attached? %>
-               <% if item.has_bought %>
+               <%# if item.has_bought %>
                  <div class="sold-out-badge">
                    <span>在庫なし</span>
                  </div>
-               <% end %>
+               <%# end %>
              </div>
              <div class="product-content">
                <div class="product-category"><%= item.category.category_name%></div> 
