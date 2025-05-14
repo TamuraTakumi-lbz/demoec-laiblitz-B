@@ -22,7 +22,7 @@
     <div class="products-grid">
       <% if @items.present? %>
         <% @items.each do |item| %>
-           <%= link_to  "#", class: 'product-card' do %>
+           <%= link_to item_path(item.id), class: 'product-card' do %>
              <div class="product-image-container">
                <%# image_tag item.image, class: 'product-image' %>
                <%# if item.has_bought %>
