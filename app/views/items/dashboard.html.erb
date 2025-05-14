@@ -51,8 +51,7 @@
                   <div class="item-info">
                     <div class="item-avatar">
                       <div>
-                        <%= image_tag "item-sample.png", class: "item-image" %>
-                        
+                        <%= image_tag item.image, class: 'item-image' if item.image.attached? %>
                         <%if !!Purchase.find_by(item_id:item.id)%>
                           <%# 商品が売れている場合は "在庫なし" を表示 %>
                             <div class="sold-out">
