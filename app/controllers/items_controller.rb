@@ -1,6 +1,12 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:dashboard]
+ before_action :authenticate_user!, only: [:dashboard]
   before_action :authenticate_admin, only: [:dashboard]
+
+  def show
+    @item = Item.find(params[:id])
+    @category = Category.find(@item.category_id)
+    @condition = Condition.find(@item.condition_id)
+  end
 
   def dashboard
     @items=Item.order(created_at: :desc)

@@ -20,6 +20,10 @@ class User < ApplicationRecord
   # パスワードの英数字混合ルールを追加（Deviseのvalidationsを拡張）
   validate :password_complexity
 
+  def admin?
+  is_admin
+  end
+
   private
 
   def password_complexity
@@ -27,4 +31,5 @@ class User < ApplicationRecord
 
     errors.add(:password, 'は半角英字と数字の両方を含めてください')
   end
+
 end
