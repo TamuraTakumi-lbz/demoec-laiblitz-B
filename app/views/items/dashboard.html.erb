@@ -52,13 +52,14 @@
                     <div class="item-avatar">
                       <div>
                         <%= image_tag "item-sample.png", class: "item-image" %>
+                        
                         <%if !!Purchase.find_by(item_id:item.id)%>
                           <%# 商品が売れている場合は "在庫なし" を表示 %>
                             <div class="sold-out">
                               <span>在庫なし</span>
                             </div>
                           <%# /商品が売れている場合は "在庫なし" を表示 %>
-                        <%end%>
+                        <%# end%>
                       </div>
                     </div>
                     <div class="item-details">
