@@ -15,7 +15,7 @@ class ItemsController < ApplicationController
     if item.destroy
       redirect_to items_dashboard_path
     else
-      render :dashboard
+      render :dashboard, status: :unprocessable_entity
     end
   end
 
