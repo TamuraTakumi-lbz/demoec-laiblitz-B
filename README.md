@@ -33,7 +33,6 @@
 
 ### Userテーブル (users)
 
-|   |   |   |
 |Column|Type|Options|
 |---|---|---|
 |id|bigint|null: false, primary_key: true|
@@ -56,7 +55,6 @@
 
 ### Itemテーブル (items)
 
-|   |   |   |
 |Column|Type|Options|
 |---|---|---|
 |id|bigint|null: false, primary_key: true|
@@ -81,7 +79,6 @@
 
 ### Categoryテーブル (categories)
 
-|   |   |   |
 |Column|Type|Options|
 |---|---|---|
 |id|bigint|null: false, primary_key: true|
@@ -98,7 +95,6 @@
 
 ### Conditionテーブル (conditions)
 
-|   |   |   |
 |Column|Type|Options|
 |---|---|---|
 |id|bigint|null: false, primary_key: true|
@@ -129,7 +125,6 @@
 
 ## Shipテーブル (ships)
 
-|   |   |   |   |
 |Column|Type|Options|説明|
 |---|---|---|---|
 |id|bigint|null: false, primary_key: true|配送先ID (主キー)|

@@ -1,0 +1,242 @@
+/* 基本スタイル */
+.items-sell-contents {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: var(--spacing-2xl) var(--spacing-lg);
+  background-color: var(--color-secondary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.items-sell-header img {
+  width: 150px;
+}
+
+.items-sell-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin-bottom: var(--spacing-lg);
+}
+
+.form, .img-upload, .sell-price, .caution {
+  background-color: var(--color-background);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.select-box, .items-text, .price-input {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-md);
+  transition: border-color var(--transition-fast);
+}
+
+.select-box:focus, .items-text:focus, .price-input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+.sell-btn-contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding-top: var(--spacing-lg);
+}
+
+.sell-btn, .back-btn {
+  width: 100%;
+  flex: 1;
+  padding: var(--spacing-sm);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast);
+}
+
+.sell-btn {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.sell-btn:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.back-btn {
+  background-color: var(--color-border);
+  color: var(--color-text-light);
+  text-align: center;
+  text-decoration: none;
+}
+
+.back-btn:hover {
+  background-color: var(--color-secondary);
+}
+
+.items-sell-footer {
+  padding: var(--spacing-md) 0;
+}
+
+.menu {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.menu li {
+  list-style: none;
+}
+
+.menu a {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.menu a:hover {
+  color: var(--color-primary);
+}
+
+.inc {
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+}
+
+.create-listing-page {
+  padding: var(--spacing-xl) 0;
+  background-color: var(--color-background);
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.header-logo-section {
+  display: flex;
+  justify-content: center;
+}
+
+.logo-icon {
+  width: 120px;
+  height: auto;
+}
+
+.form-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+}
+
+/* フォームセクション */
+.form-section {
+  background: white;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.section-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+}
+
+/* アクションボタン */
+.form-actions {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-2xl);
+  padding: 0 var(--spacing-xl);
+}
+
+
+.form-main {
+  background-color: var(--color-secondary);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-md);
+  margin-top: var(--spacing-lg);
+}
+
+/* 各フォームセクションの背景を白に */
+.img-upload,
+.new-items,
+.items-detail,
+.sell-price {
+  background-color: var(--color-background);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 商品カードのスタイル */
+.product-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-background);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  height: 100%;
+}
+
+
+.form-header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.form-title {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--spacing-sm);
+}
+
+.form-section {
+  margin-bottom: var(--spacing-2xl);
+  padding-bottom: var(--spacing-xl);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.section-title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  margin-bottom: var(--spacing-lg);
+}
+
+.required-badge {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+}
+
+.form-input:focus,
+.form-select:focus {
+  border-color: var(--color-primary);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-primary-light);
+}

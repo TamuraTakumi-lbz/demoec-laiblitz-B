@@ -13,7 +13,7 @@
     </div>
   </section>
 
-  <%# 商品一覧 %>
+  
   <section class="featured-products-section">
     <div class="section-header">
       <h2 class="section-title">新着商品</h2>
@@ -22,10 +22,12 @@
     <div class="products-grid">
       <% if @items.present? %>
         <% @items.each do |item| %>
-           <%= link_to  "#", class: 'product-card' do %>
+           <%= link_to item_path(item.id), class: 'product-card' do %>
              <div class="product-image-container">
                <%# <%= image_tag item.image, class: 'product-image' %>
                <%# <% if item.has_bought %> 
+               <%= image_tag item.image, class: 'product-image' if item.image.attached? %>
+               <% if !!Purchase.find_by(item_id:item.id) %>
                  <div class="sold-out-badge">
                    <span>在庫なし</span>
                  </div>
@@ -57,7 +59,7 @@
       <% end %>
     </div>
   </section>
-  <%# /商品一覧 %>
+  
 </div>
 
 <%= render "shared/footer" %>
