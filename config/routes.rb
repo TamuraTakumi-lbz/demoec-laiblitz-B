@@ -22,5 +22,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   root "items#index"
-  resources :items, only: [:show, :new, :create, :edit, :update]
+  resources :items, only: [:show, :new, :create, :edit, :update] do
+    member do
+      get 'order',to: 'orders#new',as: 'order'
+    end
+  end
 end
