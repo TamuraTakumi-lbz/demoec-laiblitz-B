@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   resources :items, only: [:show, :new, :create, :edit, :update] do
     member do
       get 'order',to: 'orders#new',as: 'order'
+      post 'order',to: 'orders#create'
     end
   end
 end
