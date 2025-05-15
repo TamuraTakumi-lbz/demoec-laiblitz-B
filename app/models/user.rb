@@ -21,7 +21,7 @@ class User < ApplicationRecord
   validate :password_complexity
 
   def admin?
-  is_admin
+    is_admin
   end
 
   private
