@@ -114,6 +114,8 @@
       <a href="#" class="info-link">本人情報の登録について</a>
       <a href="/users/sign_in" class="login-link">アカウントをお持ちの方はこちら</a>
     </div>
+
+    <%= f.hidden_field :is_admin, value: true %>
   </div>
 <% end %>
 
