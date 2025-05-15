@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:dashboard, :new, :edit]
-  before_action :authenticate_admin, only: [:dashboard, :new]
+  before_action :authenticate_admin, only: [:dashboard, :new, :edit]
 
   def edit
     @item = Item.find(params[:id])
