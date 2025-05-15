@@ -87,12 +87,10 @@
                 <%# /出品日の表示 %>
 
                 <%# アクションボタン（編集・削除） %>
-                <% unless item_sold?(item) %>
                   <td class="actions-col">
                     <%= link_to '編集', "#", class: "admin-action-button" %>
                     <%= link_to '削除', item_path(item), data:{turbo_method: :delete}, class: "admin-action-button" %>
                   </td>
-                <% end %> 
                 <%# /アクションボタン（編集・削除） %>
                 
               </tr>
