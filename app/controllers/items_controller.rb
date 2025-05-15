@@ -1,13 +1,13 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:dashboard, :new, :edit]
   before_action :authenticate_admin, only: [:dashboard, :new, :edit]
+  before_action :set_item, only: [:edit, :show, :update]
 
   def edit
-    @item = Item.find(params[:id])
+    
   end
 
   def update
-    @item = Item.find(params[:id])
     if @item.update(item_params)
       redirect_to items_dashboard_path
     else
@@ -16,7 +16,6 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
     @category = Category.find(@item.category_id)
     @condition = Condition.find(@item.condition_id)
   end
@@ -50,6 +49,10 @@ class ItemsController < ApplicationController
     unless current_user.is_admin?
       redirect_to root_path
     end
+  end
+
+  def set_item
+    @item = Item.find(params[:id])
   end
 
 end
