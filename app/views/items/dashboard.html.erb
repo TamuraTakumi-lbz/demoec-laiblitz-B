@@ -88,8 +88,8 @@
 
                 <%# アクションボタン（編集・削除） %>
                 <td class="actions-col">
-                  <%= link_to '編集', edit_item_path(item), class: "admin-action-button" %>
-                  <%= link_to '削除', item_path(item), data:{turbo_method: :delete}, class: "admin-action-button" %>
+                  <%= action_button '編集', edit_item_path(item), { class: 'admin-action-button' }, item: item %>
+                  <%= action_button '削除', item_path(item), { class: 'admin-action-button', data: { turbo_method: :delete } }, item: item %>
                 </td>
                 <%# /アクションボタン（編集・削除） %>
                 
