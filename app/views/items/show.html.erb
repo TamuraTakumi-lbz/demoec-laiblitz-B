@@ -5,11 +5,13 @@
       <%# 商品画像セクション %>
       <div class="product-image-section">
         <div class="main-image-container">
-          <%= image_tag "item-sample.png", class: "main-image" %>
+          <%= image_tag @item.image, class: "main-image" if @item.image.attached? %>
           <%# 商品が売れている場合は、在庫なしを表示しましょう %>
-          <div class="sold-out-badge">
-            <span>在庫なし</span>
-          </div>
+          <% if !!Purchase.find_by(item_id:@item.id) %>
+            <div class="sold-out-badge">
+              <span>在庫なし</span>
+            </div>
+          <% end %>
           <%# //商品が売れている場合は、在庫なしを表示しましょう %>
         </div>
       </div>
