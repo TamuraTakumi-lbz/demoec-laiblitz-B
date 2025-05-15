@@ -1,0 +1,19 @@
+.second-fotter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-lg) var(--spacing-md);
+  background-color: var(--color-background);
+  border-top: 1px solid var(--color-border);
+}
+
+.second-fotter-text-wrap {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.second-fotter-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  margin: 0;
+}

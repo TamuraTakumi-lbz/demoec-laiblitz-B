@@ -17,14 +17,14 @@
       <%# 商品情報セクション %>
       <div class="product-info-section">
         <div class="product-header">
-          <h1 class="product-title"><%= "商品名" %></h1>
+          <h1 class="product-title"><%= @item.name %></h1>
           <div class="product-price-container">
-            <span class="product-price">¥<%= "999,999,999" %></span>
+            <span class="product-price">¥<%= @item.price %></span>
           </div>
         </div>
 
         <div class="product-description">
-          <p><%= "商品説明" %></p>
+          <p><%= @item.description %></p>
         </div>
 
         <%# 商品詳細テーブル %>
@@ -32,11 +32,11 @@
           <table class="details-table">
             <tr>
               <th>カテゴリー</th>
-              <td><%= "カテゴリー名" %></td>
+              <td><%= @category.category_name %></td>
             </tr>
             <tr>
               <th>商品の状態</th>
-              <td><%= "商品の状態" %></td>
+              <td><%= @condition.condition_name %></td>
             </tr>
           </table>
         </div>
@@ -44,17 +44,16 @@
         <%# アクションボタン %>
         <div class="product-actions">
           <%# ログインしているユーザーのみ表示されましょう、また管理者ユーザーは購入ボタンが表示されないようにしましょう %>
+          <% if user_signed_in? && !current_user.admin? %>
           <%# 商品が売れていない場合はこちらを表示しましょう %>
-          <%= link_to '購入する', "#", class: "btn btn-purchase" %>
+            <%= link_to '購入する', "#", class: "btn btn-purchase" %>
           <%# //商品が売れていない場合はこちらを表示しましょう %>
           <%# //ログインしているユーザーのみ表示されましょう、また管理者ユーザーは購入ボタンが表示されないようにしましょう %>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
-  <%= @item.name %>
 </div>
-
-
 
 <%= render "shared/footer" %>
