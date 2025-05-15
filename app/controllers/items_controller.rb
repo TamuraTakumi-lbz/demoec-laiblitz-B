@@ -1,11 +1,9 @@
 class ItemsController < ApplicationController
-
   before_action :authenticate_user!, only: [:dashboard, :new]
   before_action :authenticate_admin, only: [:dashboard, :new]
-
+  before_action :set_item, only: [:show, :destroy]
 
   def show
-    @item = Item.find(params[:id])
     @category = Category.find(@item.category_id)
     @condition = Condition.find(@item.condition_id)
   end
@@ -30,24 +28,25 @@ class ItemsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-  
-   def destroy
-    item = Item.find(params[:id])
-    if item.destroy
+
+  def destroy
+    if @item.destroy
       redirect_to items_dashboard_path
     else
       render :dashboard, status: :unprocessable_entity
     end
-   end
-  
-  private
-  def item_params
-    params.require(:item).permit(:name,:image,:description,:price,:category_id,:condition_id)
   end
+
+  private
+
+  def item_params
+    params.require(:item).permit(:name, :image, :description, :price, :category_id, :condition_id)
+  end
+
   def authenticate_admin
-    unless current_user.is_admin?
-      redirect_to root_path
-    end
+    return if current_user.is_admin?
+
+    redirect_to root_path
   end
 
   private
@@ -56,5 +55,9 @@ class ItemsController < ApplicationController
     return if current_user.is_admin?
 
     redirect_to root_path
+  end
+
+  def set_item
+    @item = Item.find(params[:id])
   end
 end

@@ -52,7 +52,7 @@
                     <div class="item-avatar">
                       <div>
                         <%= image_tag item.image, class: 'item-image' if item.image.attached? %>
-                        <%if !!Purchase.find_by(item_id:item.id)%>
+                        <% if item_sold?(item) %>
                           <%# 商品が売れている場合は "在庫なし" を表示 %>
                             <div class="sold-out">
                               <span>在庫なし</span>
@@ -87,10 +87,12 @@
                 <%# /出品日の表示 %>
 
                 <%# アクションボタン（編集・削除） %>
-                <td class="actions-col">
-                  <%= link_to '編集', "#", class: "admin-action-button" %>
-                  <%= link_to '削除', item_path(item), data:{turbo_method: :delete}, class: "admin-action-button" %>
-                </td>
+                <% unless item_sold?(item) %>
+                  <td class="actions-col">
+                    <%= link_to '編集', "#", class: "admin-action-button" %>
+                    <%= link_to '削除', item_path(item), data:{turbo_method: :delete}, class: "admin-action-button" %>
+                  </td>
+                <% end %> 
                 <%# /アクションボタン（編集・削除） %>
                 
               </tr>
