@@ -6,13 +6,11 @@
       <div class="product-image-section">
         <div class="main-image-container">
           <%= image_tag @item.image, class: "main-image" if @item.image.attached? %>
-          <%# 商品が売れている場合は、在庫なしを表示しましょう %>
           <% if !!Purchase.find_by(item_id:@item.id) %>
             <div class="sold-out-badge">
               <span>在庫なし</span>
             </div>
           <% end %>
-          <%# //商品が売れている場合は、在庫なしを表示しましょう %>
         </div>
       </div>
 
@@ -45,12 +43,10 @@
 
         <%# アクションボタン %>
         <div class="product-actions">
-          <%# ログインしているユーザーのみ表示されましょう、また管理者ユーザーは購入ボタンが表示されないようにしましょう %>
           <% if user_signed_in? && !current_user.admin? %>
-          <%# 商品が売れていない場合はこちらを表示しましょう %>
-            <%= link_to '購入する', "#", class: "btn btn-purchase" %>
-          <%# //商品が売れていない場合はこちらを表示しましょう %>
-          <%# //ログインしているユーザーのみ表示されましょう、また管理者ユーザーは購入ボタンが表示されないようにしましょう %>
+            <% unless Purchase.find_by(item_id: @item.id) %>
+              <%= link_to '購入する', "#", class: "btn btn-purchase" %>
+            <% end %>
           <% end %>
         </div>
       </div>
