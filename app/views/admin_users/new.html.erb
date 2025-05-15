@@ -1,9 +1,7 @@
 <%= render "shared/second-header"%>
 
-<%# 「モデル名」にはUserモデルであれば@userを渡しましょう。「管理者の新規登録機能へのパス」は、devise導入後にrails routesを実行してdevise/registrations#createへのパスを確認し、記載してください。 %>
 <%= form_with model: resource, scope: :user, class: 'registration-main',
         url: admin_registration_path,  local: true do |f| %>
-<%# //「モデル名」にはUserモデルであれば@userを渡しましょう。「管理者の新規登録機能へのパス」は、devise導入後にrails routesを実行してdevise/registrations#createへのパスを確認し、記載してください。 %>
 <div class='form-container'>
   <div class='form-header'>
     <h1 class='form-title'>管理者会員登録</h1>
