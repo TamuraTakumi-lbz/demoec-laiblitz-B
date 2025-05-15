@@ -3,14 +3,13 @@ class ItemsController < ApplicationController
   before_action :authenticate_admin, only: [:dashboard, :new]
 
   def edit
-    @item = Item.find(1)
+    @item = Item.find(params[:id])
   end
 
   def update
-    # ダッシュボードに戻す。適宜パスは修正
     @item = Item.find(params[:id])
     if @item.update(item_params)
-      redirect_to dashboard_path
+      redirect_to items_dashboard_path
     else
       render :edit, status: :unprocessable_entity
     end
