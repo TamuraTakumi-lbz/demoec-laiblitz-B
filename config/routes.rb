@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users,skip: [:registrations]
   # devise_for :users, only: [:sessions]
-
+  
   devise_scope :user do
     get  "/users/sign_up", to: "devise/registrations#new",    as: :new_user_registration
     post "/users",         to: "devise/registrations#create", as: :user_registration
@@ -12,8 +12,8 @@ Rails.application.routes.draw do
     post "/admin",        to: "admin_users#create", as: :admin_registration
 
     get "admin_users", to: "admin_users#index"
-
   end
+  
 
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
