@@ -49,14 +49,6 @@ class ItemsController < ApplicationController
     redirect_to root_path
   end
 
-  private
-
-  def authenticate_admin
-    return if current_user.is_admin?
-
-    redirect_to root_path
-  end
-
   def set_item
     @item = Item.find(params[:id])
   end
