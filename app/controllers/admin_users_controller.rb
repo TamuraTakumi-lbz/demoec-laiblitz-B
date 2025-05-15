@@ -1,4 +1,5 @@
 class AdminUsersController < Devise::RegistrationsController
+  before_action :basic_authenticate, only:[:new]
   before_action :set_admin_flag, only: [:new, :create]
 
 
@@ -19,4 +20,9 @@ class AdminUsersController < Devise::RegistrationsController
     root_path
   end
 
+  def basic_authenticate
+    authenticate_or_request_with_http_basic do |username, password|
+      username == ENV["BASIC_AUTH_USER"] && password == ENV["BASIC_AUTH_PASSWORD"]
+    end
+  end
 end
