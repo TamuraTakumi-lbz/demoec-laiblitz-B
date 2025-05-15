@@ -3,11 +3,11 @@ class ItemsController < ApplicationController
   before_action :authenticate_admin, only: [:dashboard]
 
   def dashboard
-    @items = Item.order(created_at: :desc)
+    @items = Item.order(created_at: :DESC)
   end
 
   def index
-    @items = Item.order('created_at DESC')
+    @items = Item.order(created_at: :DESC)
   end
 
   def destroy
