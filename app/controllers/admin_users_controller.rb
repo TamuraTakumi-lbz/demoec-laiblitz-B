@@ -1,13 +1,12 @@
 class AdminUsersController < Devise::RegistrationsController
-  
+  before_action :redirect_logout_user, only: [:index]
   before_action :authenticate_admin, only: [:index]
   before_action :set_admin_flag, only: [:new, :create]
 
-
   def index
+    
     @admin_users = User.all
   end
-
 
   private
   def set_admin_flag
@@ -30,4 +29,10 @@ class AdminUsersController < Devise::RegistrationsController
     end
   end
 
+  def redirect_logout_user
+    if current_user == nil
+      redirect_to new_user_session_path
+      return
+    end
+  end
 end
