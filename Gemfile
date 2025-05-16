@@ -81,3 +81,4 @@ gem 'active_hash'
 
 gem 'mini_magick'
 gem 'image_processing', '~> 1.2'
+gem 'rails-i18n', '~> 7.0'

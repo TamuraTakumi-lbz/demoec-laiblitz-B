@@ -63,3 +63,16 @@ en:
       not_saved:
         one: "1 error prohibited this %{resource} from being saved:"
         other: "%{count} errors prohibited this %{resource} from being saved:"
+
+ja:
+  devise:
+    failure:
+      invalid: "メールアドレスまたはパスワードが正しくありません"
+      locked: "このアカウントはロックされています"
+      inactive: "このアカウントは有効化されていません"
+      unconfirmed: "メールアドレスが確認されていません"
+      expired: "このセッションの有効期限が切れています"
+      timeout: "しばらく操作がなかったため、再度ログインしてください"
+      not_found_in_database: "メールアドレスまたはパスワードが正しくありません"
+      # user:
+      #   not_found_in_database: "メールアドレスが見つかりません"

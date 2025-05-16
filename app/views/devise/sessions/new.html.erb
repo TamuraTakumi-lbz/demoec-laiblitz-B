@@ -8,10 +8,12 @@
     <p class="form-subtitle">アカウントにログインして、お買い物を続けましょう</p>
   </div>
 
-  <div class='login-flash-message'>
-    <%= flash[:notice] %>
-    <%= flash[:alert] %>
-  </div>
+  <% if flash[:alert] || flash[:notice]%>
+    <div class='login-flash-message'>
+      <%= flash[:notice] %>
+      <%= flash[:alert] %>
+    </div>
+  <%end%>
 
   <div class="form-section">
     <div class="form-group">

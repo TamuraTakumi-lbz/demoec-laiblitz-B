@@ -39,3 +39,10 @@ module TimeFormatSandbox
     config.i18n.default_locale = :ja
   end
 end
+
+module Error_messages_jp
+  class Application < Rails::Application
+    config.i18n.default_locale = :ja
+  end
+end
+

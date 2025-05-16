@@ -9,10 +9,10 @@ class User < ApplicationRecord
 
   validates :last_name_kanji, :first_name_kanji, presence: true
   validates :last_name_kanji, :first_name_kanji,
-            format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/, message: 'は全角（漢字・ひらがな・カタカナ）で入力してください' }
+            format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/ }
   validates :last_name_kana, :first_name_kana, presence: true
   validates :last_name_kana, :first_name_kana,
-            format: { with: /\A[ァ-ヶー]+\z/, message: 'は全角カタカナで入力してください' }
+            format: { with: /\A[ァ-ヶー]+\z/ }
 
   # その他
   validates :birth_date, presence: true
@@ -26,7 +26,7 @@ class User < ApplicationRecord
   def password_complexity
     return if password.blank? || password =~ /\A(?=.*?[a-zA-Z])(?=.*?\d)[a-zA-Z\d]+\z/
 
-    errors.add(:password, 'は半角英字と数字の両方を含めてください')
+    errors.add(:password, :password_complexity)
   end
 
 end
