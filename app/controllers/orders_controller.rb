@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   def new
     @item = Item.find(params[:id])
+    redirect_to root_path if current_user.is_admin?
     @order = Ship.new
   end
 
