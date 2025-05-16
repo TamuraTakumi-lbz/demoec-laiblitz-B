@@ -6,8 +6,16 @@ class AdminUsersController < Devise::RegistrationsController
   before_action :set_admin_flag, only: [:new, :create]
 
   def index
-    
     @admin_users = User.all
+  end
+
+  def destroy
+    @admin_user = User.find(params[:id])
+    if @admin_user.destroy
+      redirect_to admin_users_path
+    else
+      render :index, status: :unprocessable_entity
+    end
   end
 
 
