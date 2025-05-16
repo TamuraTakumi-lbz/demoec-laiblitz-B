@@ -6,7 +6,7 @@
       <div class="product-image-section">
         <div class="main-image-container">
           <%= image_tag @item.image, class: "main-image" if @item.image.attached? %>
-          <% if !!Purchase.find_by(item_id:@item.id) %>
+          <% if item_sold?(@item) %>
             <div class="sold-out-badge">
               <span>在庫なし</span>
             </div>
@@ -44,7 +44,7 @@
         <%# アクションボタン %>
         <div class="product-actions">
           <% if user_signed_in? && !current_user.admin? %>
-            <% unless Purchase.find_by(item_id: @item.id) %>
+             <% unless item_sold?(@item) %>
               <%= link_to '購入する', "#", class: "btn btn-purchase" %>
             <% end %>
           <% end %>

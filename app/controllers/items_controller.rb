@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:dashboard, :new, :edit]
   before_action :authenticate_admin, only: [:dashboard, :new, :edit]
-  before_action :set_item, only: [:edit, :show, :update]
+  before_action :set_item, only: [:edit, :show, :update, :destroy]
 
   def edit
     
@@ -21,11 +21,11 @@ class ItemsController < ApplicationController
   end
 
   def dashboard
-    @items=Item.order(created_at: :desc)
+    @items = Item.order(created_at: :DESC)
   end
 
   def index
-    @items = Item.order("created_at DESC")
+    @items = Item.order(created_at: :DESC)
   end
 
   def new
@@ -40,15 +40,25 @@ class ItemsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-  
-  private
-  def item_params
-    params.require(:item).permit(:name,:image,:description,:price,:category_id,:condition_id)
-  end
-  def authenticate_admin
-    unless current_user.is_admin?
-      redirect_to root_path
+
+  def destroy
+    if @item.destroy
+      redirect_to items_dashboard_path
+    else
+      render :dashboard, status: :unprocessable_entity
     end
+  end
+
+  private
+
+  def item_params
+    params.require(:item).permit(:name, :image, :description, :price, :category_id, :condition_id)
+  end
+
+  def authenticate_admin
+    return if current_user.is_admin?
+
+    redirect_to root_path
   end
 
   def set_item

@@ -52,13 +52,13 @@
                     <div class="item-avatar">
                       <div>
                         <%= image_tag item.image, class: 'item-image' if item.image.attached? %>
-                        <%if !!Purchase.find_by(item_id:item.id)%>
+                        <% if item_sold?(item) %>
                           <%# 商品が売れている場合は "在庫なし" を表示 %>
                             <div class="sold-out">
                               <span>在庫なし</span>
                             </div>
                           <%# /商品が売れている場合は "在庫なし" を表示 %>
-                        <%end%>
+                        <% end %> 
                       </div>
                     </div>
                     <div class="item-details">
@@ -88,13 +88,13 @@
 
                 <%# アクションボタン（編集・削除） %>
                 <td class="actions-col">
-                  <%= link_to '編集', edit_item_path(item), class: "admin-action-button" %>
-                  <%= link_to '削除', "#", method: :delete, class: "admin-action-button" %>
+                  <%= action_button '編集', edit_item_path(item), { class: 'admin-action-button' }, item: item %>
+                  <%= action_button '削除', item_path(item), { class: 'admin-action-button', data: { turbo_method: :delete } }, item: item %>
                 </td>
                 <%# /アクションボタン（編集・削除） %>
                 
               </tr>
-            <%end%>
+            <% end %>
             <%# 商品のインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
 
           </tbody>

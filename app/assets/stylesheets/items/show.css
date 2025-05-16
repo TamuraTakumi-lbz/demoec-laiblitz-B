@@ -152,3 +152,10 @@
   background-color: var(--color-error);
   color: white;
 }
+
+.disabled-button {
+  pointer-events: none;
+  color: #aaa;
+  border: none;
+  cursor: not-allowed;
+}
