@@ -19,7 +19,7 @@
         <div class="product-header">
           <h1 class="product-title"><%= @item.name %></h1>
           <div class="product-price-container">
-            <span class="product-price">¥<%= @item.price %></span>
+            <span class="product-price">¥<%= number_to_currency(@item.price) %></span>
           </div>
         </div>
 
