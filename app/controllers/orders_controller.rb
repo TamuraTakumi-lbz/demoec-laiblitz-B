@@ -4,9 +4,7 @@ class OrdersController < ApplicationController
   def new
     redirect_to root_path if current_user.is_admin?
 
-    # 本来はこっちがいいけどなぜかENVから読み取れない
-    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
-    # gon.public_key = 'pk_test_5b54d89290ed5613885a21ba'
+    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @order = Ship.new
   end
 
@@ -14,12 +12,12 @@ class OrdersController < ApplicationController
     @order = Ship.new(ship_params)
 
     # renderでやり直した時のために設定
-    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
+    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
 
     payjp_token = params[:token]
 
     if @order.valid?
-      Payjp.api_key = ENV['PAYJP_SECRET_KEY']
+      Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
 
       charge = Payjp::Charge.create(
         amount: @item.price,
