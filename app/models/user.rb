@@ -2,10 +2,12 @@ class User < ApplicationRecord
   extend Devise::Models
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  
+  validates :nickname, presence: true, uniqueness: true
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :nickname, presence: true, uniqueness: true
+  
 
   validates :last_name_kanji, :first_name_kanji, presence: true
   validates :last_name_kanji, :first_name_kanji,
