@@ -4,8 +4,13 @@ class Item < ApplicationRecord
   validates :price, presence: { message: "can't be blank" }
   validates :image, presence: { message: "can't be blank" }
 
-  validates :price, format: { with: /\A[0-9]+\z/, message: 'is invalid. Input half-width characters' }
-  validates :price, numericality: { greater_than: 300, less_than: 9_999_999, message: 'is out of setting range' }
+  validate :half_width_digits_only_for_price
+  validates :price, numericality: {
+    only_integer: true,
+    greater_than_or_equal_to: 300,
+    less_than_or_equal_to: 9_999_999,
+    message: 'is out of setting range'
+  }
 
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category
@@ -15,4 +20,13 @@ class Item < ApplicationRecord
   validates :condition_id, numericality: { other_than: 1, message: "can't be blank" }
 
   has_one_attached :image
+
+  private
+
+  def half_width_digits_only_for_price
+    raw = price_before_type_cast
+    if raw.present? && raw !~ /\A[0-9]+\z/
+      errors.add(:price, 'is invalid. Input half-width characters')
+    end
+  end
 end
