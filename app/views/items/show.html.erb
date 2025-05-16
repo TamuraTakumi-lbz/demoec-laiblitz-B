@@ -43,7 +43,7 @@
 
         <%# アクションボタン %>
         <div class="product-actions">
-          <% if user_signed_in? && !current_user.admin? %>
+          <% if user_signed_in? && !current_user.is_admin? %>
              <% unless item_sold?(@item) %>
               <%= link_to '購入する', "#", class: "btn btn-purchase" %>
             <% end %>
