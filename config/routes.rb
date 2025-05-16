@@ -19,8 +19,14 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
   get "/items/dashboard", to: "items#dashboard"
   resources :items, only: [:destroy]
-  # Defines the root path route ("/")
-  # root "posts#index"
   root "items#index"
   resources :items, only: [:show, :new, :create, :edit, :update]
+
+  resources :items, only: [:show, :new, :create ,:create, :edit, :update] do
+    member do
+      get 'order',to: 'orders#new',as: 'order'
+      post 'order',to: 'orders#create'
+    end
+  end
+
 end

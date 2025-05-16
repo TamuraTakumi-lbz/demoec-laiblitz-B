@@ -1,4 +1,12 @@
 ja:
+  number:
+    currency:
+      format:
+        unit: ""
+        precision: 0
+        delimiter: ","
+        format: "%u%n"
+
   date:
     formats:
       default: '%Y/%m/%d'
