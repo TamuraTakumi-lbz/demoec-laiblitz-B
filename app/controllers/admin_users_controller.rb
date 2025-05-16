@@ -37,6 +37,8 @@ class AdminUsersController < Devise::RegistrationsController
     if current_user == nil
       redirect_to new_user_session_path
       return
+    end
+  end
 
   def basic_authenticate
     authenticate_or_request_with_http_basic do |username, password|
