@@ -14,3 +14,35 @@ ja:
       - :year
       - :month
       - :day
+  activerecord:
+    models:
+      user: "ユーザー"
+    attributes:
+      user:
+        email: "メールアドレス"
+        password: "パスワード"
+        nickname: "ニックネーム"
+        last_name_kanji: "姓（漢字）"
+        first_name_kanji: "名（漢字）"
+        last_name_kana: "姓（カナ）"
+        first_name_kana: "名（カナ）"
+        birth_date: "生年月日"
+
+    errors:
+      messages:
+        blank: "を入力してください"
+        invalid: "が不正です"
+
+      models:
+        user:
+          attributes:
+            last_name_kanji:
+              invalid: "は全角（漢字・ひらがな・カタカナ）で入力してください"
+            first_name_kanji:
+              invalid: "は全角（漢字・ひらがな・カタカナ）で入力してください"
+            last_name_kana:
+              invalid: "は全角カタカナで入力してください"
+            first_name_kana:
+              invalid: "は全角カタカナで入力してください"
+            password:
+              password_complexity: "は半角英字と数字の両方を含めてください"
