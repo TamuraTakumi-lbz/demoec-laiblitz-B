@@ -1,8 +1,14 @@
 class AdminUsersController < Devise::RegistrationsController
+
   before_action :basic_authenticate, only:[:new]
+  before_action :redirect_logout_user, only: [:index]
+  before_action :authenticate_admin, only: [:index]
   before_action :set_admin_flag, only: [:new, :create]
 
-
+  def index
+    
+    @admin_users = User.all
+  end
 
 
   private
@@ -20,9 +26,22 @@ class AdminUsersController < Devise::RegistrationsController
     root_path
   end
 
+
+  def authenticate_admin
+    unless current_user.is_admin?
+      redirect_to root_path
+    end
+  end
+
+  def redirect_logout_user
+    if current_user == nil
+      redirect_to new_user_session_path
+      return
+
   def basic_authenticate
     authenticate_or_request_with_http_basic do |username, password|
       username == ENV["BASIC_AUTH_USER"] && password == ENV["BASIC_AUTH_PASSWORD"]
+
     end
   end
 end
