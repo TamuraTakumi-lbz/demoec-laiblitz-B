@@ -78,7 +78,7 @@ ja:
       # devise.sessions.user.signed_out: "ログアウト済みです。"
       # devise.sessions.signed_out: "ログアウト済みです。"
     sessions:
-      signed_in:  "ログインしました"
-      signed_out: "再度ログインする場合には、メールアドレスとパスワードを入力してください。"
+      signed_in:  ""
+      signed_out: ""
     # user:
       #   not_found_in_database: "メールアドレスが見つかりません"
