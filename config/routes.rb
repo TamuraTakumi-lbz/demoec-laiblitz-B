@@ -11,16 +11,18 @@ Rails.application.routes.draw do
     get  "/admin/sign_up", to: "admin_users#new",    as: :new_admin_registration
     post "/admin",        to: "admin_users#create", as: :admin_registration
 
+<<<<<<< HEAD
+=======
     get "admin_users", to: "admin_users#index"
   end
   
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
+>>>>>>> 0a0d17b7772c2d971ba15ab28bef124f2af1a6e9
   get "/items/dashboard", to: "items#dashboard"
   resources :items, only: [:destroy]
   root "items#index"
-  resources :items, only: [:show, :new, :create, :edit, :update]
 
   resources :items, only: [:show, :new, :create ,:create, :edit, :update] do
     member do
