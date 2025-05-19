@@ -11,9 +11,6 @@ class Item < ApplicationRecord
     less_than_or_equal_to: 9_999_999,
     message: 'is out of setting range'
   }
-
-  has_many :purchases
-  has_many :items, through: :purchases
   
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category
