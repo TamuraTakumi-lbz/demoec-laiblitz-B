@@ -45,8 +45,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_14_015505) do
     t.integer "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "condition_id", null: false
-    t.integer "category_id", null: false
+    t.bigint "category_id", null: false
+    t.bigint "condition_id", null: false
+    t.index ["category_id"], name: "index_items_on_category_id"
+    t.index ["condition_id"], name: "index_items_on_condition_id"
   end
 
   create_table "purchases", charset: "utf8mb3", force: :cascade do |t|
