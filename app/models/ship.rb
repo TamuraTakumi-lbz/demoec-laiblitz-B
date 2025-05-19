@@ -7,4 +7,6 @@ class Ship < ApplicationRecord
   validates :street_address, presence: true
   validates :phone_number, presence: true,
                            format: { with: /\A[0-9]{10,11}\z/, message: 'is invalid. Input half-width characters' }
+
+  belongs_to :purchase
 end
