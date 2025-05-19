@@ -13,10 +13,14 @@ class AdminUsersController < Devise::RegistrationsController
     user = User.find(params[:id])
     purchases = Purchase.where(user_id: user.id)
     item_ids = purchases.map(&:item_id)
+    # ship_ids = purchases.map(&:id)
+    # Ship.where(purchases_id: ship_ids).destroy_all
     # begin
     #   ActiveRecord::Base.transaction do
     if user.destroy
+      
       items = Item.where(id: item_ids).destroy_all
+      
       redirect_to admin_users_path
     #   end
     # rescue 
