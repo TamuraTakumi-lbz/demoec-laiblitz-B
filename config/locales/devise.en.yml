@@ -74,5 +74,9 @@ ja:
       expired: "このセッションの有効期限が切れています"
       timeout: "しばらく操作がなかったため、再度ログインしてください"
       not_found_in_database: "メールアドレスまたはパスワードが正しくありません"
+      # unauthenticated:           "ログインしてください"
+      # devise.sessions.user.signed_out: "ログアウト済みです。"
+      # devise.sessions.signed_out: "ログアウト済みです。"
+
       # user:
       #   not_found_in_database: "メールアドレスが見つかりません"
