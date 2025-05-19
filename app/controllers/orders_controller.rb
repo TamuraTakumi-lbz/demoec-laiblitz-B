@@ -9,6 +9,7 @@ class OrdersController < ApplicationController
   end
 
   def create
+    
     @order = Ship.new(ship_params)
 
     # renderでやり直した時のために設定
