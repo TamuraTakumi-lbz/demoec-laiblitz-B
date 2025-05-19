@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     post "/admin",        to: "admin_users#create", as: :admin_registration
 
     get "admin_users", to: "admin_users#index"
+    delete "admin_users/:id", to: "admin_users#destroy", as: :admin_user_delete
+    get "/items/dashboard", to: "items#dashboard"
   end
   
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -27,5 +29,12 @@ Rails.application.routes.draw do
       post 'order',to: 'orders#create'
     end
   end
+
+  
+  
+  # Defines the root path route ("/")
+  # root "posts#index"
+  root "items#index"
+  resources :items
 
 end

@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:dashboard, :new, :edit]
-  before_action :authenticate_admin, only: [:dashboard, :new, :edit]
+  before_action :authenticate_user!, only: [:dashboard, :new, :create, :edit, :update, :destroy]
+  before_action :authenticate_admin, only: [:dashboard, :new, :create, :edit, :update, :destroy]
   before_action :set_item, only: [:edit, :show, :update, :destroy]
 
   def edit

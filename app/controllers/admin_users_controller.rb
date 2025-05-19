@@ -6,8 +6,20 @@ class AdminUsersController < Devise::RegistrationsController
   before_action :set_admin_flag, only: [:new, :create]
 
   def index
-    
     @admin_users = User.all
+  end
+
+  def destroy
+    user = User.find(params[:id])
+    purchase = Purchase.find_by(user_id: user.id)
+    item = Item.find_by(id: purchase.item_id)
+    if purchase.destroy
+      user.destroy
+      item.destroy
+      redirect_to admin_users_path
+    else
+      render :index, status: :unprocessable_entity
+    end
   end
 
 

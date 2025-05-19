@@ -71,7 +71,7 @@
 
                   <%# 退会ボタンの表示 %>
                   <td class="actions-col">
-                    <%= link_to '退会', "#", method: :delete , class: "admin-action-button" %>
+                    <%= link_to '退会', admin_user_delete_path(admin_user), data: {turbo_method: :delete} , class: "admin-action-button" %>
                   </td>
                   <%# /退会ボタンの表示 %>
                 
@@ -88,4 +88,6 @@
 
   </div>
   <%# /ユーザー管理画面 全体レイアウト %>
+  
 </div>
+
