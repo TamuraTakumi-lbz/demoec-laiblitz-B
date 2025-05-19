@@ -23,7 +23,6 @@ Rails.application.routes.draw do
 
   get "/items/dashboard", to: "items#dashboard"
   resources :items, only: [:destroy]
-  root "items#index"
 
   resources :items, only: [:show, :new, :create ,:create, :edit, :update] do
     member do
