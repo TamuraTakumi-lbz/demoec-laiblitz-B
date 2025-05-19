@@ -20,6 +20,8 @@ class User < ApplicationRecord
   # パスワードの英数字混合ルールを追加（Deviseのvalidationsを拡張）
   validate :password_complexity
 
+  has_many :purchases
+
   private
 
   def password_complexity

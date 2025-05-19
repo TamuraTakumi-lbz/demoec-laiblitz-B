@@ -12,6 +12,8 @@ class Item < ApplicationRecord
     message: 'is out of setting range'
   }
   
+  has_many :purchases
+  
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category
   belongs_to :condition
