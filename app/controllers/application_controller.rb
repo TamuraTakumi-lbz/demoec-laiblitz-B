@@ -16,7 +16,8 @@ class ApplicationController < ActionController::Base
                                         :first_name_kanji,
                                         :last_name_kana,
                                         :first_name_kana,
-                                        :birth_date
+                                        :birth_date,
+                                        :is_admin
                                       ])
   end
 
