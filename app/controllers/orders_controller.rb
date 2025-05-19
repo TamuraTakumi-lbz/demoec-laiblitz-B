@@ -2,9 +2,11 @@ class OrdersController < ApplicationController
   before_action :set_item, only: %i[new create]
 
   def new
-    redirect_to root_path if current_user.is_admin?
+    # 購入可能な状態以外はページ遷移
+    return redirect_to new_user_session_path unless user_signed_in?
+    return redirect_to root_path if current_user&.is_admin? || Purchase.exists?(item_id: @item.id)
 
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @order = Ship.new
   end
 
@@ -12,12 +14,12 @@ class OrdersController < ApplicationController
     @order = Ship.new(ship_params)
 
     # renderでやり直した時のために設定
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
 
     payjp_token = params[:token]
 
     if @order.valid?
-      Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+      Payjp.api_key = ENV['PAYJP_SECRET_KEY']
 
       charge = Payjp::Charge.create(
         amount: @item.price,
