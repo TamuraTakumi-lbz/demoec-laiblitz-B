@@ -31,6 +31,7 @@ class OrdersController < ApplicationController
       @order = Ship.new(ship_params)
       @order.purchase_id = @purchase.id
 
+      # binding.pry
       @order.save!
 
       redirect_to root_path, notice: '購入が完了しました！'
