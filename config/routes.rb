@@ -12,15 +12,16 @@ Rails.application.routes.draw do
     post "/admin",        to: "admin_users#create", as: :admin_registration
 
     get "admin_users", to: "admin_users#index"
+    delete "admin_users/:id", to: "admin_users#destroy", as: :admin_user_delete
   end
   
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
   get "/items/dashboard", to: "items#dashboard"
-  resources :items, only: [:destroy]
+  
   # Defines the root path route ("/")
   # root "posts#index"
   root "items#index"
-  resources :items, only: [:show, :new, :create, :edit, :update]
+  resources :items
 end
