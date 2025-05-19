@@ -11,13 +11,15 @@ class AdminUsersController < Devise::RegistrationsController
 
   def destroy
     user = User.find(params[:id])
-    purchase = Purchase.find_by(user_id: user.id)
-    item = Item.find_by(id: purchase.item_id)
-    if purchase.destroy
-      user.destroy
-      item.destroy
-      redirect_to admin_users_path
-    else
+    purchases = Purchase.where(user_id: user.id)
+    item_ids = purchases.map(&:item_id)
+    begin
+      ActiveRecord::Base.transaction do
+        user.destroy
+        items = Item.where(id: item_ids).destroy_all
+        redirect_to admin_users_path
+      end
+    rescue 
       render :index, status: :unprocessable_entity
     end
   end
