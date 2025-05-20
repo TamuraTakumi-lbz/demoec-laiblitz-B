@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_20_081621) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_20_101140) do
   create_table "active_storage_attachments", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -122,6 +122,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_20_081621) do
   add_foreign_key "purchases", "items"
   add_foreign_key "purchases", "users"
   add_foreign_key "ships", "purchases"
-  add_foreign_key "user_coupons", "coupons"
-  add_foreign_key "user_coupons", "users"
+  add_foreign_key "user_coupons", "coupons", on_delete: :cascade
+  add_foreign_key "user_coupons", "users", on_delete: :cascade
 end

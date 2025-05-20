@@ -24,6 +24,10 @@ class User < ApplicationRecord
 
   has_many :purchases, dependent: :destroy
 
+  #Couponモデル・UserCouponモデルとの関連付け
+  has_many :user_coupons, dependent: :destroy
+  has_many :coupons,      through:   :user_coupons
+
   private
 
   def password_complexity
