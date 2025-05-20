@@ -2,13 +2,6 @@ const pay = () => {
   const orderForm = document.getElementById('charge-form');
   if (!orderForm) return;
 
-    // 既に初期化されていたら再初期化しない（重複防止）
-    const alreadyInitialized = orderForm.dataset.payjpInitialized === 'true';
-    if (alreadyInitialized) {
-      console.log("Payjp already initialized, skipping");
-      return;
-    }
-
   const publicKey = gon.public_key; 
   const payjp = Payjp(publicKey); 
 
@@ -48,4 +41,4 @@ const pay = () => {
   });
 };
 
-window.addEventListener("DOMContentLoaded", pay); // 初回ロード用
+window.addEventListener("load", pay);

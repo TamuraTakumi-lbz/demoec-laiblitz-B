@@ -45,7 +45,7 @@
         <div class="product-actions">
           <% if user_signed_in? && !current_user.is_admin? %>
              <% unless item_sold?(@item) %>
-              <%= link_to '購入する',order_item_path, class: "btn btn-purchase" %>
+              <%= link_to '購入する',order_item_path,data: { turbo: false }, class: "btn btn-purchase" %>
             <% end %>
           <% end %>
         </div>
