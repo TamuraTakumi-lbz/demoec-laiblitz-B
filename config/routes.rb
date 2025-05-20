@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     end
   end
 
+  #クーポン周りのルーティング
+  resources :coupons
   
   
   # Defines the root path route ("/")
