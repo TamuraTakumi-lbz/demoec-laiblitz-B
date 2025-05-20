@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_14_015505) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_19_110642) do
   create_table "active_storage_attachments", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -63,14 +63,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_14_015505) do
   create_table "ships", charset: "utf8mb3", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "purchases_id", null: false
+    t.bigint "purchase_id", null: false
     t.string "postal_code"
     t.integer "prefecture_id"
     t.string "city"
     t.string "street_address"
     t.string "building_name"
     t.string "phone_number"
-    t.index ["purchases_id"], name: "index_ships_on_purchases_id"
+    t.index ["purchase_id"], name: "index_ships_on_purchase_id"
+    t.index ["purchase_id"], name: "index_ships_on_purchases_id"
   end
 
   create_table "users", charset: "utf8mb3", force: :cascade do |t|
@@ -96,5 +97,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_14_015505) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "purchases", "items"
   add_foreign_key "purchases", "users"
-  add_foreign_key "ships", "purchases", column: "purchases_id"
+  add_foreign_key "ships", "purchases"
+  add_foreign_key "ships", "purchases"
 end

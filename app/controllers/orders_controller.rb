@@ -2,40 +2,39 @@ class OrdersController < ApplicationController
   before_action :set_item, only: %i[new create]
 
   def new
-    redirect_to root_path if current_user.is_admin?
+    # 購入可能な状態以外はページ遷移
+    return redirect_to new_user_session_path unless user_signed_in?
+    return redirect_to root_path if current_user&.is_admin? || Purchase.exists?(item_id: @item.id)
 
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @order = Ship.new
   end
 
   def create
-    
-    @order = Ship.new(ship_params)
-
     # renderでやり直した時のために設定
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
 
     payjp_token = params[:token]
 
-    if @order.valid?
-      Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    # 決済処理
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
+    charge = Payjp::Charge.create(
+      amount: @item.price,
+      card: payjp_token,
+      currency: 'jpy'
+    )
 
-      charge = Payjp::Charge.create(
-        amount: @item.price,
-        card: payjp_token,
-        currency: 'jpy'
-      )
+    ActiveRecord::Base.transaction do
+      @purchase = Purchase.new(user_id: current_user.id, item_id: @item.id)
+      @purchase.save!
 
-      ActiveRecord::Base.transaction do
-        @purchase = Purchase.create!(user_id: current_user.id, item_id: @item.id)
+      @order = Ship.new(ship_params)
+      @order.purchase_id = @purchase.id
 
-        @order.purchases_id = @purchase.id
-        @order.save!
+      # binding.pry
+      @order.save!
 
-        redirect_to root_path, notice: '購入が完了しました！'
-      end
-    else
-      render :new, status: :unprocessable_entity
+      redirect_to root_path, notice: '購入が完了しました！'
     end
   rescue Payjp::PayjpError => e
     Rails.logger.error "Payjp決済エラーが発生しました: #{e.message}"
