@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   def new
     # 購入可能な状態以外はページ遷移
     return redirect_to new_user_session_path unless user_signed_in?
-    return redirect_to root_path if current_user&.is_admin? || Purchase.exists?(item_id: @item.id)
+    return redirect_to root_path if current_user&.is_admin? || PurchaseItem.exists?(item_id: @item.id)
 
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @order = Ship.new
@@ -25,8 +25,13 @@ class OrdersController < ApplicationController
     )
 
     ActiveRecord::Base.transaction do
-      @purchase = Purchase.new(user_id: current_user.id, item_id: @item.id)
+      binding.pry
+      @purchase = Purchase.new(user_id: current_user.id, total_price: @item.price, status: 'paid')
       @purchase.save!
+
+      @purchase_item = PurchaseItem.new(item_id: @item.id,
+                                        purchase_id: @purchase.id, quantity: 1, price_at_purchase: @item.price)
+      @purchase_item.save!
 
       @order = Ship.new(ship_params)
       @order.purchase_id = @purchase.id

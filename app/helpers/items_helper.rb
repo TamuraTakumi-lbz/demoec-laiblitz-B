@@ -8,6 +8,7 @@ module ItemsHelper
   end
 
   def item_sold?(item)
-    Purchase.exists?(item_id: item.id)
+    PurchaseItem.exists?(item_id: item.id)
+    # false
   end
 end
