@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_19_110642) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_20_083536) do
   create_table "active_storage_attachments", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -51,12 +51,27 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_19_110642) do
     t.index ["condition_id"], name: "index_items_on_condition_id"
   end
 
-  create_table "purchases", charset: "utf8mb3", force: :cascade do |t|
-    t.bigint "user_id", null: false
+  create_table "purchase_items", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "item_id", null: false
+    t.bigint "purchase_id", null: false
+    t.integer "quantity"
+    t.integer "price_at_purchase"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["item_id"], name: "index_purchases_on_item_id"
+    t.index ["item_id"], name: "index_purchase_items_on_item_id"
+    t.index ["purchase_id"], name: "index_purchase_items_on_purchase_id"
+  end
+
+  create_table "purchases", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "total_price", default: 0, null: false
+    t.integer "used_points", default: 0, null: false
+    t.integer "coupon_discount_amount", default: 0, null: false
+    t.integer "final_payment_amount", default: 0, null: false
+    t.string "payment_method"
+    t.string "status", default: "pending_payment", null: false
     t.index ["user_id"], name: "index_purchases_on_user_id"
   end
 
@@ -64,12 +79,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_19_110642) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "purchase_id", null: false
-    t.string "postal_code"
-    t.integer "prefecture_id"
-    t.string "city"
-    t.string "street_address"
-    t.string "building_name"
-    t.string "phone_number"
     t.index ["purchase_id"], name: "index_ships_on_purchase_id"
   end
 
@@ -94,7 +103,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_19_110642) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "purchases", "items"
+  add_foreign_key "purchase_items", "items"
+  add_foreign_key "purchase_items", "purchases"
   add_foreign_key "purchases", "users"
-  add_foreign_key "ships", "purchases"
 end
