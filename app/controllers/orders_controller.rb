@@ -11,32 +11,29 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = Ship.new(ship_params)
-
     # renderでやり直した時のために設定
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
 
     payjp_token = params[:token]
 
-    if @order.valid?
-      Payjp.api_key = ENV['PAYJP_SECRET_KEY']
+    # 決済処理
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
+    charge = Payjp::Charge.create(
+      amount: @item.price,
+      card: payjp_token,
+      currency: 'jpy'
+    )
 
-      charge = Payjp::Charge.create(
-        amount: @item.price,
-        card: payjp_token,
-        currency: 'jpy'
-      )
+    ActiveRecord::Base.transaction do
+      @purchase = Purchase.new(user_id: current_user.id, item_id: @item.id)
+      @purchase.save!
 
-      ActiveRecord::Base.transaction do
-        @purchase = Purchase.create!(user_id: current_user.id, item_id: @item.id)
+      @order = Ship.new(ship_params)
+      @order.purchase_id = @purchase.id
 
-        @order.purchases_id = @purchase.id
-        @order.save!
+      @order.save!
 
-        redirect_to root_path, notice: '購入が完了しました！'
-      end
-    else
-      render :new, status: :unprocessable_entity
+      redirect_to root_path, notice: '購入が完了しました！'
     end
   rescue Payjp::PayjpError => e
     Rails.logger.error "Payjp決済エラーが発生しました: #{e.message}"
