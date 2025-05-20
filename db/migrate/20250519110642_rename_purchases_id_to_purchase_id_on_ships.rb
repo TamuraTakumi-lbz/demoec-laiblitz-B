@@ -8,7 +8,7 @@ class RenamePurchasesIdToPurchaseIdOnShips < ActiveRecord::Migration[7.1]
       remove_index :ships, name: "index_ships_on_purchases_id"
     end
 
-    # rename_column :ships, :purchases_id, :purchase_id
+    rename_column :ships, :purchases_id, :purchase_id
 
     add_index :ships, :purchase_id
 

@@ -71,7 +71,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_19_110642) do
     t.string "building_name"
     t.string "phone_number"
     t.index ["purchase_id"], name: "index_ships_on_purchase_id"
-    t.index ["purchase_id"], name: "index_ships_on_purchases_id"
   end
 
   create_table "users", charset: "utf8mb3", force: :cascade do |t|
@@ -97,6 +96,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_19_110642) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "purchases", "items"
   add_foreign_key "purchases", "users"
-  add_foreign_key "ships", "purchases"
   add_foreign_key "ships", "purchases"
 end
