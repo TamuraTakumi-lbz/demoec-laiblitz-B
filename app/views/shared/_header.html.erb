@@ -15,7 +15,7 @@
             <%= link_to item[:name], item[:href], class: "nav-link dropdown-toggle" %>
             <div class="dropdown-content">
               <% @categories.each do |category| %>
-                <%= link_to category.category_name, search_items_path, class: "user-admin" %>
+                <%= link_to category.category_name, search_items_path(q: {category_id_eq: category.id}), class: "user-admin" %>
               <% end %>
             </div>
           </div>
