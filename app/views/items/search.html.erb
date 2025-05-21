@@ -1,0 +1,79 @@
+<%= render "shared/header" %>
+
+<div class="home-page">
+  <section class="hero-section">
+    <div class="hero-image-container">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1 class="hero-title"> あなたの生活を彩る、<br> 特別なアイテム</h1>
+        <p class="hero-description">
+          DemoECで、あなただけの特別な商品を見つけましょう。高品質な商品を手頃な価格で。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="filter-section">
+    <div class="filter-container">
+      <h1 class="filer-title">絞り込み</h1>
+        <%= search_form_for @q, url: search_items_path, method: :get do |f| %>
+          <%= f.label :category, "カテゴリー" %>
+          <%= f.collection_select :category_id_eq, Category.all, :id, :category_name %>
+          <%= f.label :condition, "商品の状態" %>
+          <%= f.collection_select :condition_id_eq, Condition.all, :id, :condition_name %>
+          <%= f.label :price, "金額" %>
+          <%= f.number_field :price_gteq %>以上〜
+          <%= f.number_field :price_lteq %>以下
+          <%= f.submit "表示", class: "display-btn" %>
+        <% end %>
+    </div>
+  </section>
+  <section class="featured-products-section">
+    <div class="section-header">
+      <h2 class="section-title">検索結果</h2>
+      <%= link_to 'すべて見る', '#', class: 'view-all-link' %>
+    </div>
+    <div class="products-grid">
+      <% if params.present? %>
+        <% @items.each do |item| %>
+           <%= link_to item_path(item.id), class: 'product-card' do %>
+             <div class="product-image-container">
+               <%# <%= image_tag item.image, class: 'product-image' %>
+               <%# <% if item.has_bought %> 
+               <%= image_tag item.image, class: 'product-image' if item.image.attached? %>
+               <% if item_sold?(item) %>
+                 <div class="sold-out-badge">
+                   <span>在庫なし</span>
+                 </div>
+               <% end %>  
+             </div>
+             <div class="product-content">
+               <div class="product-category"><%= item.category.category_name%></div> 
+               <h3 class="product-name"><%= item.name  %></h3>
+             </div>
+             <div class="product-footer">
+               <div class="product-price">¥<%= item.price  %></div>
+             </div>
+           <% end %>
+        <% end %>  
+        
+      <% else %>
+        <%= link_to '#', class: 'product-card' do %>
+          <div class="product-image-container">
+            <%= image_tag "placeholder.svg", class: "product-image" %>
+          </div>
+          <div class="product-content">
+            <div class="product-category"></div>
+            <h3 class="product-name">商品準備中</h3>
+          </div>
+          <div class="product-footer">
+            <div class="product-price">¥<span>99999999</span></div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+  
+</div>
+
+<%= render "shared/footer" %>

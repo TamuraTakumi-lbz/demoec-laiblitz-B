@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   # before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_q
 
   private
 
@@ -24,5 +25,9 @@ class ApplicationController < ActionController::Base
   def after_sign_up_path_for
     # 新規登録後のリダイレクト先を指定
     root_path
+  end
+
+  def set_q
+    @q = Item.ransack(params[:q])
   end
 end

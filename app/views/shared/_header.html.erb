@@ -13,10 +13,13 @@
 
     <div class="header-actions desktop-only">
       <div class="search-container">
-        <i class="fas fa-search"></i>
-        <input type="search" placeholder="商品を検索..." class="search-input">
+        <%= search_form_for @q, url: search_items_path, method: :get do |f| %>
+          <i class="fas fa-search"></i>
+          <%= f.search_field :name_cont, placeholder: "商品を検索...", class: "search-input" %>
+          <%= f.submit "検索", class: "search-btn" %>
+        <% end %>
       </div>
-
+     
         <div class="user-menu">
           <%# deviseを導入できたら、ログインの有無で表示が変わるように分岐しましょう%>
           <%if user_signed_in?%>

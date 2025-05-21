@@ -11,9 +11,24 @@ class Item < ApplicationRecord
     less_than_or_equal_to: 9_999_999,
     message: 'is out of setting range'
   }
-  
+
   has_many :purchases
-  
+
+  def self.searchable_attributes
+    %w[name description]
+  end
+  searchable_attributes.each do |field|
+    scope "search_by_#{field}", ->(keyword) { where("#{field} LIKE ?", "%#{keyword}%") }
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name description category_id condition_id price]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[category condition purchases]
+  end
+
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category
   belongs_to :condition
@@ -27,8 +42,8 @@ class Item < ApplicationRecord
 
   def half_width_digits_only_for_price
     raw = price_before_type_cast
-    if raw.present? && raw !~ /\A[0-9]+\z/
-      errors.add(:price, 'is invalid. Input half-width characters')
-    end
+    return unless raw.present? && raw !~ /\A[0-9]+\z/
+
+    errors.add(:price, 'is invalid. Input half-width characters')
   end
 end

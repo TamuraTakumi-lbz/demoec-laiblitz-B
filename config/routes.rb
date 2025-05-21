@@ -27,6 +27,9 @@ Rails.application.routes.draw do
       get 'order',to: 'orders#new',as: 'order'
       post 'order',to: 'orders#create'
     end
+    collection do
+      get :search
+    end
   end
 
   
@@ -35,5 +38,4 @@ Rails.application.routes.draw do
   # root "posts#index"
   root "items#index"
   resources :items
-
 end

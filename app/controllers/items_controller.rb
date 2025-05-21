@@ -4,7 +4,6 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:edit, :show, :update, :destroy]
 
   def edit
-    
   end
 
   def update
@@ -26,6 +25,11 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.order(created_at: :DESC)
+  end
+
+  def search
+    @q = Item.ransack(params[:q])
+    @items = @q.result(distinct: true).order(created_at: :DESC)
   end
 
   def new
@@ -64,5 +68,4 @@ class ItemsController < ApplicationController
   def set_item
     @item = Item.find(params[:id])
   end
-
 end
