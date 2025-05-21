@@ -79,7 +79,7 @@
                 <%# アクションボタン（編集・削除） %>
                 <td class="actions-col">
                   <%= link_to '編集', edit_notification_path(notification), { class: 'admin-action-button' } %>
-                  <%= link_to '削除', "#", { class: 'admin-action-button', data: { turbo_method: :delete } } %>
+                  <%= link_to '削除', notification_path(notification), { class: 'admin-action-button', data: { turbo_method: :delete } } %>
                 </td>
                 <%# /アクションボタン（編集・削除） %>
                 

@@ -1,5 +1,7 @@
 class NotificationsController < ApplicationController
-  before_action :set_notification, only: [:edit, :update]
+
+  before_action :set_notification, only: [:edit, :update, :destroy]
+  
   def index
     @notifications = Notification.all
   end
@@ -21,6 +23,14 @@ class NotificationsController < ApplicationController
   end
   def update
     if @notification.update(notification_params)
+      redirect_to notifications_path
+    else
+      render :index, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @notification.destroy
       redirect_to notifications_path
     else
       render :index, status: :unprocessable_entity
