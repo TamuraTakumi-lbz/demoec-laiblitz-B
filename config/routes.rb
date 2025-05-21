@@ -29,7 +29,7 @@ Rails.application.routes.draw do
     end
   end
 
-  
+  get "notifications", to: "notifications#index"
   
   # Defines the root path route ("/")
   # root "posts#index"
