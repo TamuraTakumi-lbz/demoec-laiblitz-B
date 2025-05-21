@@ -10,17 +10,12 @@ class AdminUsersController < Devise::RegistrationsController
 
   def destroy
     user = User.find(params[:id])
-    purchases = Purchase.where(user_id: user.id)
-    purchase_item = PurchaseItem.where(purchase_id: purchases.ids)
-
-    items = Item.where(id: purchase_item.map(&:item_id))
+    purchase_items = PurchaseItem.where(purchase_id: user.purchases.ids)
+    items_to_delete = Item.where(id: purchase_items.map(&:item_id))
 
     ActiveRecord::Base.transaction do
-      purchases.destroy_all
-      purchase_item.destroy_all
-      items.destroy_all
-
       user.destroy
+      items_to_delete.destroy_all
       redirect_to admin_users_path
     end
   rescue ActiveRecord::RecordInvalid => e
