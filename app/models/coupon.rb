@@ -32,6 +32,9 @@ class Coupon < ApplicationRecord
     [base - discount_amount, 0].max
   end
 
+  #createアクション実行後に、クーポン配布
+  after_create :distribute_to_existing_users
+
   private
   #デフォ値再設定←いらないかも
   def ensure_defaults
@@ -43,6 +46,13 @@ class Coupon < ApplicationRecord
   def expires_on_cannot_be_in_past
     return if expires_on.blank? || expires_on >= Date.current
     errors.add(:expires_on, "は今日以降の日付を指定してください")
+  end
+
+  #中間テーブルにeach文でレコードを追加していくことで、adminでないユーザー全員に、クーポンを配布
+  def distribute_to_existing_users
+    User.where(is_admin: false).find_each(batch_size: 1000) do |user|
+      user.user_coupons.find_or_create_by!(coupon: self)
+    end
   end
 
 end
