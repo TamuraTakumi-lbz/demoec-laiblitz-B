@@ -62,7 +62,7 @@
                       </div>
                     </div>
                     <div class="item-details">
-                      <span class="item-name"><%= coupon.name %></span>
+                      <span class="item-name"><%= link_to coupon.name, coupon_path(coupon) %></span>
                     </div>
                   </div>
                 </td>
@@ -70,19 +70,19 @@
               
                 <%# 販売価格の表示 %>
                 <td class="price-col">
-                  <%= coupon.discount_amount %>円
+                  <%= number_to_currency(coupon.discount_amount) %>円
                 </td>
                 <%# /販売価格の表示 %>
 
                 <%# カテゴリーの表示 %>
                 <td class="category-col">
-                  <%= coupon.minimum_order_price %>
+                  <%= number_to_currency(coupon.minimum_order_price) %>円
                 </td>
                 <%# /カテゴリーの表示 %>
 
                 <%# 出品日の表示 %>
                 <td class="date-col">
-                  <%= l coupon.expires_on, format: :short%>
+                  <%=l coupon.expires_on, format: :short %>
                 </td>
                 <%# /出品日の表示 %>
 
