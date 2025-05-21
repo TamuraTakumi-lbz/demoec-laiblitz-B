@@ -29,7 +29,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get "notifications", to: "notifications#index"
+  resources :notifications, only: [:index, :new, :create, :edit, :update]
   
   # Defines the root path route ("/")
   # root "posts#index"
