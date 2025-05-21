@@ -27,6 +27,10 @@ class User < ApplicationRecord
   #Couponモデル・UserCouponモデルとの関連付け
   has_many :user_coupons, dependent: :destroy
   has_many :coupons,      through:   :user_coupons
+  #有効かつ、該当userが未使用のクーポン取得。current.user.available_couponsで想定
+  def available_coupons
+    self.coupons.active.merge(user_coupons.unused).distinct
+  end
 
   private
 

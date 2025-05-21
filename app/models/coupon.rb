@@ -10,14 +10,32 @@ class Coupon < ApplicationRecord
   validates :is_active,       inclusion: { in: [true, false] } #falseがnil判定されるのを防止
   validates :expires_on_cannot_be_in_past
 
+  #有効期限かつ有効フラグがtrueのクーポンをクエリで回収
+  scope :active, ->{
+    where(is_active: true).where("expire_on >=?", Date.current)
+  }
+
   #有効期限かつ有効フラグがtrueかを判定
   def active?
     is_active && expires_on >= Date.current
   end
 
-  #値引き金額(クーポンが適用可能な最低価格)がorder_price以下かを判定
+  #値引き金額(クーポンが適用可能な最低価格)がorder_price以下かを判定(整数返還いらないかも)
   def applicable_to?(order_price)
     active? && minimum_order_price.to_i <= order_price.to_i
+  end
+
+  #割引処理
+  def apply_discount(order_price)
+    base = order_price.to_i
+    [base - discount_amount, 0].max
+  end
+
+  private
+  #デフォ値再設定←いらないかも
+  def ensure_defaults
+    self.minimum_order_price ||= 0
+    self.is_active = true if is_active.nil?
   end
 
   #すでに期限切れのクーポンを作成することを防止
