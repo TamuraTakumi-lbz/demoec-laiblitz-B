@@ -2,15 +2,15 @@ class Coupon < ApplicationRecord
   has_many :user_coupons, dependent: :destroy
   has_many :users, through: :user_coupons
 
-  validates :name,            presence: true
-  validates :description,     presence: true
+  validates :name,            presence: true,length: { maximum: 50, message: "は50文字以内で入力してください" } #文字数の制約：DBレベルでは未実装
+  validates :description,     presence: true, length: { maximum: 500, message: "は500文字以内で入力してください" } #文字数の制約：DBレベルでは未実装
   validates :discount_amount, presence: true, numericality: { only_integer: true, greater_than: 0 } #整数かつ0より大きい
   validates :minimum_order_price, numericality: { only_integer: true, greater_than_or_equal_to: 0 } #整数かつ0以上
   validates :expires_on,      presence: true
   validates :is_active,       inclusion: { in: [true, false] } #falseがnil判定されるのを防止
   validate :expires_on_cannot_be_in_past
   before_validation :ensure_defaults
-  
+
   #有効期限かつ有効フラグがtrueのクーポンをクエリで回収
   scope :active, ->{
     where(is_active: true).where("expire_on >=?", Date.current)
