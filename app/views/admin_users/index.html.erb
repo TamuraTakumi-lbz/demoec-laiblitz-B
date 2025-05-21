@@ -19,7 +19,7 @@
           <h2 class="section-title">ユーザー一覧</h2>
           <p class="section-description">
 
-            登録されているユーザーの一覧です。<%= @admin_users.length %>人のユーザーが見つかりました。
+            登録されているユーザーの一覧です。<%= @users.length %>人のユーザーが見つかりました。
 
           </p>
         </div>
@@ -38,7 +38,7 @@
             </tr>
           </thead>
           <tbody>
-            <% @admin_users.each do |admin_user|%>
+            <% @users.each do |user|%>
               <tr>
                 
                   <%# ユーザー名・メールアドレスの表示 %>
@@ -48,8 +48,8 @@
                         <div class="avatar-fallback"></div>
                       </div>
                       <div class="user-details">
-                        <span class="nickname"><%= admin_user.nickname %></span>
-                        <span class="email"><%= admin_user.email %></span>
+                        <span class="nickname"><%= user.nickname %></span>
+                        <span class="email"><%= user.email %></span>
                       </div>
                     </div>
                   </td>
@@ -57,21 +57,21 @@
 
                   <%# 登録日の表示 %>
                   <td class="date-col">
-                    <%= l admin_user.created_at, format: :short %>
+                    <%= l user.created_at, format: :short %>
                   </td>
                   <%# /登録日の表示 %>
 
                   <%# ユーザーの権限（管理者・一般ユーザー）の表示 %>
                   <td class="role-col">
-                    <span class="role-badge <%= admin_user.is_admin ? 'admin' : 'user' %>">
-                      <%= admin_user.is_admin ? '管理者' : '一般ユーザー' %>
+                    <span class="role-badge <%= user.is_admin ? 'admin' : 'user' %>">
+                      <%= user.is_admin ? '管理者' : '一般ユーザー' %>
                     </span>
                   </td>
                   <%# /ユーザーの権限（管理者・一般ユーザー）の表示 %>
 
                   <%# 退会ボタンの表示 %>
                   <td class="actions-col">
-                    <%= link_to '退会', admin_user_delete_path(admin_user), data: {turbo_method: :delete} , class: "admin-action-button" %>
+                    <%= link_to '退会', admin_user_delete_path(user), data: {turbo_method: :delete} , class: "admin-action-button" %>
                   </td>
                   <%# /退会ボタンの表示 %>
                 
