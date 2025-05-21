@@ -1,0 +1,35 @@
+<%= render "shared/header" %>
+
+<div class="product-detail-page">
+    <div class="product-detail-grid">
+      <%# 商品画像セクション %>
+
+      <%# 商品情報セクション %>
+      <div class="product-info-section">
+        <div class="product-header">
+          <h1 class="product-title">☆<%= @coupon.name %></h1>
+          <div class="product-price-container">
+            <span class="product-price">値引き金額：<%= @coupon.discount_amount %>円引き</span>
+          </div>
+        </div>
+        <div class="product-description">
+          <div>☆クーポン詳細</div>
+          <p><%= @coupon.description %></p>
+        </div>
+        <div class="product-description">
+          <span>有効期限：<%= @coupon.expires_on %></span>
+        </div>
+        <div>
+          <% unless @coupon.active? %>
+            <div>
+              <span>※使用済みもしくは有効期限切れのため、無効なクーポンです。</span>
+            </div>
+          <% end %>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render "shared/footer" %>
