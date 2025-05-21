@@ -12,6 +12,5 @@ class RenamePurchasesIdToPurchaseIdOnShips < ActiveRecord::Migration[7.1]
 
     add_index :ships, :purchase_id
 
-    add_foreign_key :ships, :purchases, column: :purchase_id
   end
 end
