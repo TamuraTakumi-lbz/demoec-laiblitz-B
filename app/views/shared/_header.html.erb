@@ -6,8 +6,22 @@
 
     <nav class="main-nav desktop-only">
       <% nav_items = [{'name': 'ホーム', 'href': root_path}, {'name': 'カテゴリー', 'href': "#"},{'name': '人気商品', 'href': "#"}] %>
+        <%# <% Category.all.each do |category| %>
+          <%# <%= link_to category.category_name, "#", class: "user-admin" %>
+        <%# <% end %>  
       <% nav_items.each do |item| %>
-        <%= link_to item[:name], item[:href], class: "nav-link #{controller_name == item[:href].gsub('/', '') ? 'active' : ''}" %>
+        <% if item[:name] == 'カテゴリー' %>
+          <div class="user-dropdown">
+            <%= link_to item[:name], item[:href], class: "nav-link dropdown-toggle" %>
+            <div class="dropdown-content">
+              <% @categories.each do |category| %>
+                <%= link_to category.category_name, search_items_path, class: "user-admin" %>
+              <% end %>
+            </div>
+          </div>
+        <% else %>
+          <%= link_to item[:name], item[:href], class: "nav-link #{controller_name == item[:href].gsub('/', '') ? 'active' : ''}" %>
+        <% end %>
       <% end %>
     </nav>
 

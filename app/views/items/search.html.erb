@@ -18,9 +18,9 @@
       <h1 class="filer-title">絞り込み</h1>
         <%= search_form_for @q, url: search_items_path, method: :get do |f| %>
           <%= f.label :category, "カテゴリー" %>
-          <%= f.collection_select :category_id_eq, Category.all, :id, :category_name, include_blank: true %>
+          <%= f.collection_select :category_id_eq, @categories, :id, :category_name, include_blank: true %>
           <%= f.label :condition, "商品の状態" %>
-          <%= f.collection_select :condition_id_eq, Condition.all, :id, :condition_name, include_blank: true %>
+          <%= f.collection_select :condition_id_eq, @conditions, :id, :condition_name, include_blank: true %>
           <%= f.label :price, "金額" %>
           <%= f.number_field :price_gteq %>以上〜
           <%= f.number_field :price_lteq %>以下

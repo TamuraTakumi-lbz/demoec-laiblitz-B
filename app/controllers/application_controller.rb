@@ -2,6 +2,12 @@ class ApplicationController < ActionController::Base
   # before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_q
+  before_action :except_id_one
+
+  def except_id_one
+    @categories = Category.where.not(id: 1)
+    @conditions = Condition.where.not(id: 1)
+  end
 
   private
 
