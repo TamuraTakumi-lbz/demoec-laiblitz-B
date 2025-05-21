@@ -26,17 +26,17 @@ class OrdersController < ApplicationController
 
     ActiveRecord::Base.transaction do
       binding.pry
-      @purchase = Purchase.new(user_id: current_user.id, total_price: @item.price, status: 'paid')
-      @purchase.save!
+      purchase = Purchase.new(user_id: current_user.id, total_price: @item.price, status: 'paid')
+      purchase.save!
 
-      @purchase_item = PurchaseItem.new(item_id: @item.id,
-                                        purchase_id: @purchase.id, quantity: 1, price_at_purchase: @item.price)
-      @purchase_item.save!
+      purchase_item = PurchaseItem.new(item_id: @item.id,
+                                       purchase_id: purchase.id, quantity: 1, price_at_purchase: @item.price)
+      purchase_item.save!
 
-      @order = Ship.new(ship_params)
-      @order.purchase_id = @purchase.id
+      order = Ship.new(ship_params)
+      order.purchase_id = purchase.id
 
-      @order.save!
+      order.save!
 
       redirect_to root_path, notice: '購入が完了しました！'
     end
