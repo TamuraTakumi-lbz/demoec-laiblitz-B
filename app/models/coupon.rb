@@ -8,8 +8,9 @@ class Coupon < ApplicationRecord
   validates :minimum_order_price, numericality: { only_integer: true, greater_than_or_equal_to: 0 } #整数かつ0以上
   validates :expires_on,      presence: true
   validates :is_active,       inclusion: { in: [true, false] } #falseがnil判定されるのを防止
-  validates :expires_on_cannot_be_in_past
-
+  validate :expires_on_cannot_be_in_past
+  before_validation :ensure_defaults
+  
   #有効期限かつ有効フラグがtrueのクーポンをクエリで回収
   scope :active, ->{
     where(is_active: true).where("expire_on >=?", Date.current)

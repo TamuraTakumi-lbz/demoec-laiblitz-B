@@ -4,10 +4,11 @@ class CouponsController < ApplicationController
   before_action :set_coupon, only: [:show, :edit, :update, :destroy]
 
   def index
-    @coupons = Coupon.all.order(created_at: :DESC)
+    @coupons = Coupon.all.order(expires_on: :ASC)
   end
 
   def show
+
   end
 
   def new
@@ -20,6 +21,7 @@ class CouponsController < ApplicationController
       redirect_to coupons_path
     else
       render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
@@ -50,12 +52,14 @@ class CouponsController < ApplicationController
 
   def coupon_params
     params.require(:coupon).permit(
-      :name, :description, 
+      :name, 
+      :description, 
       :discount_amount, 
       :minimum_order_price,
       :expires_on,
       :is_active
     )
+  end
 
   def set_coupon
     @coupon = Coupon.find(params[:id])
