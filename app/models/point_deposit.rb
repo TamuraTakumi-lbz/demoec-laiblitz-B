@@ -1,0 +1,2 @@
+class PointDeposit < ApplicationRecord
+end
