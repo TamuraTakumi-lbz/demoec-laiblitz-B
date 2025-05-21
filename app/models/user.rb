@@ -32,12 +32,24 @@ class User < ApplicationRecord
     self.coupons.active.merge(user_coupons.unused).distinct
   end
 
+  after_create :assign_all_active_coupons
+
   private
 
   def password_complexity
     return if password.blank? || password =~ /\A(?=.*?[a-zA-Z])(?=.*?\d)[a-zA-Z\d]+\z/
 
     errors.add(:password, :password_complexity)
+  end
+
+  #ユーザー登録時にクーポン配布
+  def assign_all_active_coupons
+    Coupon
+      .where(is_active: true)
+      .where("expires_on >= ?", Date.current)
+      .find_each(batch_size: 500) do |coupon|
+        user_coupons.find_or_create_by!(coupon: coupon)
+      end
   end
 
 end
