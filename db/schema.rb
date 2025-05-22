@@ -154,7 +154,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_21_092708) do
     t.index ["user_id", "coupon_id"], name: "index_user_coupons_on_user_id_and_coupon_id", unique: true
     t.index ["user_id"], name: "index_user_coupons_on_user_id"
   end
-  
+
   create_table "user_ranks", charset: "utf8mb3", force: :cascade do |t|
     t.string "rank_name", null: false
     t.text "description", null: false
