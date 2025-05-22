@@ -2,12 +2,10 @@ class User < ApplicationRecord
   extend Devise::Models
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  
+
   validates :nickname, presence: true, uniqueness: true
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-
-  
 
   validates :last_name_kanji, :first_name_kanji, presence: true
   validates :last_name_kanji, :first_name_kanji,
@@ -34,6 +32,11 @@ class User < ApplicationRecord
   end
 
   after_create :assign_all_active_coupons
+  belongs_to :user_rank, optional: true
+  has_many :point_deals, dependent: :destroy
+
+  has_many :point_deposits, through: :point_deals
+  has_many :point_withdrawals, through: :point_dealss
 
   private
 
@@ -50,5 +53,4 @@ class User < ApplicationRecord
         user_coupons.create!(coupon: coupon)
       end
   end
-
 end

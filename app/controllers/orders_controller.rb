@@ -25,17 +25,29 @@ class OrdersController < ApplicationController
       coupon_id:   coupon_id
     )
 
-    if creator.call
-      redirect_to root_path, notice: '購入が完了しました！'
-    else
-      @order = Ship.new(ship_params)
-      #利用可能クーポンの再セット
-      @available_coupons = current_user.available_coupons
-
-      # Service Object から取得したエラーメッセージを @order の errors に追加
-      creator.errors.each do |message|
-        @order.errors.add(:base, message)
+    begin ActiveRecord::Base.transaction do
+      unless creator.call
+        @order = Ship.new(ship_params)
+        populate_order_errors_from_creator(creator)
+        raise ActiveRecord::Rollbaclack
       end
+
+      point_awarding_service = PointAwardingService.new(user: current_user,
+                                                        purchase: creator.purchase,
+                                                        type_key: '0001')
+
+      point_award_result = point_awarding_service.call
+
+      unless point_award_result.success?
+        @order = Ship.new(ship_params)
+        @order.errors.add(:base, point_award_result.error_message || 'ポイントの付与に失敗しました。')
+        raise ActiveRecord::Rollback
+      end
+
+      redirect_to root_path, notice: '購入が完了しました！'
+    end
+    rescue ActiveRecord::Rollback
+      flash.now[:alert] = '購入処理中にエラーが発生しました。'
       render :new, status: :unprocessable_entity
     end
   end
@@ -55,5 +67,19 @@ class OrdersController < ApplicationController
       :building_name,
       :phone_number
     )
+  end
+
+  def populate_order_errors_from_creator(creator)
+    if creator.errors.respond_to?(:full_messages) && creator.errors.full_messages.any?
+      creator.errors.full_messages.each do |message|
+        @order.errors.add(:base, message)
+      end
+    elsif creator.errors.is_a?(Array) && creator.errors.any?
+      creator.errors.each do |message|
+        @order.errors.add(:base, message)
+      end
+    else
+      @order.errors.add(:base, '購入処理中にエラーが発生しました。')
+    end
   end
 end
