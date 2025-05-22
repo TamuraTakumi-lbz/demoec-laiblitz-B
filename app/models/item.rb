@@ -12,7 +12,8 @@ class Item < ApplicationRecord
     message: 'is out of setting range'
   }
 
-  has_many :purchases
+
+  has_many :purchases, through: :purchase_items
 
   def self.searchable_attributes
     %w[name description]
@@ -28,6 +29,7 @@ class Item < ApplicationRecord
   def self.ransackable_associations(auth_object = nil)
     %w[category condition purchases]
   end
+
 
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category
