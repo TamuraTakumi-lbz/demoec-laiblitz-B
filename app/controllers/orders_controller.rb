@@ -8,6 +8,8 @@ class OrdersController < ApplicationController
 
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @order = Ship.new
+    #有効かつ、userが未使用のクーポン取得。Userモデル内で定義。
+    @available_coupons = current_user.available_coupons
   end
 
   def create
@@ -18,13 +20,17 @@ class OrdersController < ApplicationController
       user: current_user,
       item: @item,
       ship_params: ship_params,
-      payjp_token: payjp_token
+      payjp_token: payjp_token,
+      # クーポンidを受け取り
+      coupon_id:   coupon_id
     )
 
     if creator.call
       redirect_to root_path, notice: '購入が完了しました！'
     else
       @order = Ship.new(ship_params)
+      #利用可能クーポンの再セット
+      @available_coupons = current_user.available_coupons
 
       # Service Object から取得したエラーメッセージを @order の errors に追加
       creator.errors.each do |message|

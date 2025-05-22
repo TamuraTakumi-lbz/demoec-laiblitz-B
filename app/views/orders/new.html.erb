@@ -19,6 +19,25 @@
           </div>
         </div>
 
+        <%# 利用可能クーポンを所持している場合のみ、プルダウン表示 %>
+        <%# 選択されたクーポンのidを %>
+        <% if @available_coupons.any? %>
+          <div class="coupon-selection-outside">
+            <label for="coupon-select-outside">利用可能なクーポンを選択</label>
+            <%= select_tag :coupon_id_outside,
+                  options_for_select(
+                    @available_coupons.map { |c|
+                      ["#{c.name}（¥#{c.discount_amount} OFF）", c.id]
+                    }
+                  ),
+                  include_blank: 'クーポンを使わない',
+                  id: 'coupon-select-outside',
+                  class: 'form-select' %>
+            <%# クーポン関連のエラー表示用エリア %>
+            <p id="coupon-error-outside" class="error-messages"></p>
+          </div>
+        <% end %>
+
         <div class="payment-summary">
           <div class="summary-row">
             <span>商品金額</span>
@@ -133,6 +152,8 @@
 
           <%# Payjpトークンを格納する隠しフィールド %>
           <%= f.hidden_field :token %>
+          <%# coupon_idを送信する隠しフィールド。JSでnilになってるvalueを変更・・・？ %>
+          <%= hidden_field_tag :coupon_id, nil, id: 'hidden-coupon-id'%>
 
           <div class="form-actions">
             <%= f.submit "購入を確定する", class: "submit-button", id: "button" %>

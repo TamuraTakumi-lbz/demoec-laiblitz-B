@@ -4,6 +4,8 @@ class UserCoupon < ApplicationRecord
   #同一のcoupon_idに対してのみ、ユニーク制約を設定。
   validates :user_id, uniqueness: { scope: :coupon_id, message: 'はこのクーポンを既に付与されています' }
 
+  # validates :coupon_id, uniqueness: { scope: :user_id, message: 'はこのクーポンを既に付与されています' }
+
   #使用済みのレコードをクエリで回収
   scope :used, ->{
     where.not(used_at: nil)

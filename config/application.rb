@@ -18,6 +18,8 @@ module DemoecLaiblitzB
 
     config.active_storage.variant_processor = :mini_magick
 
+    config.time_zone = 'Asia/Tokyo'
+    config.i18n.default_locale = :ja
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
@@ -28,21 +30,21 @@ module DemoecLaiblitzB
   end
 end
 
-module TimeFormatSandbox
-  class Application < Rails::Application
-    # ...
+# module TimeFormatSandbox
+#   class Application < Rails::Application
+#     # ...
 
-    # タイムゾーンを日本時間に設定
-    config.time_zone = 'Asia/Tokyo'
+#     # タイムゾーンを日本時間に設定
+#     config.time_zone = 'Asia/Tokyo'
     
-    # デフォルトのロケールを日本（ja）に設定
-    config.i18n.default_locale = :ja
-  end
-end
+#     # デフォルトのロケールを日本（ja）に設定
+#     config.i18n.default_locale = :ja
+#   end
+# end
 
-module Error_messages_jp
-  class Application < Rails::Application
-    config.i18n.default_locale = :ja
-  end
-end
+# module Error_messages_jp
+#   class Application < Rails::Application
+#     config.i18n.default_locale = :ja
+#   end
+# end
 

@@ -1,11 +1,12 @@
 class PurchaseCreator
   attr_reader :purchase, :errors
 
-  def initialize(user:, item:, ship_params:, payjp_token:)
+  def initialize(user:, item:, ship_params:, payjp_token:, coupon_id:)
     @user = user
     @item = item
     @ship_params = ship_params
     @payjp_token = payjp_token
+    @coupon_id   = coupon_id
     @errors = []
   end
 
@@ -22,6 +23,26 @@ class PurchaseCreator
       @ship = Ship.new(@ship_params)
       @ship.purchase = @purchase
       @ship.save!
+
+       # クーポン割引額の計算
+      coupon_discount = 0
+      if @coupon_id.present?
+        coupon = Coupon.find_by(id: @coupon_id)
+        unless coupon && coupon.applicable_to?(@item.price)
+          @errors << 'このクーポンは利用できません'
+          raise ActiveRecord::Rollback
+        end
+        coupon_discount = coupon.discount_amount
+      end
+
+      #割引後金額の計算
+      final_payment_amount = @item.price - coupon_discount
+
+      #used_at(クーポンの使用履歴)のセット
+      if @coupon_id.present?
+        uc = @user.user_coupons.find_by(coupon_id: @coupon_id)
+        uc&.update!(used_at: Time.current)
+      end
 
       true
     end

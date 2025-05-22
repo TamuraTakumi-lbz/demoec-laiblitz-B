@@ -13,7 +13,7 @@ class Coupon < ApplicationRecord
 
   #有効期限かつ有効フラグがtrueのクーポンをクエリで回収
   scope :active, ->{
-    where(is_active: true).where("expire_on >=?", Date.current)
+    where(is_active: true).where("expires_on >=?", Date.current)
   }
 
   #有効期限かつ有効フラグがtrueかを判定
@@ -33,7 +33,7 @@ class Coupon < ApplicationRecord
   end
 
   #createアクション実行後に、クーポン配布
-  after_create :distribute_to_existing_users
+  after_create :distribute_to_common_users
 
   private
   #デフォ値再設定←いらないかも
@@ -49,9 +49,9 @@ class Coupon < ApplicationRecord
   end
 
   #中間テーブルにeach文でレコードを追加していくことで、adminでないユーザー全員にクーポンを配布
-  def distribute_to_existing_users
+  def distribute_to_common_users
     User.where(is_admin: false).find_each(batch_size: 1000) do |user|
-      user.user_coupons.find_or_create_by!(coupon: self)
+      user.user_coupons.create!(coupon: self)
     end
   end
 
