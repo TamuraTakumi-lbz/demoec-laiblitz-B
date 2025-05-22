@@ -1,2 +1,0 @@
-class PointWithDrawal < ApplicationRecord
-end

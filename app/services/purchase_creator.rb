@@ -13,7 +13,9 @@ class PurchaseCreator
     # 購入のトランザクション
 
     ActiveRecord::Base.transaction do
-      @purchase = Purchase.new(user: @user, total_price: @item.price, status: 'paid')
+      # final_payment_amountは将来クーポンやポイントを利用した際に変更する
+      @purchase = Purchase.new(user: @user, total_price: @item.price,
+                               status: 'paid', final_payment_amount: @item.price)
       @purchase.save!
 
       @purchase_item = PurchaseItem.new(item: @item, purchase: @purchase, quantity: 1, price_at_purchase: @item.price)
