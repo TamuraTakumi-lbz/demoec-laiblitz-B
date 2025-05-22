@@ -17,8 +17,16 @@
     <div class="filter-container">
       <h1 class="filer-title">絞り込み</h1>
         <%= search_form_for @q, url: search_items_path, method: :get do |f| %>
-          <%= f.label :category, "カテゴリー" %>
-          <%= f.collection_select :category_id_eq, @categories, :id, :category_name, include_blank: true %>
+          <% if params[:from_header] != "true" %>
+            <div class="category-select">
+              <%= f.label :category, "カテゴリー" %>
+              <%= f.collection_select :category_id_eq, @categories, :id, :category_name, include_blank: true %>
+            </div>
+          <% else %>
+            <% category_id = params.dig(:q, :category_id_eq) %>
+            <% selected_category = @categories.find { |c| c.id.to_s == category_id } %>
+            <h2>カテゴリー：<%= selected_category&.category_name %></h2>
+          <% end %>
           <%= f.label :condition, "商品の状態" %>
           <%= f.collection_select :condition_id_eq, @conditions, :id, :condition_name, include_blank: true %>
           <%= f.label :price, "金額" %>
