@@ -13,12 +13,17 @@
     </div>
   </section>
 
+  <section class="featured-products-section">
+    <div class="section-header">
+      <h2 class="section-title">検索結果</h2>
+      <%= link_to 'すべて見る', '#', class: 'view-all-link' %>
+    </div>
   <section class="filter-section">
-    <div class="filter-container">
-      <h1 class="filer-title">絞り込み</h1>
-        <%= search_form_for @q, url: search_items_path, method: :get do |f| %>
-          <% if params[:from_header] != "true" %>
-            <div class="category-select">
+  <div class="filter-container">
+    <h1 class="filer-title">絞り込み</h1>
+      <%= search_form_for @q, url: search_items_path, method: :get do |f| %>
+         <% if params[:from_header] != "true" %>
+           <div class="category-select">
               <%= f.label :category, "カテゴリー" %>
               <%= f.collection_select :category_id_eq, @categories, :id, :category_name, include_blank: true %>
             </div>
@@ -36,11 +41,6 @@
         <% end %>
     </div>
   </section>
-  <section class="featured-products-section">
-    <div class="section-header">
-      <h2 class="section-title">検索結果</h2>
-      <%= link_to 'すべて見る', '#', class: 'view-all-link' %>
-    </div>
     <div class="products-grid">
       <% if params.present? %>
         <% @items.each do |item| %>
