@@ -23,6 +23,9 @@
       <h1 class="filer-title">絞り込み</h1>
       <%= search_form_for @q, url: search_items_path, method: :get do |f| %>
         <div class="category_condition">
+          <% if params.dig(:q, :name_cont).present? %>
+            <%= f.hidden_field :name_cont, value: params.dig(:q, :name_cont) %>
+          <% end %>
           <% if params[:from_header] != "true" %>
             <div class="category-select">
                 <%= f.label :category, "カテゴリー：" %>
