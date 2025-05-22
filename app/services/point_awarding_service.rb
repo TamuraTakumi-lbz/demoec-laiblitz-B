@@ -26,6 +26,7 @@ class PointAwardingService
 
     return Result.new(success?: false, error_message: '付与ポイント数が0以下です。') if award_point <= 0
 
+    # ポイント付与のトランザクション
     ActiveRecord::Base.transaction do
       point_deal = PointDeal.create!(
         user: @user,
@@ -41,8 +42,8 @@ class PointAwardingService
 
       unless @user.save
         error_msg = "ユーザーのポイント残高更新に失敗しました: #{@user.errors.full_messages.join(', ')}"
-        Rails.logger.error error_msg # ログにも残す
-        raise ActiveRecord::Rollback, error_msg # この例外でトランザクションをロールバック
+        Rails.logger.error error_msg
+        raise ActiveRecord::Rollback, error_msg
       end
 
       return Result.new(success?: true,
