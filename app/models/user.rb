@@ -42,7 +42,7 @@ class User < ApplicationRecord
     errors.add(:password, :password_complexity)
   end
 
-  #ユーザー登録時にクーポン配布
+  #ユーザー登録時に有効かつ期限内のクーポンを全て配布
   def assign_all_active_coupons
     Coupon
       .where(is_active: true)

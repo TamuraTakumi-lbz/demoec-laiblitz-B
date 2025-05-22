@@ -48,7 +48,7 @@ class Coupon < ApplicationRecord
     errors.add(:expires_on, "は今日以降の日付を指定してください")
   end
 
-  #中間テーブルにeach文でレコードを追加していくことで、adminでないユーザー全員に、クーポンを配布
+  #中間テーブルにeach文でレコードを追加していくことで、adminでないユーザー全員にクーポンを配布
   def distribute_to_existing_users
     User.where(is_admin: false).find_each(batch_size: 1000) do |user|
       user.user_coupons.find_or_create_by!(coupon: self)
