@@ -3,17 +3,33 @@ class NotificationsController < ApplicationController
   before_action :set_notification, only: [:edit, :update, :destroy]
   
   def index
-    @notifications = Notification.all
+    @notifications = Notification.where(is_published: true) 
+
+    Notification.where(is_published: false).find_each do |notification|
+      logger.debug(notification[:id])
+      logger.debug(notification[:starts_at])
+      logger.debug(Time.current)
+
+      if notification[:starts_at] <= Time.current
+        notification[:is_published] = true
+        notification.save
+      end
+      if !(notification[:ends_at]==nil) && (notification[:ends_at] < Time.now)
+        notification[:is_published] = false
+        notification.save
+      end
+    end
   end
   def new
     @notification = Notification.new
   end
   def create
-    @notification = Notification.new(notification_params)
-    if @notification.save
+    notification = Notification.new(notification_params)
+    notification[:is_published] = false
+    if notification.save
       redirect_to notifications_path
     else
-      render :index, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
 
   end
@@ -35,6 +51,10 @@ class NotificationsController < ApplicationController
     else
       render :index, status: :unprocessable_entity
     end
+  end
+
+  def dashboard
+
   end
 
   private
