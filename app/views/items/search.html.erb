@@ -30,9 +30,11 @@
               </div>
             <% else %>
               <div class="category-select">
-                <% category_id = params.dig(:q, :category_id_eq) %>
-                <% selected_category = @categories.find { |c| c.id.to_s == category_id } %>
-                <h2>カテゴリー：<%= selected_category&.category_name %></h2>
+                <%# <% category_id = params.dig(:q, :category_id_eq) %>
+                <%# <% selected_category = @categories.find { |c| c.id.to_s == category_id } %> 
+                <%# <h2>カテゴリー：<%= selected_category&.category_name</h2>  %>
+                <%= f.hidden_field :category_id_eq, value: params.dig(:q, :category_id_eq) %>
+                <h2>カテゴリー：<%= Category.find_by(id: params.dig(:q, :category_id_eq))&.category_name %></h2>
               </div>
             <% end %>
               <div class="condition-select">
