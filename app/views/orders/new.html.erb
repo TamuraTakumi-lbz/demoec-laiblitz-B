@@ -20,7 +20,7 @@
         </div>
 
         <%# 利用可能クーポンを所持している場合のみ、プルダウン表示 %>
-        <%# 選択されたクーポンのidを %>
+        <%# 選択されたクーポンのidをフォーム内の隠しフィールドで送信 %>
         <% if @available_coupons.any? %>
           <div class="coupon-selection-outside">
             <label for="coupon-select-outside">利用可能なクーポンを選択</label>
