@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_q
   before_action :except_id_one
+  before_action :check_published_flag, if: :common_setup?
 
   def except_id_one
     @categories = Category.where.not(id: 1)
@@ -26,6 +27,28 @@ class ApplicationController < ActionController::Base
                                         :birth_date,
                                         :is_admin
                                       ])
+  end
+
+  def check_published_flag
+    Notification.where(is_published: false).find_each do |notification|
+
+      if notification[:starts_at] <= Time.current
+        notification[:is_published] = true
+        notification.save(validate: false)
+      end
+      
+    end
+    Notification.where(is_published: true).find_each do |notification|
+      if !(notification[:ends_at]==nil) && (notification[:ends_at] < Time.now)
+        logger.debug("check")
+        notification[:is_published] = false
+        notification.save(validate: false)
+      end
+    end
+  end
+
+  def common_setup?
+    action_name == 'index' && controller_name.in?(%w[items notifications])
   end
 
   def after_sign_up_path_for

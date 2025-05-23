@@ -80,5 +80,8 @@ ja:
     sessions:
       signed_in:  ""
       signed_out: ""
+    registrations:
+      signed_up:  ""
+      signed_out: ""
     # user:
       #   not_found_in_database: "メールアドレスが見つかりません"

@@ -25,6 +25,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.order(created_at: :DESC)
+    @notifications = Notification.where(is_published: true).order(created_at: :DESC)
   end
 
   def search

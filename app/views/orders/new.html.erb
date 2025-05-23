@@ -19,11 +19,31 @@
           </div>
         </div>
 
+        <%# 利用可能クーポンを所持している場合のみ、プルダウン表示 %>
+        <%# 選択されたクーポンのidをフォーム内の隠しフィールドで送信 %>
+        <% if @available_coupons.any? %>
+          <div class="coupon-selection-outside">
+            <label for="coupon-select-outside">利用可能なクーポンを選択</label>
+            <%= select_tag :coupon_id_outside,
+                  options_for_select(
+                    @available_coupons.map { |c|
+                      ["#{c.name}（¥#{c.discount_amount} OFF）", c.id]
+                    }
+                  ),
+                  include_blank: 'クーポンを使わない',
+                  id: 'coupon-select-outside',
+                  class: 'form-select' %>
+            <%# クーポン関連のエラー表示用エリア %>
+            <p id="coupon-error-outside" class="error-messages"></p>
+          </div>
+        <% end %>
+
         <div class="payment-summary">
           <div class="summary-row">
             <span>商品金額</span>
             <span>¥<%= @item.price %></span>
           </div>
+          <div>Your Point is <%= current_user.total_available_points %> Pt</div>
           <div class="summary-row total">
             <span>お支払い金額</span>
             <span>¥<%= @item.price %></span>
@@ -129,10 +149,12 @@
               <%= f.text_field :phone_number, class: "form-input", placeholder: "例）09012345678", maxlength: "11", model: "@ship" %>
             </div>
           </div>
-          <%# /配送先の入力 %>
 
           <%# Payjpトークンを格納する隠しフィールド %>
           <%= f.hidden_field :token %>
+          <%# coupon_idを送信する隠しフィールド。JSでnilになってるvalueを変更・・・？ %>
+          <%= hidden_field_tag :coupon_id, nil, id: 'hidden-coupon-id'%>
+
 
           <div class="form-actions">
             <%= f.submit "購入を確定する", class: "submit-button", id: "button" %>

@@ -1,0 +1,44 @@
+<%= render "shared/header" %>
+
+<div class="product-detail-page">
+  <div class="product-detail-grid">
+    <%# クーポン情報セクション %>
+    <div class="product-info-section">
+      <div class="product-header">
+        <h1 class="product-title"><%= @coupon.name %></h1>
+        <div class="product-price-container">
+          <span class="product-price">¥<%= number_with_delimiter(@coupon.discount_amount) %> OFF</span>
+        </div>
+      </div>
+
+      <div class="product-description">
+        <p><%= @coupon.description %></p>
+      </div>
+
+      <%# クーポン詳細テーブル %>
+      <div class="product-details">
+        <table class="details-table">
+          <tr>
+            <th>有効期限</th>
+            <td><%= @coupon.expires_on.strftime('%Y/%m/%d') %></td>
+          </tr>
+          <tr>
+            <th>ステータス</th>
+            <td>
+              <%= @coupon.is_active && @coupon.expires_on >= Date.current ? '使用可能' : '無効（有効期限切れ / 使用済み）' %>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <%# アクションボタン（有効かつ一般ユーザーのみ表示） %>
+      <% if @coupon.is_active && @coupon.expires_on >= Date.current && !(current_user&.is_admin?) %>
+        <div class="product-actions">
+          <%= link_to 'クーポンを獲得する', '#', class: "btn btn-purchase" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= render "shared/footer" %>
