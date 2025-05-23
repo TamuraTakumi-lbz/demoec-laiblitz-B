@@ -29,8 +29,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :notifications, only: [:index, :new, :create, :edit, :update, :destroy]
-  resources :promotions, only: [:index]
+  resources :notifications, except: [:show]
+  resources :promotions, except: [:show]
   
   # Defines the root path route ("/")
   # root "posts#index"

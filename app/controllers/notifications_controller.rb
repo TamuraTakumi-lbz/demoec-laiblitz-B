@@ -39,10 +39,6 @@ class NotificationsController < ApplicationController
     end
   end
 
-  def dashboard
-
-  end
-
   private
   def set_notification
     @notification = Notification.find(params[:id])
