@@ -1192,7 +1192,8 @@ img {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: 40px;
-  margin: 30px 0;
+  margin: 30px auto;
+  width: 70%;
 }
 
 .filer-title{
