@@ -7,6 +7,8 @@ class OrdersController < ApplicationController
     return redirect_to root_path if current_user&.is_admin? || PurchaseItem.exists?(item_id: @item.id)
 
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
+    gon.user_total_points = current_user.total_available_points
+    gon.item_price = @item.price
     @order = Ship.new
     # 有効かつ、userが未使用のクーポン取得。Userモデル内で定義。
     @available_coupons = current_user.available_coupons
@@ -16,8 +18,8 @@ class OrdersController < ApplicationController
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     payjp_token = params[:token]
 
-    # redemption_amount = params[:redeem_points].to_i
-    redemption_amount = 49
+    redemption_amount = params[:points_to_redeem_on_submit].to_i
+    coupon_id = params[:selected_coupon_id_on_submit].presence
     @order = Ship.new(ship_params)
 
     begin ActiveRecord::Base.transaction do
@@ -26,6 +28,7 @@ class OrdersController < ApplicationController
         point_redemption_service = PointRedemptionService.new(user: current_user,
                                                               purchase: nil,
                                                               redemption_amount: redemption_amount).call
+        puts point_redemption_service
 
         unless point_redemption_service.success?
           point_redemption_service.error_message.each do |error_message|
@@ -45,8 +48,10 @@ class OrdersController < ApplicationController
         payjp_token: payjp_token,
         used_points: redemption_amount,
         point_deal: point_redemption_service.present? ? point_redemption_service.data[:point_deal] : nil,
-        coupon_id: params[:coupon_id].presence
+        coupon_id: coupon_id
       ).call
+      puts creator_result
+
       unless creator_result.success?
         creator_result.error_message.each do |error_message|
           @order.errors.add(:base, error_message)
@@ -55,10 +60,10 @@ class OrdersController < ApplicationController
         raise ActiveRecord::Rollback
       end
 
+      # ポイント付与
       point_awarding_service = PointAwardingService.new(user: current_user,
                                                         purchase: creator_result.data[:purchase],
                                                         type_key: '0001').call
-
       unless point_awarding_service.success?
         point_award_result.error_message.each do |error_message|
           @order.errors.add(:base, error_message)

@@ -16,34 +16,38 @@ class PurchaseCreator
   end
 
   def call
-    final_payment_amount = @item.price - @used_points
-
-    return Result.new(success?: false, error_message: '購入金額が0以下です。') if final_payment_amount <= 0
+    return Result.new(success?: false, error_message: '購入金額が0以下です。') if @item.price <= 0
     return Result.new(success?: false, error_message: 'ポイントの使用が0以下です。') if @used_points < 0
 
     ActiveRecord::Base.transaction do
       # クーポンが使用されれば値引き金額を,使用されなければ0を返すサービスを呼び出し
-      coupon_service = CouponApplicationService.new(
-        user: @user,
-        item_price_before_discount: @item.price,
-        coupon_id: @coupon_id
-      ).call
-      unless coupon_service.success?
-        @errors << coupon_service.error_message
-        raise ActiveRecord::Rollback
+      coupon_discounted_amount = 0
+      if @coupon_id.present?
+        coupon_service = CouponApplicationService.new(
+          user: @user,
+          item_price_before_discount: @item.price,
+          coupon_id: @coupon_id
+        ).call
+        unless coupon_service.success?
+          @errors << coupon_service.error_message
+          raise ActiveRecord::Rollback
+        end
+        coupon_discounted_amount = coupon_service.data[:discount]
       end
+      puts coupon_service if coupon_service.present?
 
       # 値引き金額定義
-      coupon_discount_amount = coupon_service.data[:discount]
+      final_payment_amount = @item.price - @used_points - coupon_discounted_amount
 
       @purchase = Purchase.new(
         user: @user,
         total_price: @item.price,
         used_points: @used_points,
         final_payment_amount: final_payment_amount,
-        coupon_discount_amount: coupon_discount_amount,
+        coupon_discount_amount: coupon_discounted_amount,
         status: 'pending_payment'
       )
+
       unless @purchase.save
         return Result.new(success?: false, error_message: @purchase.errors.full_messages,
                           data: { errors_object: @purchase.errors })

@@ -19,7 +19,7 @@ class PointRedemptionService
 
     Result.new(success?: false, error_message: '利用ポイント数が0以下です。') if @redemption_amount <= 0
 
-    unless @user.total_available_points >= @redemption_amount
+    unless @user.total_available_points > @redemption_amount
       return Result.new(success?: false, error_message: '利用ポイント数が残高を超えています。')
     end
 
