@@ -59,10 +59,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_21_092708) do
     t.integer "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "category_id", null: false
-    t.bigint "condition_id", null: false
-    t.index ["category_id"], name: "index_items_on_category_id"
-    t.index ["condition_id"], name: "index_items_on_condition_id"
+    t.integer "condition_id", null: false
+    t.integer "category_id", null: false
   end
 
   create_table "notifications", charset: "utf8mb3", force: :cascade do |t|
@@ -207,6 +205,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_21_092708) do
   add_foreign_key "purchase_items", "items"
   add_foreign_key "purchase_items", "purchases"
   add_foreign_key "purchases", "users"
+  add_foreign_key "ships", "purchases"
   add_foreign_key "user_coupons", "coupons", on_delete: :cascade
   add_foreign_key "user_coupons", "users", on_delete: :cascade
   add_foreign_key "users", "user_ranks"
