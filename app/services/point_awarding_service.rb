@@ -26,7 +26,6 @@ class PointAwardingService
 
     return Result.new(success?: false, error_message: '付与ポイント数が0以下です。') if award_point <= 0
 
-    # ポイント付与のトランザクション
     ActiveRecord::Base.transaction do
       point_deal = PointDeal.create!(
         user: @user,

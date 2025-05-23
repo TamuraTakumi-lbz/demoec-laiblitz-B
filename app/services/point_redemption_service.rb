@@ -27,7 +27,7 @@ class PointRedemptionService
     ActiveRecord::Base.transaction do
       point_deal = PointDeal.create!(
         user: @user,
-        title: "#{point_deal_type.description || 'ポイント利用'} (#{@purchase.id})",
+        title: "#{point_deal_type.description || 'ポイント利用'} (#{@purchase.id if @purchase.present?})",
         point_deal_type: point_deal_type,
         purchase: @purchase,
         dealed_at: Time.current

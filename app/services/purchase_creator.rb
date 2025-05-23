@@ -2,12 +2,13 @@ class PurchaseCreator
   Result = Struct.new(:success?, :data, :error_message, keyword_init: true)
   attr_reader :purchase
 
-  def initialize(user:, item:, ship_params:, payjp_token:, used_points: 0)
+  def initialize(user:, item:, ship_params:, payjp_token:, point_deal: nil, used_points: 0)
     @user = user
     @item = item
     @ship_params = ship_params
     @payjp_token = payjp_token
     @used_points = used_points.to_i
+    @point_deal = point_deal
     @errors = []
   end
 
@@ -61,6 +62,9 @@ class PurchaseCreator
       else
         @purchase.update!(status: 'paid_by_points')
       end
+
+      # ポイント利用の記録
+      @point_deal.update!(purchase: @purchase) if @used_points > 0 && @point_deal.present?
 
       return Result.new(success?: true, data: { purchase: @purchase, purchase_item: @purchase_item, ship: @ship })
     end
