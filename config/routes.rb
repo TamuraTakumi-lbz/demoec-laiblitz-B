@@ -41,5 +41,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   root "items#index"
-  resources :items
+
+  namespace :users do
+    get "profile",   to: "profiles#index",  as: :profile
+    get 'orders',    to: 'orders#index',    as: :orders
+    get "favorites", to: "favorites#index", as: :favorites
+  end
 end
