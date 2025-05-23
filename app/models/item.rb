@@ -43,9 +43,9 @@ class Item < ApplicationRecord
   private
 
   def half_width_digits_only_for_price
-    raw = price_before_type_cast
-    return unless raw.present? && raw !~ /\A[0-9]+\z/
-
+    raw = price_before_type_cast.to_s
+    return if raw.blank?
+    return if raw =~ /\A[0-9]+\z/
     errors.add(:price, 'is invalid. Input half-width characters')
   end
 end
