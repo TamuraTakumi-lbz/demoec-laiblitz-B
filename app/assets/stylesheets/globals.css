@@ -1164,6 +1164,11 @@ img {
 }
 
 /* 検索結果絞り込み */
+.selected-category{
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
 .filter-container{
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);

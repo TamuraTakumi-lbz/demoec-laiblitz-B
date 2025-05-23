@@ -1,45 +1,26 @@
 <%= render "shared/header" %>
 
-<div class="home-page">
-  <section class="hero-section">
-    <div class="hero-image-container">
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <h1 class="hero-title"> あなたの生活を彩る、<br> 特別なアイテム</h1>
-        <p class="hero-description">
-          DemoECで、あなただけの特別な商品を見つけましょう。高品質な商品を手頃な価格で。
-        </p>
-      </div>
-    </div>
-  </section>
-
   <section class="featured-products-section">
-    <div class="section-header">
+    <div class="search-result">
       <h2 class="section-title">検索結果</h2>
-      <%= link_to 'すべて見る', '#', class: 'view-all-link' %>
+      <div class="selected-category">
+          <% if params[:from_header] == "true" %>
+            <h2 class="selected-category">カテゴリー: <%= Category.find_by(id: params.dig(:q, :category_id_eq))&.category_name %></h2>
+          <% end %> 
+      </div> 
     </div>
   <section class="filter-section">
     <div class="filter-container">
       <h1 class="filer-title">絞り込み</h1>
-      <%= search_form_for @q, url: search_items_path, method: :get do |f| %>
+      <%= search_form_for @blank_q, url: search_items_path, method: :get do |f| %>
         <div class="category_condition">
           <% if params.dig(:q, :name_cont).present? %>
             <%= f.hidden_field :name_cont, value: params.dig(:q, :name_cont) %>
           <% end %>
-          <% if params[:from_header] != "true" %>
             <div class="category-select">
                 <%= f.label :category, "カテゴリー：" %>
                 <%= f.collection_select :category_id_eq, @categories, :id, :category_name, include_blank: true %>
               </div>
-            <% else %>
-              <div class="category-select">
-                <%# <% category_id = params.dig(:q, :category_id_eq) %>
-                <%# <% selected_category = @categories.find { |c| c.id.to_s == category_id } %> 
-                <%# <h2>カテゴリー：<%= selected_category&.category_name</h2>  %>
-                <%= f.hidden_field :category_id_eq, value: params.dig(:q, :category_id_eq) %>
-                <h2>カテゴリー：<%= Category.find_by(id: params.dig(:q, :category_id_eq))&.category_name %></h2>
-              </div>
-            <% end %>
               <div class="condition-select">
                 <%= f.label :condition, "商品の状態：" %>
                 <%= f.collection_select :condition_id_eq, @conditions, :id, :condition_name, include_blank: true %>
