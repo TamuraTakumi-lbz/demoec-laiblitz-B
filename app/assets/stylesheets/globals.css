@@ -1192,7 +1192,7 @@ img {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: 40px;
-  margin-bottom: 30px;
+  margin: 30px 0;
 }
 
 .filer-title{
