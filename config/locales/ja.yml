@@ -1,7 +1,15 @@
 ja:
+  number:
+    currency:
+      format:
+        unit: ""
+        precision: 0
+        delimiter: ","
+        format: "%u%n"
   date:
     formats:
       default: '%Y/%m/%d'
+      short: "%Y/%m/%d"
     order:
       - :year
       - :month
@@ -10,6 +18,7 @@ ja:
     formats:
       default: "%Y/%m/%d %H:%M:%S"
       short: "%Y/%m/%d"
+      notification: "%Y/%m/%d %H:%M"
     order:
       - :year
       - :month

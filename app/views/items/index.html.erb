@@ -1,9 +1,34 @@
 <%= render "shared/header" %>
 
 <div class="home-page">
+  <section class="notification-section">
+    <div class="notification-title">
+      <div class="n-title">
+        おしらせ
+      </div>
+    </div>
+
+    <div class= "notification">
+      <div class="notification-content">
+        <% @notifications.each do | notification|%>
+          <div class="n-content">
+            <div class="text-title">
+              <%= notification.title%>
+            </div>
+            <div class="text-content">
+              <%= notification.content%>
+            </div>
+            
+          </div>
+        <%end%>
+      </div>
+    </div>
+  </section>
   <section class="hero-section">
     <div class="hero-image-container">
-      <div class="hero-overlay"></div>
+      <div class="hero-overlay"> 
+        
+      </div>
       <div class="hero-content">
         <h1 class="hero-title"> あなたの生活を彩る、<br> 特別なアイテム</h1>
         <p class="hero-description">
@@ -11,10 +36,13 @@
         </p>
       </div>
     </div>
+    
   </section>
 
   
+  
   <section class="featured-products-section">
+    
     <div class="section-header">
       <h2 class="section-title">新着商品</h2>
       <%= link_to 'すべて見る', '#', class: 'view-all-link' %>

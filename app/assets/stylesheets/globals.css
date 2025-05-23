@@ -398,13 +398,14 @@ img {
 .home-page {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-2xl);
+  gap: 0,0,var(--spacing-2xl),0;
   padding-bottom: var(--spacing-xl);
 }
 
 /* ヒーローセクション */
 .hero-section {
   position: relative;
+  /* top: 200px; */
   width: 100%;
 }
 
@@ -425,6 +426,52 @@ img {
   inset: 0;
   background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2));
   z-index: 5;
+  
+}
+
+.notification-section{
+  margin: 0 auto;
+  width: 80%;
+}
+.notification{
+  background-color: white;
+  height: 100px;
+  line-height: 100px;
+  overflow: scroll;
+}
+.notification-title{
+  color: black;
+  width: 100%;
+  text-align: center;
+}
+.notification-content{
+  color: black;
+  width: 100%;
+  /* display: flex;
+  flex-direction: column; */
+  display: block;
+  height: auto;
+}
+.text-title{
+  width: 300px;
+  border-right: 1px black solid;
+  padding: 5px 5px;
+}
+.text-content{
+  width: calc(100% - 300px);
+  padding: 5px 5px;
+}
+.n-title{
+  margin: 0 auto;
+  height: 50px;
+  line-height: 50px;
+  font-size: 24px;
+}
+.n-content{
+  height: auto;
+  line-height: 20px;
+  display: flex;
+  font-size: 14px;
 }
 
 .hero-content {

@@ -50,3 +50,17 @@ unless User.exists?(email: common_email)
 else
   puts "Common user with email '#{common_email}' already exists."
 end
+
+
+Item.create!(
+  name: 'Sample Item 1',
+  description: 'これは最初のサンプルアイテムです。',
+  price: 1000,
+  category_id: 2,
+  condition_id: 2,
+  # image: ActiveStorage::Blob.create_and_upload!(
+  #   io: File.open(Rails.root.join('app/assets/images/item-sample.png')), # 適切な画像ファイルパスに変更
+  #   filename: 'item-sample.png',
+  #   content_type: 'image/png'
+  # )
+)
