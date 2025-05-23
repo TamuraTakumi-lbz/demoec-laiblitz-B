@@ -27,14 +27,20 @@ Rails.application.routes.draw do
       get 'order',to: 'orders#new',as: 'order'
       post 'order',to: 'orders#create'
     end
+    collection do
+      get :search
+    end
   end
+
 
   resources :notifications, except: [:show]
   resources :promotions, except: [:show]
+
+  resources :coupons
+
   
   # Defines the root path route ("/")
   # root "posts#index"
   root "items#index"
   resources :items
-
 end

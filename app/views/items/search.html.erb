@@ -1,0 +1,96 @@
+<%= render "shared/header" %>
+  
+  <section class="featured-products-section"> 
+    <div class="filter-container">
+      <h1 class="filer-title">絞り込み</h1>
+      <%= search_form_for @q, url: search_items_path, method: :get do |f| %>
+        <div class="category_condition">
+          <% if params.dig(:q, :name_cont).present? %>
+            <%= f.hidden_field :name_cont, value: params.dig(:q, :name_cont) %>
+          <% end %>
+          <div class="category-select">
+            <%= f.label :category_id_eq, "カテゴリー：" %>
+            <%= f.collection_select :category_id_eq, @categories, :id, :category_name, include_blank: true %>
+          </div>
+          <div class="condition-select">
+            <%= f.label :condition_id_eq, "商品の状態：" %>
+            <%= f.collection_select :condition_id_eq, @conditions, :id, :condition_name, include_blank: true %>
+          </div>
+        </div>
+        <div class="price_button">
+          <div class="price-select">
+            <%= f.label :price, "金額：" %>
+            <%= f.number_field :price_gteq %>円〜
+            <%= f.number_field :price_lteq %>円
+          </div>
+          <div class="display-button">
+            <%= f.submit "表示する", class: "display-btn" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="search-result">
+      <h2 class="section-title">検索結果</h2>
+      <div class="search-menu">
+        <% if params.dig(:q, :category_id_eq).present? %>
+          <div class="selected-category">
+            <h2><%= Category.find_by(id: params.dig(:q, :category_id_eq))&.category_name %></h2>
+          </div>
+        <% end %> 
+        <% if params.dig(:q, :condition_id_eq).present? %>
+          <div class="selected-condition">
+            <h2><%= Condition.find_by(id: params.dig(:q, :condition_id_eq))&.condition_name %></h2>
+          </div> 
+        <% end %> 
+          <% if params.dig(:q, :price_gteq).present? || params.dig(:q, :price_lteq).present? %>
+            <div class="selected-price"><h2>
+              <%= params.dig(:q, :price_gteq).presence  %> ～ 
+              <%= params.dig(:q, :price_lteq).presence  %></h2>
+            </div> 
+          <% end %> 
+      </div>
+    </div>
+
+    <div class="products-grid">
+      <% if params.present? %>
+        <% @items.each do |item| %>
+           <%= link_to item_path(item.id), class: 'product-card' do %>
+             <div class="product-image-container">
+               <%= image_tag item.image, class: 'product-image' if item.image.attached? %>
+               <% if item_sold?(item) %>
+                 <div class="sold-out-badge">
+                   <span>在庫なし</span>
+                 </div>
+               <% end %>  
+             </div>
+             <div class="product-content">
+               <div class="product-category"><%= item.category.category_name%></div> 
+               <h3 class="product-name"><%= item.name  %></h3>
+             </div>
+             <div class="product-footer">
+               <div class="product-price">¥<%= item.price  %></div>
+             </div>
+           <% end %>
+        <% end %>  
+        
+      <% else %>
+        <%= link_to '#', class: 'product-card' do %>
+          <div class="product-image-container">
+            <%= image_tag "placeholder.svg", class: "product-image" %>
+          </div>
+          <div class="product-content">
+            <div class="product-category"></div>
+            <h3 class="product-name">商品準備中</h3>
+          </div>
+          <div class="product-footer">
+            <div class="product-price">¥<span>99999999</span></div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+  
+</div>
+
+<%= render "shared/footer" %>

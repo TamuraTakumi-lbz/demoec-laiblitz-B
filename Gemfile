@@ -54,6 +54,7 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows]
   gem "rspec-rails"
   gem "factory_bot_rails"
+  gem "faker"
 end
 
 group :development do
@@ -85,3 +86,4 @@ gem 'active_hash'
 gem 'mini_magick'
 gem 'image_processing', '~> 1.2'
 gem 'rails-i18n', '~> 7.0'
+gem 'ransack'

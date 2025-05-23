@@ -50,3 +50,39 @@ unless User.exists?(email: common_email)
 else
   puts "Common user with email '#{common_email}' already exists."
 end
+
+
+Item.create!(
+  name: 'Sample Item 1',
+  description: 'これは最初のサンプルアイテムです。',
+  price: 1000,
+  category_id: 2,
+  condition_id: 2,
+  image: ActiveStorage::Blob.create_and_upload!(
+    io: File.open(Rails.root.join('app/assets/images/item-sample.png')), # 適切な画像ファイルパスに変更
+    filename: 'item-sample.png',
+    content_type: 'image/png'
+  )
+)
+
+unless PointDealType.exists?(type_key: '0001')
+  PointDealType.create!(
+    type_key:    '0001',
+    description: '購入者付与用',
+    is_deposit:  true
+  )
+  puts "PointDealType with type_key '0001' created."
+else
+  puts "PointDealType with type_key '0001' already exists."
+end
+
+unless PointDealType.exists?(type_key: '0002')
+  PointDealType.create!(
+    type_key:    '0002',
+    description: '商品購入時の消費用',
+    is_deposit:  false
+  )
+  puts "PointDealType with type_key '0002' created."
+else
+  puts "PointDealType with type_key '0002' already exists."
+end

@@ -1230,3 +1230,73 @@ img {
     grid-template-columns: repeat(4, 1fr);
   }
 }
+
+/* ヘッダーのキーワード検索 */
+.search-btn{
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  font-size: var(--font-size-sm);
+}
+
+/* 検索結果絞り込み */
+.search-result{
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.section-title{
+  margin-right: 20px;
+  align-items: center;
+}
+
+.search-menu{
+  display: flex;
+}
+ 
+.selected-category, .selected-condition, .selected-price{
+  font-weight: 700;
+  margin-right: 15px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 5px 20px;
+  background-color: var(--color-border);
+}
+
+.filter-container{
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 40px;
+  margin: 30px auto;
+  width: 70%;
+}
+
+.filer-title{
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+.category_condition, .price_button{
+  display: flex;
+}
+
+.category_condition{
+  margin-bottom: 20px;
+}
+
+.category-select, .price-select{
+  margin-right: 20px;
+}
+
+.display-btn{
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 5px 20px;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+}

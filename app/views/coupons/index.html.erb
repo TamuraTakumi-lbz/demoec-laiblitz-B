@@ -1,0 +1,110 @@
+<%= render "shared/second-header" %>
+
+<div class="container">
+  <%# クーポン管理画面 全体レイアウト %>
+  <%# dashboardから引用 %>
+  <div class="card-layout">
+
+    <%# ヘッダー部分：タイトル %>
+    <div class="card-header">
+      <h1 class="app-title">DemoEC クーポン管理</h1>
+    </div>
+    <%# /ヘッダー部分：タイトル %>
+
+    <%# 出品した商品一覧 %>
+    <div class="item-list-container">
+
+      <%# 出品した商品の見出し %>
+      <div class="item-list-header">
+        <div>
+          <h2 class="section-title">発行したクーポン一覧</h2>
+          <p class="section-description">
+            発行されているクーポンの一覧です。<%= @coupons.length %>個のクーポンが見つかりました。
+          </p>
+        </div>
+
+        <%# 出品ボタン %>
+        <div class="list-header-actions">
+          <%= link_to 'クーポンを発行する', new_coupon_path, class: "new-item-button" %>
+        </div>
+        <%# /出品ボタン %>
+      </div>
+      <%# /出品した商品の見出し %>
+
+      <%# 商品テーブル %>
+      <div class="item-table">
+        <table>
+          <thead>
+            <tr>
+              <th>クーポン名</th>
+              <th>割引金額</th>
+              <th>最低適用価格</th>
+              <th>有効期限</th>
+              <th>アクション</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @coupons.each do |coupon|%>
+            <%# 商品のインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
+              <tr>
+                <%# 商品名・画像の表示 %>
+                <td class="item-col">
+                  <div class="item-info">
+                    <div class="item-avatar">
+                      <div>
+                        <% unless coupon.active? %>
+                          <%# 商品が売れている場合は "在庫なし" を表示 %>
+                            <div class="sold-out">
+                              <span>無効</span>
+                            </div>
+                          <%# /商品が売れている場合は "在庫なし" を表示 %>
+                        <% end %> 
+                      </div>
+                    </div>
+                    <div class="item-details">
+                      <span class="item-name"><%= link_to coupon.name, coupon_path(coupon) %></span>
+                    </div>
+                  </div>
+                </td>
+                <%# /商品名・画像の表示 %>
+              
+                <%# 販売価格の表示 %>
+                <td class="price-col">
+                  <%= number_to_currency(coupon.discount_amount) %>円
+                </td>
+                <%# /販売価格の表示 %>
+
+                <%# カテゴリーの表示 %>
+                <td class="category-col">
+                  <%= number_to_currency(coupon.minimum_order_price) %>円
+                </td>
+                <%# /カテゴリーの表示 %>
+
+                <%# 出品日の表示 %>
+                <td class="date-col">
+                  <%=l coupon.expires_on, format: :short %>
+                </td>
+                <%# /出品日の表示 %>
+
+                <%# アクションボタン（編集・削除） %>
+                <td class="actions-col">
+                  <%= link_to '編集', edit_coupon_path(coupon), { class: 'admin-action-button' } %>
+                  <%= link_to '削除', coupon_path(coupon), { class: 'admin-action-button', data: { turbo_method: :delete } } %>
+                </td>
+                <%# /アクションボタン（編集・削除） %>
+                
+              </tr>
+            <% end %>
+            <%# 商品のインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
+
+          </tbody>
+        </table>
+      </div>
+      <%# /商品テーブル %>
+
+    </div>
+    <%# /出品した商品一覧 %>
+
+  </div>
+  <%# /商品管理画面 全体レイアウト %>
+</div>

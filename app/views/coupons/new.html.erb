@@ -1,0 +1,87 @@
+<%# cssは商品出品のものを併用しています。 app/assets/stylesheets/items/form.css %>
+
+<div class="create-listing-page">
+  <div class="container">
+    <div class="form-container">
+      <header class="form-header">
+        <div class="header-logo-section">
+          <%= link_to image_tag('logo.svg', class: 'logo-icon'), root_path, class: 'logo-link' %>
+        </div>
+      </header>
+
+      <div class="form-main">
+        <h2 class="form-title">クーポン情報を入力</h2>
+        <%= form_with model: @coupon, local: true do |f| %>
+
+          <%= render 'shared/error_messages', model: @coupon %>
+
+          <div class="new-items">
+            <div class="form-group">
+              <div class="weight-bold-text">
+                クーポン名 <span class="required-badge">必須</span>
+              </div>
+              <%= f.text_area :name,
+                    class: "items-text",
+                    id: "item-name",
+                    placeholder: "クーポン名（必須 50文字まで）",
+                    maxlength: "50" %>
+            </div>
+
+            <div class="form-group">
+              <div class="items-explain">
+                <div class="weight-bold-text">
+                  説明 <span class="required-badge">必須</span>
+                </div>
+                <%= f.text_area :description,
+                      class: "items-text",
+                      id: "item-description",
+                      placeholder: "説明（必須 500文字まで）",
+                      rows: "7",
+                      maxlength: "500" %>
+              </div>
+            </div>
+          </div>
+
+          <div class="items-detail">
+            <div class="weight-bold-text">クーポンの詳細</div>
+
+            <div class="form-group">
+              <div class="weight-bold-text">
+                割引額(円) <span class="required-badge">必須</span>
+              </div>
+              <%= f.number_field :discount_amount,
+                    class: "price-input",
+                    id: "item-price",
+                    placeholder: "半角数字で入力" %>
+            </div>
+
+            <div class="form-group">
+              <div class="weight-bold-text">
+                最小注文額(円) ※割引額に応じて変更してください。
+              </div>
+              <%= f.number_field :minimum_order_price,
+                class: "price-input",
+                id: "item-price",
+                placeholder: "半角数字で入力" %>
+            </div>
+
+            <div class="form-group">
+              <div class="weight-bold-text">
+                有効期限 <span class="required-badge">必須</span>
+              </div>
+              <%= f.date_field :expires_on,
+                    class: "items-text",
+                    id: "item-description" %>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <%= f.submit "作成する", class: "submit-button" %>
+            <%= link_to 'もどる', coupons_path, class: "cancel-button" %>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
