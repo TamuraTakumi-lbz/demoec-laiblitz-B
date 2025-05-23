@@ -437,7 +437,8 @@ img {
   background-color: white;
   height: 100px;
   line-height: 100px;
-  overflow: scroll;
+  overflow: auto;
+  resize: vertical;
 }
 .notification-title{
   color: black;
@@ -727,16 +728,18 @@ img {
 }
 
 .promotion-container {
-  overflow: hidden;
+  overflow: scroll;
   border-radius: var(--radius-md);
   background-color: var(--color-secondary);
+  display: flex;
+  height: 500px;
 }
 
 .promotion-content {
   padding: var(--spacing-xl);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: center; */
 }
 
 .promotion-title {
@@ -757,6 +760,35 @@ img {
 
 .promotion-image {
   object-fit: cover;
+}
+
+/*スクロール*/
+@keyframes infinity-scroll-right {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+	}
+.scroll-infinity__wrap {
+  display: flex;
+  overflow: hidden;
+}
+.scroll-infinity__list {
+  display: flex;
+  list-style: none;
+  padding: 0
+}
+.scroll-infinity__item {
+  width: calc(100vw / 6);
+  height: 100%;
+}
+.scroll-infinity__item>img {
+  width: 100%;
+}
+.scroll-infinity__list--right{
+  animation :infinity-scroll-right 60s infinite linear 0.1s both;
 }
 
 /* ボタン */

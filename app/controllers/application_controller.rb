@@ -45,6 +45,21 @@ class ApplicationController < ActionController::Base
         notification.save(validate: false)
       end
     end
+
+    Promotion.where(is_published: false).find_each do |promotion|
+
+      if promotion[:starts_at] <= Time.current
+        promotion[:is_published] = true
+        promotion.save(validate: false)
+      end
+      
+    end
+    Promotion.where(is_published: true).find_each do |promotion|
+      if !(promotion[:ends_at]==nil) && (promotion[:ends_at] < Time.now)
+        promotion[:is_published] = false
+        promotion.save(validate: false)
+      end
+    end
   end
 
   def common_setup?

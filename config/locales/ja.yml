@@ -42,6 +42,7 @@ ja:
       messages:
         blank: "を入力してください"
         invalid: "が不正です"
+        current_time: "を現在の時刻より後に設定してください"
 
       models:
         user:

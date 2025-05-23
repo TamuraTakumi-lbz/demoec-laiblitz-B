@@ -32,10 +32,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :coupons
-  
 
-  resources :notifications, only: [:index, :new, :create, :edit, :update, :destroy]
+  resources :notifications, except: [:show]
+  resources :promotions, except: [:show]
+
+  resources :coupons
 
   
   # Defines the root path route ("/")

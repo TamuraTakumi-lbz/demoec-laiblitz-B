@@ -27,7 +27,7 @@ class NotificationsController < ApplicationController
     if @notification.update(notification_params)
       redirect_to notifications_path
     else
-      render :index, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -37,10 +37,6 @@ class NotificationsController < ApplicationController
     else
       render :index, status: :unprocessable_entity
     end
-  end
-
-  def dashboard
-
   end
 
   private

@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_21_092708) do
+
+ActiveRecord::Schema[7.1].define(version: 2025_05_23_030329) do
+
   create_table "active_storage_attachments", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -73,6 +75,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_21_092708) do
     t.datetime "updated_at", null: false
   end
 
+
+  create_table "promotions", charset: "utf8mb3", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.boolean "is_published", default: false
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "point_deal_types", charset: "utf8mb3", force: :cascade do |t|
     t.string "type_key", null: false
     t.string "description", null: false
@@ -114,6 +128,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_21_092708) do
     t.datetime "updated_at", null: false
     t.index ["point_deal_id"], name: "index_point_withdrawals_on_point_deal_id", unique: true
   end
+
 
   create_table "purchase_items", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "item_id", null: false
@@ -206,7 +221,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_21_092708) do
   add_foreign_key "purchase_items", "purchases"
   add_foreign_key "purchases", "users"
   add_foreign_key "ships", "purchases"
+
   add_foreign_key "user_coupons", "coupons", on_delete: :cascade
   add_foreign_key "user_coupons", "users", on_delete: :cascade
   add_foreign_key "users", "user_ranks"
+
 end
