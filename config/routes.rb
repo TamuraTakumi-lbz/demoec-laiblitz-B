@@ -29,7 +29,11 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :coupons
+  
+
   resources :notifications, only: [:index, :new, :create, :edit, :update, :destroy]
+
   
   # Defines the root path route ("/")
   # root "posts#index"

@@ -8,14 +8,18 @@ class OrdersController < ApplicationController
 
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @order = Ship.new
+    #有効かつ、userが未使用のクーポン取得。Userモデル内で定義。
+    @available_coupons = current_user.available_coupons
   end
 
   def create
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     payjp_token = params[:token]
+
     # redemption_amount = params[:redeem_points].to_i
     redemption_amount = 49
     @order = Ship.new(ship_params)
+
 
     begin ActiveRecord::Base.transaction do
       # ポイント消費
@@ -42,6 +46,7 @@ class OrdersController < ApplicationController
         payjp_token: payjp_token,
         used_points: redemption_amount,
         point_deal: point_redemption_service.present? ? point_redemption_service.data[:point_deal] : nil
+        coupon_id: params[:coupon_id].presence
       ).call
       unless creator_result.success?
         creator_result.error_message.each do |error_message|

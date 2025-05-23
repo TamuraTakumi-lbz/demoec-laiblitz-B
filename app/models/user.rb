@@ -22,6 +22,16 @@ class User < ApplicationRecord
 
   has_many :purchases, dependent: :destroy
 
+  #Couponモデル・UserCouponモデルとの関連付け
+  has_many :user_coupons, dependent: :destroy
+  has_many :coupons,      through:   :user_coupons
+
+  #有効かつ、該当userが未使用のクーポン取得。current.user.available_couponsで想定
+  def available_coupons
+    self.coupons.active.merge(user_coupons.unused).distinct
+  end
+
+  after_create :assign_all_active_coupons
   belongs_to :user_rank, optional: true
   has_many :point_deals, dependent: :destroy
 
@@ -34,5 +44,13 @@ class User < ApplicationRecord
     return if password.blank? || password =~ /\A(?=.*?[a-zA-Z])(?=.*?\d)[a-zA-Z\d]+\z/
 
     errors.add(:password, :password_complexity)
+  end
+
+  #ユーザー登録時に有効かつ期限内のクーポンを全て配布
+  def assign_all_active_coupons
+    Coupon.where(is_active: true).where("expires_on >= ?", Date.current)
+      .find_each(batch_size: 1000) do |coupon|
+        user_coupons.create!(coupon: coupon)
+      end
   end
 end
