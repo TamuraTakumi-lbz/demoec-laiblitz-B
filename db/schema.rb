@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_21_092708) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_21_011359) do
+
   create_table "active_storage_attachments", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -50,6 +51,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_21_092708) do
     t.index ["category_id"], name: "index_items_on_category_id"
     t.index ["condition_id"], name: "index_items_on_condition_id"
   end
+
 
   create_table "point_deal_types", charset: "utf8mb3", force: :cascade do |t|
     t.string "type_key", null: false
@@ -93,6 +95,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_21_092708) do
     t.index ["point_deal_id"], name: "index_point_withdrawals_on_point_deal_id", unique: true
   end
 
+
+  create_table "notifications", charset: "utf8mb3", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.boolean "is_published", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+
   create_table "purchase_items", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "item_id", null: false
     t.bigint "purchase_id", null: false
@@ -102,6 +114,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_21_092708) do
     t.datetime "updated_at", null: false
     t.index ["item_id"], name: "index_purchase_items_on_item_id"
     t.index ["purchase_id"], name: "index_purchase_items_on_purchase_id"
+
   end
 
   create_table "purchases", charset: "utf8mb3", force: :cascade do |t|
