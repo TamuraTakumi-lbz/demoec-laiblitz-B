@@ -2,8 +2,7 @@ class PurchaseCreator
   Result = Struct.new(:success?, :data, :error_message, keyword_init: true)
   attr_reader :purchase
 
-  def initialize(user:, item:, ship_params:, payjp_token:, coupon_id:,point_deal: nil, used_points: 0)
-
+  def initialize(user:, item:, ship_params:, payjp_token:, coupon_id:, point_deal: nil, used_points: 0)
     @user = user
     @item = item
     @ship_params = ship_params
@@ -23,28 +22,24 @@ class PurchaseCreator
     return Result.new(success?: false, error_message: 'ポイントの使用が0以下です。') if @used_points < 0
 
     ActiveRecord::Base.transaction do
-
-
-      #クーポンが使用されれば値引き金額を,使用されなければ0を返すサービスを呼び出し
+      # クーポンが使用されれば値引き金額を,使用されなければ0を返すサービスを呼び出し
       coupon_service = CouponApplicationService.new(
-        user:                       @user,
+        user: @user,
         item_price_before_discount: @item.price,
-        coupon_id:                  @coupon_id
+        coupon_id: @coupon_id
       ).call
       unless coupon_service.success?
         @errors << coupon_service.error_message
         raise ActiveRecord::Rollback
       end
 
-      #値引き金額定義
+      # 値引き金額定義
       coupon_discount_amount = coupon_service.data[:discount]
-
 
       @purchase = Purchase.new(
         user: @user,
         total_price: @item.price,
         used_points: @used_points,
-        coupon_discount_amount: 0,
         final_payment_amount: final_payment_amount,
         coupon_discount_amount: coupon_discount_amount,
         status: 'pending_payment'
@@ -87,7 +82,6 @@ class PurchaseCreator
 
       # ポイント利用の記録
       @point_deal.update!(purchase: @purchase) if @used_points > 0 && @point_deal.present?
-
 
       return Result.new(success?: true, data: { purchase: @purchase, purchase_item: @purchase_item, ship: @ship })
     end

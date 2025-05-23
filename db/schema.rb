@@ -207,7 +207,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_21_092708) do
   add_foreign_key "purchase_items", "items"
   add_foreign_key "purchase_items", "purchases"
   add_foreign_key "purchases", "users"
-  add_foreign_key "ships", "purchases"
   add_foreign_key "user_coupons", "coupons", on_delete: :cascade
   add_foreign_key "user_coupons", "users", on_delete: :cascade
   add_foreign_key "users", "user_ranks"
