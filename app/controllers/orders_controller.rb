@@ -4,49 +4,34 @@ class OrdersController < ApplicationController
   def new
     # 購入可能な状態以外はページ遷移
     return redirect_to new_user_session_path unless user_signed_in?
-    return redirect_to root_path if current_user&.is_admin? || Purchase.exists?(item_id: @item.id)
+    return redirect_to root_path if current_user&.is_admin? || PurchaseItem.exists?(item_id: @item.id)
 
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @order = Ship.new
   end
 
   def create
-    # renderでやり直した時のために設定
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
-
     payjp_token = params[:token]
 
-    # 決済処理
-    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
-    charge = Payjp::Charge.create(
-      amount: @item.price,
-      card: payjp_token,
-      currency: 'jpy'
+    creator = PurchaseCreator.new(
+      user: current_user,
+      item: @item,
+      ship_params: ship_params,
+      payjp_token: payjp_token
     )
 
-    ActiveRecord::Base.transaction do
-      @purchase = Purchase.new(user_id: current_user.id, item_id: @item.id)
-      @purchase.save!
-
-      @order = Ship.new(ship_params)
-      @order.purchase_id = @purchase.id
-
-      @order.save!
-
+    if creator.call
       redirect_to root_path, notice: '購入が完了しました！'
+    else
+      @order = Ship.new(ship_params)
+
+      # Service Object から取得したエラーメッセージを @order の errors に追加
+      creator.errors.each do |message|
+        @order.errors.add(:base, message)
+      end
+      render :new, status: :unprocessable_entity
     end
-  rescue Payjp::PayjpError => e
-    Rails.logger.error "Payjp決済エラーが発生しました: #{e.message}"
-    flash.now[:alert] = "決済処理に失敗しました: #{e.message}"
-    render :new, status: :unprocessable_entity
-  rescue ActiveRecord::RecordInvalid => e
-    Rails.logger.error "モデル保存エラーが発生しました: #{e.message}"
-    flash.now[:alert] = "データの保存に失敗しました: #{e.message}"
-    render :new, status: :unprocessable_entity
-  rescue StandardError => e
-    Rails.logger.error "予期せぬエラーが発生しました: #{e.message}"
-    flash.now[:alert] = '予期せぬエラーが発生しました。時間をおいてお試しください。'
-    render :new, status: :unprocessable_entity
   end
 
   private
