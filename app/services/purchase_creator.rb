@@ -14,8 +14,23 @@ class PurchaseCreator
     # 購入のトランザクション
 
     ActiveRecord::Base.transaction do
+
+      #クーポンが使用されれば値引き金額を,使用されなければ0を返すサービスを呼び出し
+      coupon_service = CouponApplicationService.new(
+        user:                       @user,
+        item_price_before_discount: @item.price,
+        coupon_id:                  @coupon_id
+      ).call
+      unless coupon_service.success?
+        @errors << coupon_service.error_message
+        raise ActiveRecord::Rollback
+      end
+
+      #値引き金額定義
+      discount_amount = coupon_service.data[:discount]
+
       # final_payment_amountは将来クーポンやポイントを利用した際に変更する
-      @purchase = Purchase.new(user: @user, total_price: @item.price,
+      @purchase = Purchase.new(user: @user, total_price: @item.price, coupon_discount_amount: discount_amount,
                                status: 'paid', final_payment_amount: @item.price)
       @purchase.save!
 
@@ -26,25 +41,6 @@ class PurchaseCreator
       @ship.purchase = @purchase
       @ship.save!
 
-       # クーポン割引額の計算
-      coupon_discount = 0
-      if @coupon_id.present?
-        coupon = Coupon.find_by(id: @coupon_id)
-        unless coupon && coupon.applicable_to?(@item.price)
-          @errors << 'このクーポンは利用できません'
-          raise ActiveRecord::Rollback
-        end
-        coupon_discount = coupon.discount_amount
-      end
-
-      #割引後金額の計算
-      final_payment_amount = @item.price - coupon_discount
-
-      #used_at(クーポンの使用履歴)のセット
-      if @coupon_id.present?
-        uc = @user.user_coupons.find_by(coupon_id: @coupon_id)
-        uc&.update!(used_at: Time.current)
-      end
 
       true
     end

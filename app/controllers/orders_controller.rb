@@ -22,7 +22,7 @@ class OrdersController < ApplicationController
       ship_params: ship_params,
       payjp_token: payjp_token,
       # クーポンidを受け取り
-      coupon_id:   coupon_id
+      coupon_id: params[:coupon_id].presence
     )
 
     begin ActiveRecord::Base.transaction do
