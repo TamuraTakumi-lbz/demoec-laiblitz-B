@@ -14,21 +14,24 @@ class OrdersController < ApplicationController
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     payjp_token = params[:token]
     # redemption_amount = params[:redeem_points].to_i
-    redemption_amount = 100
+    redemption_amount = 49
     @order = Ship.new(ship_params)
 
     begin ActiveRecord::Base.transaction do
       # ポイント消費
-      point_redemption_service = PointRedemptionService.new(user: current_user,
-                                                            purchase: nil,
-                                                            redemption_amount: redemption_amount).call
+      if redemption_amount > 0
+        point_redemption_service = PointRedemptionService.new(user: current_user,
+                                                              purchase: nil,
+                                                              redemption_amount: redemption_amount).call
 
-      unless point_redemption_service.success?
-        point_redemption_service.error_message.each do |error_message|
-          @order.errors.add(:base, error_message)
+        unless point_redemption_service.success?
+          point_redemption_service.error_message.each do |error_message|
+            @order.errors.add(:base, error_message)
+          end
+          render :new, status: :unprocessable_entity
+          raise ActiveRecord::Rollback
         end
-        render :new, status: :unprocessable_entity
-        raise ActiveRecord::Rollback
+        redemption_amount = point_redemption_service.data[:redemption_points]
       end
 
       # 購入処理
@@ -37,8 +40,8 @@ class OrdersController < ApplicationController
         item: @item,
         ship_params: ship_params,
         payjp_token: payjp_token,
-        used_points: point_redemption_service.data[:redemption_points],
-        point_deal: point_redemption_service.data[:point_deal]
+        used_points: redemption_amount,
+        point_deal: point_redemption_service.present? ? point_redemption_service.data[:point_deal] : nil
       ).call
       unless creator_result.success?
         creator_result.error_message.each do |error_message|
