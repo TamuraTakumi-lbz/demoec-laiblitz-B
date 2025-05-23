@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
   end
 
   def common_setup?
-    action_name == 'index' && controller_name.in?(%w[items, notifications])
+    action_name == 'index' && controller_name.in?(%w[items notifications])
   end
 
   def after_sign_up_path_for
