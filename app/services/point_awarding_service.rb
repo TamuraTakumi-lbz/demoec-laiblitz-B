@@ -41,8 +41,8 @@ class PointAwardingService
 
       unless @user.save
         error_msg = "ユーザーのポイント残高更新に失敗しました: #{@user.errors.full_messages.join(', ')}"
-        Rails.logger.error error_msg # ログにも残す
-        raise ActiveRecord::Rollback, error_msg # この例外でトランザクションをロールバック
+        Rails.logger.error error_msg
+        raise ActiveRecord::Rollback, error_msg
       end
 
       return Result.new(success?: true,
