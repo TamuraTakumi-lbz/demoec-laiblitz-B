@@ -52,7 +52,7 @@
                     <div class="item-avatar">
                       <div>
                         <%= image_tag promotion.promotion_image, class: 'item-image' if promotion.promotion_image.attached? %>
-                        <% if promotion[:is_published] %>
+                        <% if !promotion[:is_published] %>
                           <%# 商品が売れている場合は "在庫なし" を表示 %>
                             <div class="sold-out">
                               <span>掲載なし</span>

@@ -3,9 +3,7 @@
 <div class="home-page">
   <section class="notification-section">
     <div class="notification-title">
-      <div class="n-title">
-        おしらせ
-      </div>
+      おしらせ
     </div>
 
     <div class= "notification">
@@ -39,7 +37,44 @@
     
   </section>
 
-  
+  <section class="promotion-section">
+    <div class="promotion-title">
+      プロモーション
+    </div>
+    <div class="scroll-infinity">
+      <div class="scroll-infinity__wrap">
+        <ul class="scroll-infinity__list scroll-infinity__list--right">
+          <% @promotions.each do |promotion|%>
+            <li class="scroll-infinity__item">
+              <%= link_to promotion.url do %>
+                <% image_tag promotion.promotion_image%>
+              <%end%>
+            </li>
+          <%end%>
+        </ul>
+        <ul class="scroll-infinity__list scroll-infinity__list--right">
+          <% @promotions.each do |promotion|%>
+            <li class="scroll-infinity__item">
+              <%= link_to promotion.url do %>
+                <% image_tag promotion.promotion_image%>
+              <%end%>
+            </li>
+          <%end%>
+        </ul>
+        <ul class="scroll-infinity__list scroll-infinity__list--right">
+          <% @promotions.each do |promotion|%>
+            <li class="scroll-infinity__item">
+              <%= link_to promotion.url do %>
+                <% image_tag promotion.promotion_image%>
+              <%end%>
+            </li>
+          <%end%>
+        </ul>
+      </div>
+  </section>
+
+  	
+    </div>
   
   <section class="featured-products-section">
     
