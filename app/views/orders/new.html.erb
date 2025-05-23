@@ -19,21 +19,33 @@
           </div>
         </div>
 
-        <%# 利用可能クーポンを所持している場合のみ、プルダウン表示 %>
-        <%# 選択されたクーポンのidをフォーム内の隠しフィールドで送信 %>
+        <%# 利用可能クーポンを所持している場合のみ、プルダウン表示 - フォームの外に維持 %>
+        <%# JavaScriptが選択値を取得し、フォーム内の隠しフィールドを更新します %>
         <% if @available_coupons.any? %>
-          <div class="coupon-selection-outside">
-            <label for="coupon-select-outside">利用可能なクーポンを選択</label>
-            <%= select_tag :coupon_id_outside,
+          <div class="coupon-selection-outside form-group">
+            <div class="weight-bold-text">
+              <label for="selected_coupon_id_outside">利用可能なクーポンを選択</label> <%# for属性も修正 %>
+              <span class="optional-badge">任意</span>
+            </div>
+            <%# select_tag の id属性をJavaScriptで取得しやすいように変更 %>
+            <%# 各optionタグにdata-discount属性を追加 %>
+            <%= select_tag :selected_coupon_id_outside, # name属性は後でJSで隠しフィールドに設定
                   options_for_select(
                     @available_coupons.map { |c|
-                      ["#{c.name}（¥#{c.discount_amount} OFF）", c.id]
-                    }
+                      # optionタグにdata-discount属性を追加
+                      [
+                        "#{c.name}（¥#{number_with_delimiter(c.discount_amount)} OFF）",
+                        c.id,
+                        { data: { discount: c.discount_amount } } # ここで割引額を埋め込む
+                      ]
+                    },
+                    # エラー時に選択値を保持 (paramsはフォームの外の要素では直接使えないが、JSで処理可能)
+                    # params[:selected_coupon_id_on_submit]
                   ),
                   include_blank: 'クーポンを使わない',
-                  id: 'coupon-select-outside',
+                  id: 'selected_coupon_id_outside', # JavaScriptが使うID
                   class: 'form-select' %>
-            <%# クーポン関連のエラー表示用エリア %>
+            <%# クーポン関連のエラー表示用エリア (必要に応じて適切な場所に移動) %>
             <p id="coupon-error-outside" class="error-messages"></p>
           </div>
         <% end %>
@@ -41,14 +53,37 @@
         <div class="payment-summary">
           <div class="summary-row">
             <span>商品金額</span>
-            <span>¥<%= @item.price %></span>
+              <span id="item-price-display" data-item-price="<%= @item.price %>">¥<%= number_with_delimiter(@item.price) %></span>
           </div>
-          <div>Your Point is <%= current_user.total_available_points %> Pt</div>
-          <div class="summary-row total">
-            <span>お支払い金額</span>
-            <span>¥<%= @item.price %></span>
+          <div class="summary-row point-info">
+            <span>現在の所持ポイント</span>
+            <%# JavaScriptでユーザーの所持ポイントを取得できるよう、data属性に保持 %>
+            <span id="user-available-points-display" data-user-points="<%= current_user.total_available_points %>">
+              <%= number_with_delimiter(current_user.total_available_points) %> Pt
+            </span>
           </div>
+
+        <div class="form-group point-usage-group">
+          <div class="weight-bold-text">
+            <label for="redemption-point-input">利用ポイント</label>
+            <span class="optional-badge">任意</span>
+          </div>
+          <input type="number" id="redemption-point-input" name="points_to_use" class="form-input" placeholder="利用するポイント数を入力" min="0">
+          <div id="point-input-error" class="error-messages" style="color: red; font-size: 0.9em;"></div>
         </div>
+
+        <div class="summary-row">
+          <span>ポイント利用額</span>
+          <span id="used-points-display"> ¥0</span>
+        </div>
+
+        <hr class="summary-divider">
+
+        <div class="summary-row total">
+          <span>お支払い金額</span>
+          <span id="final-payment-amount-display">¥<%= number_with_delimiter(@item.price) %></span> <%# 初期値は商品金額 %>
+        </div>
+      </div>
       </section>
       <section class="payment-section">
         <%= form_with model: @order,url: order_item_path, id: 'charge-form', class: 'checkout-form',
@@ -58,7 +93,6 @@
 
           <%# ★ Payjp Elementsのエラー表示用エリア %>
           <div id="card-error-messages" class="error-messages"></div>
-
 
           <%# カード情報の入力 %>
           <div class="form-section">
@@ -105,7 +139,7 @@
                 <label>郵便番号</label>
                 <span class="required-badge">必須</span>
               </div>
-              <%= f.text_field :postal_code, class: "form-input", placeholder: "例）123-4567", maxlength: "8", model: "@ship" %>
+              <%= f.text_field :postal_code, class: "form-input", placeholder: "例）123-4567", maxlength: "8" %>
             </div>
 
             <div class="form-group">
@@ -122,7 +156,7 @@
                 <label>市区町村</label>
                 <span class="required-badge">必須</span>
               </div>
-              <%= f.text_field :city, class: "form-input", placeholder: "例）横浜市緑区", model: "@ship" %>
+              <%= f.text_field :city, class: "form-input", placeholder: "例）横浜市緑区" %>
             </div>
 
             <div class="form-group">
@@ -130,7 +164,7 @@
                 <label>番地</label>
                 <span class="required-badge">必須</span>
               </div>
-              <%= f.text_field :street_address, class: "form-input", placeholder: "例）青山1-1-1", model: "@ship" %>
+              <%= f.text_field :street_address, class: "form-input", placeholder: "例）青山1-1-1" %>
             </div>
 
             <div class="form-group">
@@ -138,7 +172,7 @@
                 <label>建物名</label>
                 <span class="optional-badge">任意</span>
               </div>
-              <%= f.text_field :building_name, class: "form-input", placeholder: "例）柳ビル103", model: "@ship" %>
+              <%= f.text_field :building_name, class: "form-input", placeholder: "例）柳ビル103" %>
             </div>
 
             <div class="form-group">
@@ -146,15 +180,14 @@
                 <label>電話番号</label>
                 <span class="required-badge">必須</span>
               </div>
-              <%= f.text_field :phone_number, class: "form-input", placeholder: "例）09012345678", maxlength: "11", model: "@ship" %>
+              <%= f.text_field :phone_number, class: "form-input", placeholder: "例）09012345678", maxlength: "11" %>
             </div>
           </div>
 
-          <%# Payjpトークンを格納する隠しフィールド %>
-          <%= f.hidden_field :token %>
-          <%# coupon_idを送信する隠しフィールド。JSでnilになってるvalueを変更・・・？ %>
-          <%= hidden_field_tag :coupon_id, nil, id: 'hidden-coupon-id'%>
-
+          <%# JavaScriptで更新される隠しフィールド - name属性はコントローラーに合わせる %>
+          <input type="hidden" name="points_to_redeem_on_submit" id="hidden-points-to-redeem-for-submission" value="0">
+          <%# クーポンIDを送信する隠しフィールド - JavaScriptで選択値が設定されます %>
+          <input type="hidden" name="selected_coupon_id_on_submit" id="hidden-selected-coupon-id-for-submission" value="">
 
           <div class="form-actions">
             <%= f.submit "購入を確定する", class: "submit-button", id: "button" %>
