@@ -57,8 +57,6 @@
         <% @items.each do |item| %>
            <%= link_to item_path(item.id), class: 'product-card' do %>
              <div class="product-image-container">
-               <%# <%= image_tag item.image, class: 'product-image' %>
-               <%# <% if item.has_bought %> 
                <%= image_tag item.image, class: 'product-image' if item.image.attached? %>
                <% if item_sold?(item) %>
                  <div class="sold-out-badge">
