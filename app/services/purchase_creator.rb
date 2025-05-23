@@ -18,7 +18,6 @@ class PurchaseCreator
     return Result.new(success?: false, error_message: 'ポイントの使用が0以下です。') if @used_points < 0
 
     ActiveRecord::Base.transaction do
-      binding.pry
       @purchase = Purchase.new(
         user: @user,
         total_price: @item.price,
@@ -28,7 +27,7 @@ class PurchaseCreator
         status: 'pending_payment'
       )
       unless @purchase.save
-        return Result.new(success?: false, error_message: @purchase.errors.full_messages.join(', '),
+        return Result.new(success?: false, error_message: @purchase.errors.full_messages,
                           data: { errors_object: @purchase.errors })
       end
 
@@ -39,14 +38,13 @@ class PurchaseCreator
         price_at_purchase: @item.price
       )
       unless @purchase_item.save
-        return Result.new(success?: false, error_message: @purchase.errors.full_messages.join(', '),
+        return Result.new(success?: false, error_message: @purchase_item.errors.full_messages,
                           data: { errors_object: @purchase_item.errors })
       end
+      @ship = Ship.new(@ship_params.merge(purchase: @purchase))
 
-      @ship = Ship.new(@ship_params)
-      @ship.purchase = @purchase
       unless @ship.save
-        return Result.new(success?: false, error_message: @purchase.errors.full_messages.join(', '),
+        return Result.new(success?: false, error_message: @ship.errors.full_messages,
                           data: { errors_object: @ship.errors })
       end
 

@@ -16,17 +16,20 @@ class OrdersController < ApplicationController
 
     @order = Ship.new(ship_params)
 
-    creator_result = PurchaseCreator.new(
-      user: current_user,
-      item: @item,
-      ship_params: ship_params,
-      payjp_token: payjp_token,
-      used_points: 10
-    ).call
-
     begin ActiveRecord::Base.transaction do
+      creator_result = PurchaseCreator.new(
+        user: current_user,
+        item: @item,
+        ship_params: ship_params,
+        payjp_token: payjp_token,
+        used_points: 10
+      ).call
+      binding.pry
       puts creator_result.success?
       unless creator_result.success?
+        creator_result.error_message.each do |error_message|
+          @order.errors.add(:base, error_message)
+        end
         render :new, status: :unprocessable_entity
         raise ActiveRecord::Rollback
       end
@@ -39,7 +42,9 @@ class OrdersController < ApplicationController
       point_award_result = point_awarding_service.call
 
       unless point_award_result.success?
-        @order.errors.add(:base, point_award_result.error_message || 'ポイントの付与に失敗しました。')
+        point_award_result.error_message.each do |error_message|
+          @order.errors.add(:base, error_message)
+        end
         raise ActiveRecord::Rollback
       end
       redirect_to root_path, notice: '購入が完了しました。'
