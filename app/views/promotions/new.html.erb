@@ -16,11 +16,7 @@
             <div class="weight-bold-text">
               商品画像 <span class="required-badge">必須</span>
             </div>
-            <% if @promotion.promotion_image.attached? %>
-              <%= image_tag @promotion.promotion_image, class: 'item-image'%>
-            <%else%>
-              <%= image_tag "sample-image.png", class: "item-image" %>
-            <% end %>
+            
             <div class="click-upload">
               <%= f.label :promotion_image, 'クリックしてファイルをアップロード', class: 'upload-label' %>
               <%= f.file_field :promotion_image, id: 'item-image', class: 'file-input' %>
