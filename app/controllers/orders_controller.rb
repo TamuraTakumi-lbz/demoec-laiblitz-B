@@ -13,23 +13,55 @@ class OrdersController < ApplicationController
   def create
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     payjp_token = params[:token]
+    # redemption_amount = params[:redeem_points].to_i
+    redemption_amount = 100
+    @order = Ship.new(ship_params)
 
-    creator = PurchaseCreator.new(
-      user: current_user,
-      item: @item,
-      ship_params: ship_params,
-      payjp_token: payjp_token
-    )
+    begin ActiveRecord::Base.transaction do
+      # ポイント消費
+      point_redemption_service = PointRedemptionService.new(user: current_user,
+                                                            purchase: nil,
+                                                            redemption_amount: redemption_amount).call
 
-    if creator.call
-      redirect_to root_path, notice: '購入が完了しました！'
-    else
-      @order = Ship.new(ship_params)
-
-      # Service Object から取得したエラーメッセージを @order の errors に追加
-      creator.errors.each do |message|
-        @order.errors.add(:base, message)
+      unless point_redemption_service.success?
+        point_redemption_service.error_message.each do |error_message|
+          @order.errors.add(:base, error_message)
+        end
+        render :new, status: :unprocessable_entity
+        raise ActiveRecord::Rollback
       end
+
+      # 購入処理
+      creator_result = PurchaseCreator.new(
+        user: current_user,
+        item: @item,
+        ship_params: ship_params,
+        payjp_token: payjp_token,
+        used_points: point_redemption_service.data[:redemption_points],
+        point_deal: point_redemption_service.data[:point_deal]
+      ).call
+      unless creator_result.success?
+        creator_result.error_message.each do |error_message|
+          @order.errors.add(:base, error_message)
+        end
+        render :new, status: :unprocessable_entity
+        raise ActiveRecord::Rollback
+      end
+
+      point_awarding_service = PointAwardingService.new(user: current_user,
+                                                        purchase: creator_result.data[:purchase],
+                                                        type_key: '0001').call
+
+      unless point_awarding_service.success?
+        point_award_result.error_message.each do |error_message|
+          @order.errors.add(:base, error_message)
+        end
+        raise ActiveRecord::Rollback
+      end
+      redirect_to root_path, notice: '購入が完了しました。'
+    end
+    rescue ActiveRecord::Rollback
+      flash.now[:alert] = '購入処理中にエラーが発生しました。'
       render :new, status: :unprocessable_entity
     end
   end
@@ -50,4 +82,18 @@ class OrdersController < ApplicationController
       :phone_number
     )
   end
+
+  # def populate_order_errors_from_creator(creator)
+  #   if creator.errors.respond_to?(:full_messages) && creator.errors.full_messages.any?
+  #     creator.errors.full_messages.each do |message|
+  #       @order.errors.add(:base, message)
+  #     end
+  #   elsif creator.errors.is_a?(Array) && creator.errors.any?
+  #     creator.errors.each do |message|
+  #       @order.errors.add(:base, message)
+  #     end
+  #   else
+  #     @order.errors.add(:base, '購入処理中にエラーが発生しました。')
+  #   end
+  # end
 end
