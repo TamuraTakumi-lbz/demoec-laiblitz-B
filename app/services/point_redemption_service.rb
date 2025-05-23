@@ -17,11 +17,9 @@ class PointRedemptionService
       return Result.new(success?: false, error_message: "指定されたアクションキーはポイント利用タイプではありません: #{@type_key}")
     end
 
-    Result.new(success?: false, error_message: '利用ポイント数が0以下です。') if @redemption_amount <= 0
+    return Result.new(success?: false, error_message: '利用ポイント数が0以下です。') if @redemption_amount <= 0
 
-    unless @user.total_available_points > @redemption_amount
-      return Result.new(success?: false, error_message: '利用ポイント数が残高を超えています。')
-    end
+    return Result.new(success?: false, error_message: '利用ポイント数が残高を超えています。') if @redemption_amount > @user.total_available_points
 
     # ポイント利用のトランザクション
     ActiveRecord::Base.transaction do
