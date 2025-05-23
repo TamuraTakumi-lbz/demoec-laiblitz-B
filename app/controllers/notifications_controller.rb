@@ -1,24 +1,10 @@
 class NotificationsController < ApplicationController
-
+  before_action :authenticate_user!, only: [:index, :new, :create, :edit, :update, :destroy]
+  before_action :authenticate_admin, only: [:index, :new, :create, :edit, :update, :destroy]
   before_action :set_notification, only: [:edit, :update, :destroy]
   
   def index
-    @notifications = Notification.where(is_published: true) 
-
-    Notification.where(is_published: false).find_each do |notification|
-      logger.debug(notification[:id])
-      logger.debug(notification[:starts_at])
-      logger.debug(Time.current)
-
-      if notification[:starts_at] <= Time.current
-        notification[:is_published] = true
-        notification.save
-      end
-      if !(notification[:ends_at]==nil) && (notification[:ends_at] < Time.now)
-        notification[:is_published] = false
-        notification.save
-      end
-    end
+    @notifications = Notification.order(created_at: :DESC)
   end
   def new
     @notification = Notification.new
@@ -63,5 +49,13 @@ class NotificationsController < ApplicationController
   end
   def notification_params
     params.require(:notification).permit(:title,:content,:starts_at, :ends_at)
+  end
+  def published_flag_params
+    params.require(:notification).permit(:is_published)
+  end
+  def authenticate_admin
+    return if current_user.is_admin?
+
+    redirect_to root_path
   end
 end
