@@ -31,7 +31,6 @@ class ItemsController < ApplicationController
   def search
     @q = Item.ransack(params[:q])
     @items = @q.result(distinct: true).order(created_at: :DESC)
-    @blank_q = Item.ransack
   end
 
   def new
