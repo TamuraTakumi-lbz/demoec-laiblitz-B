@@ -1,27 +1,29 @@
 <%= render "shared/header" %>
 
 <div class="home-page">
-  <section class="notification-section">
-    <div class="notification-title">
-      おしらせ
-    </div>
-
-    <div class= "notification">
-      <div class="notification-content">
-        <% @notifications.each do | notification|%>
-          <div class="n-content">
-            <div class="text-title">
-              <%= notification.title%>
-            </div>
-            <div class="text-content">
-              <%= notification.content%>
-            </div>
-            
-          </div>
-        <%end%>
+  <%unless current_user&.is_admin%>
+    <section class="notification-section">
+      <div class="notification-title">
+        おしらせ
       </div>
-    </div>
-  </section>
+
+      <div class= "notification">
+        <div class="notification-content">
+          <% @notifications.each do | notification|%>
+            <div class="n-content">
+              <div class="text-title">
+                <%= notification.title%>
+              </div>
+              <div class="text-content">
+                <%= notification.content%>
+              </div>
+
+            </div>
+          <%end%>
+        </div>
+      </div>
+    </section>
+  <%end%>
   <section class="hero-section">
     <div class="hero-image-container">
       <div class="hero-overlay"> 
@@ -37,41 +39,40 @@
     
   </section>
 
-  <section class="promotion-section">
-    <div class="promotion-title">
-      プロモーション
-    </div>
-    <div class="scroll-infinity">
-      <div class="scroll-infinity__wrap">
-        <ul class="scroll-infinity__list scroll-infinity__list--right">
-          <% @promotions.each do |promotion|%>
-            <li class="scroll-infinity__item">
-              <%= link_to promotion.url do %>
-                <% image_tag promotion.promotion_image%>
-              <%end%>
-            </li>
-          <%end%>
-        </ul>
-        <ul class="scroll-infinity__list scroll-infinity__list--right">
-          <% @promotions.each do |promotion|%>
-            <li class="scroll-infinity__item">
-              <%= link_to promotion.url do %>
-                <% image_tag promotion.promotion_image%>
-              <%end%>
-            </li>
-          <%end%>
-        </ul>
-        <ul class="scroll-infinity__list scroll-infinity__list--right">
-          <% @promotions.each do |promotion|%>
-            <li class="scroll-infinity__item">
-              <%= link_to promotion.url do %>
-                <% image_tag promotion.promotion_image%>
-              <%end%>
-            </li>
-          <%end%>
-        </ul>
-      </div>
-  </section>
+  <%unless current_user&.is_admin%>
+    <section class="promotion-section">
+      <div class="scroll-infinity">
+        <div class="scroll-infinity__wrap">
+          <ul class="scroll-infinity__list scroll-infinity__list--right">
+            <% @promotions.each do |promotion|%>
+              <li class="scroll-infinity__item">
+                <%= link_to promotion.url do %>
+                  <% image_tag promotion.promotion_image%>
+                <%end%>
+              </li>
+            <%end%>
+          </ul>
+          <ul class="scroll-infinity__list scroll-infinity__list--right">
+            <% @promotions.each do |promotion|%>
+              <li class="scroll-infinity__item">
+                <%= link_to promotion.url do %>
+                  <% image_tag promotion.promotion_image%>
+                <%end%>
+              </li>
+            <%end%>
+          </ul>
+          <ul class="scroll-infinity__list scroll-infinity__list--right">
+            <% @promotions.each do |promotion|%>
+              <li class="scroll-infinity__item">
+                <%= link_to promotion.url do %>
+                  <% image_tag promotion.promotion_image%>
+                <%end%>
+              </li>
+            <%end%>
+          </ul>
+        </div>
+    </section>
+  <%end%>
 
   	
     </div>

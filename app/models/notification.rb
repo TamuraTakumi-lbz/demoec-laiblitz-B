@@ -1,8 +1,19 @@
 class Notification < ApplicationRecord
   validates :title, presence: true
   validates :content, presence: true
-  validates :starts_at, presence: true
-  validates :starts_at, comparison: {greater_than: Time.now}
+  validate :starts_at_must_be_present_and_in_the_future
   validates :ends_at, comparison: {greater_than: :starts_at}, allow_nil: true
   
+  private
+  private
+  def starts_at_must_be_present_and_in_the_future
+    if starts_at.blank?
+      errors.add(:starts_at, :blank) 
+      return
+    end
+
+    if starts_at <= Time.now
+      errors.add(:starts_at, :current_time) # value を渡してエラーメッセージに含めることも可能
+    end
+  end
 end

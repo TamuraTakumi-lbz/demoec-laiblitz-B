@@ -437,7 +437,8 @@ img {
   background-color: white;
   height: 100px;
   line-height: 100px;
-  overflow: scroll;
+  overflow: auto;
+  resize: vertical;
 }
 .notification-title{
   color: black;

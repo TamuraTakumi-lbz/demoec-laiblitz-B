@@ -10,9 +10,9 @@ class NotificationsController < ApplicationController
     @notification = Notification.new
   end
   def create
-    notification = Notification.new(notification_params)
-    notification[:is_published] = false
-    if notification.save
+    @notification = Notification.new(notification_params)
+    @notification[:is_published] = false
+    if @notification.save
       redirect_to notifications_path
     else
       render :new, status: :unprocessable_entity
@@ -27,7 +27,7 @@ class NotificationsController < ApplicationController
     if @notification.update(notification_params)
       redirect_to notifications_path
     else
-      render :index, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 
